@@ -1,0 +1,34 @@
+.porcentaje-text {
+    color: white;
+}
+
+.card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 10px;
+    width: 400px;
+    min-height: 650px;
+    max-height: 650px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+#addProductFooter {
+    max-height: 50px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    border-radius: 15px 15px 0 0;
+}
+
+#addProductFooter.expanded {
+    max-height: 1100px;
+}
+
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/factory.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
