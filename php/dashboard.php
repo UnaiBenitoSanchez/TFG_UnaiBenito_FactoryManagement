@@ -31,7 +31,7 @@ session_start();
         </div>
     </div>
 
-    <footer class="bg-body-tertiary text-center text-lg-start fixed-bottom" id="addProductFooter" style=" box-shadow: inset 0px 10px 4px 0 rgba(20, 20, 20, 0.2);">
+    <footer class="text-center text-lg-start fixed-bottom" id="addProductFooter">
         <div class="container mt-3">
             <div id="footerIndicator" class="footer-indicator"></div>
             <center>
@@ -62,6 +62,7 @@ session_start();
             </form>
         </div>
     </footer>
+
 
     <?php
 

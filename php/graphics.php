@@ -55,7 +55,7 @@
     }
     ?>
 
-    <script type="text/javascript">
+<script type="text/javascript">
         google.charts.load('current', {
             'packages': ['corechart']
         });
@@ -74,7 +74,25 @@
                     curveType: 'function',
                     legend: {
                         position: 'bottom'
-                    }
+                    },
+                    backgroundColor: '#2c3e50',
+                    titleTextStyle: {
+                        color: '#ecf0f1',
+                    },
+                    legendTextStyle: {
+                        color: '#ecf0f1',
+                    },
+                    hAxis: {
+                        textStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    vAxis: {
+                        textStyle: {
+                            color: '#ecf0f1'
+                        }
+                    },
+                    colors: ['#e74c3c']
                 };
 
                 var chart_<?php echo $productId; ?> = new google.visualization.LineChart(document.getElementById('curve_chart_<?php echo $productId; ?>'));
