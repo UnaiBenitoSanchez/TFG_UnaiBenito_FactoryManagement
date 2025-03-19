@@ -164,7 +164,46 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+-- -----------------------------------------------------
+-- Table `BootstrapWebsite`.`employee`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BootstrapWebsite`.`employee`;
 
+CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`employee` (
+  `id_employee` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL UNIQUE,
+  `password` VARCHAR(1000) NOT NULL,
+  `role` ENUM('worker', 'manager', 'admin') NOT NULL DEFAULT 'worker',
+  PRIMARY KEY (`id_employee`)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+-- -----------------------------------------------------
+-- Table `BootstrapWebsite`.`factory_employee`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BootstrapWebsite`.`factory_employee`;
+
+CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`factory_employee` (
+  `factory_id_factory` INT NOT NULL,
+  `employee_id_employee` INT NOT NULL,
+  PRIMARY KEY (`factory_id_factory`, `employee_id_employee`),
+  CONSTRAINT `fk_factory_employee_factory`
+    FOREIGN KEY (`factory_id_factory`)
+    REFERENCES `BootstrapWebsite`.`factory` (`id_factory`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_factory_employee_employee`
+    FOREIGN KEY (`employee_id_employee`)
+    REFERENCES `BootstrapWebsite`.`employee` (`id_employee`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 -- Inserts-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -242,6 +281,60 @@ INSERT INTO product VALUES('25','PickyPiggy','What\'s more important than play a
 INSERT INTO inventory VALUES('25','3000','2024-01-03','25','4');
 INSERT INTO product VALUES('26','CatNap','CatNap is a calming presence for the critters and ensures he and his friends always have the right amount of sleep to jumpstart the morning\'s play! End of the day, there\'s nothing CatNap enjoys more than watching his friends sleep soundly.','20.00','img/playtime8.jpg','1');
 INSERT INTO inventory VALUES('26','3000','2024-01-03','26','4');
+
+-- Insertar empleados para Mattel (Fábrica 1)
+INSERT INTO employee VALUES 
+('1', 'Alice Johnson', 'alice.mattel@email.com', 'M@ttelH4sh01', 'worker'),
+('2', 'Bob Smith', 'bob.mattel@email.com', 'M@ttelH4sh02', 'worker'),
+('3', 'Charlie Brown', 'charlie.mattel@email.com', 'M@ttelH4sh03', 'worker'),
+('4', 'David Wilson', 'david.mattel@email.com', 'M@ttelH4sh04', 'worker'),
+('5', 'Emma Davis', 'emma.mattel@email.com', 'M@ttelH4sh05', 'worker'),
+('6', 'Frank Miller', 'frank.mattel@email.com', 'M@ttelH4sh06', 'worker'),
+('7', 'Grace Lee', 'grace.mattel@email.com', 'M@ttelH4sh07', 'worker'),
+('8', 'Henry Adams', 'henry.mattel@email.com', 'M@ttelH4sh08', 'worker'),
+('9', 'Ivy White', 'ivy.mattel@email.com', 'M@ttelH4sh09', 'worker'),
+('10', 'Jack Harris', 'jack.mattel@email.com', 'M@ttelH4sh10', 'worker');
+
+-- Asignar empleados a Mattel (Fábrica 1)
+INSERT INTO factory_employee VALUES 
+('1', '1'), ('1', '2'), ('1', '3'), ('1', '4'), ('1', '5'), 
+('1', '6'), ('1', '7'), ('1', '8'), ('1', '9'), ('1', '10');
+
+-- Insertar empleados para Lego (Fábrica 2)
+INSERT INTO employee VALUES 
+('11', 'Ava Nelson', 'ava.lego@email.com', 'L3g0H4sh01', 'worker'),
+('12', 'Ben Foster', 'ben.lego@email.com', 'L3g0H4sh02', 'worker'),
+('13', 'Chloe Ramirez', 'chloe.lego@email.com', 'L3g0H4sh03', 'worker'),
+('14', 'Daniel Reed', 'daniel.lego@email.com', 'L3g0H4sh04', 'worker'),
+('15', 'Ella Perry', 'ella.lego@email.com', 'L3g0H4sh05', 'worker');
+
+-- Asignar empleados a Lego (Fábrica 2)
+INSERT INTO factory_employee VALUES 
+('2', '21'), ('2', '22'), ('2', '23'), ('2', '24'), ('2', '25');
+
+-- Insertar empleados para Nerf (Fábrica 3)
+INSERT INTO employee VALUES 
+('16', 'Aaron Phillips', 'aaron.nerf@email.com', 'N3rfH4sh01', 'worker'),
+('17', 'Bella Scott', 'bella.nerf@email.com', 'N3rfH4sh02', 'worker'),
+('18', 'Carter Adams', 'carter.nerf@email.com', 'N3rfH4sh03', 'worker'),
+('19', 'Diana Clark', 'diana.nerf@email.com', 'N3rfH4sh04', 'worker'),
+('20', 'Ethan Rodriguez', 'ethan.nerf@email.com', 'N3rfH4sh05', 'worker');
+
+-- Asignar empleados a Nerf (Fábrica 3)
+INSERT INTO factory_employee VALUES 
+('3', '41'), ('3', '42'), ('3', '43'), ('3', '44'), ('3', '45');
+
+-- Insertar empleados para Playtime Co. (Fábrica 4)
+INSERT INTO employee VALUES 
+('21', 'Alex Carter', 'alex.playtime@email.com', 'Pl@ytimeH4sh01', 'worker'),
+('22', 'Brooke Adams', 'brooke.playtime@email.com', 'Pl@ytimeH4sh02', 'worker'),
+('23', 'Charlie Lopez', 'charlie.playtime@email.com', 'Pl@ytimeH4sh03', 'worker'),
+('24', 'Daisy Young', 'daisy.playtime@email.com', 'Pl@ytimeH4sh04', 'worker'),
+('25', 'Elliot Brooks', 'elliot.playtime@email.com', 'Pl@ytimeH4sh05', 'worker');
+
+-- Asignar empleados a Playtime Co. (Fábrica 4)
+INSERT INTO factory_employee VALUES 
+('4', '61'), ('4', '62'), ('4', '63'), ('4', '64'), ('4', '65');
 
 -- Scripts----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
