@@ -21,3 +21,9 @@ select * from inventory_history;
 
 -- Select from factory_boss
 select * from factory_boss;
+
+-- Select from employee
+select * from employee;
+
+-- Select from factory_employee
+select * from factory_employee;
