@@ -103,14 +103,14 @@ session_start();
                 DO
                 BEGIN
 
-                  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = '$productName'));
+                  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'));
                 
-                  UPDATE BootstrapWebsite.inventory
+                  UPDATE GestionDeFabricas.inventory
                   SET available_quantity = GREATEST(available_quantity - RAND()*(100-50)+50, 0)
-                  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = '$productName');
+                  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName');
                 
-                  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-                  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = '$productName'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = '$productName')), 'Subtract');
+                  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+                  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName')), 'Subtract');
                 END;
                 ";
             $stmt = $conn->prepare($subtractEventSQL);
@@ -122,14 +122,14 @@ session_start();
                 DO
                 BEGIN
            
-                  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = '$productName'));
+                  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'));
                 
-                  UPDATE BootstrapWebsite.inventory
+                  UPDATE GestionDeFabricas.inventory
                   SET available_quantity = available_quantity + RAND()*(100-50)+50
-                  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = '$productName');
+                  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName');
                 
-                  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-                  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = '$productName'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = '$productName')), 'Add');
+                  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+                  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName')), 'Add');
                 
                   END;
                 ";
