@@ -1,5 +1,5 @@
 -- Selects
-USE `BootstrapWebsite`;
+USE `GestionDeFabricas`;
 
 -- Select from boss
 select * from boss;

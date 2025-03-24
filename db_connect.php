@@ -4,7 +4,7 @@
 $servername = "localhost";
 $username = "unai";
 $password = "xd";
-$dbname = "bootstrapwebsite";
+$dbname = "GestionDeFabricas";
 
 try {
     // Create a new PDO instance for database connection

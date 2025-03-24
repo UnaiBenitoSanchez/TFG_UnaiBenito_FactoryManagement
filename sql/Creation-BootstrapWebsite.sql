@@ -5,33 +5,33 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema BootstrapWebsite
+-- Schema GestionDeFabricas
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `BootstrapWebsite`;
+DROP SCHEMA IF EXISTS `GestionDeFabricas`;
 
 -- -----------------------------------------------------
--- Schema BootstrapWebsite
+-- Schema GestionDeFabricas
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `BootstrapWebsite` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `BootstrapWebsite`;
+CREATE SCHEMA IF NOT EXISTS `GestionDeFabricas` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `GestionDeFabricas`;
 
 -- -----------------------------------------------------
--- Table `BootstrapWebsite`.`factory_boss`
+-- Table `GestionDeFabricas`.`factory_boss`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BootstrapWebsite`.`factory_boss`;
+DROP TABLE IF EXISTS `GestionDeFabricas`.`factory_boss`;
 
-CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`factory_boss` (
+CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`factory_boss` (
   `factory_id_factory` INT NOT NULL,
   `boss_id_boss_factory` INT NOT NULL,
   PRIMARY KEY (`factory_id_factory`, `boss_id_boss_factory`),
   CONSTRAINT `fk_factory_boss_factory`
     FOREIGN KEY (`factory_id_factory`)
-    REFERENCES `BootstrapWebsite`.`factory` (`id_factory`)
+    REFERENCES `GestionDeFabricas`.`factory` (`id_factory`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_factory_boss_boss`
     FOREIGN KEY (`boss_id_boss_factory`)
-    REFERENCES `BootstrapWebsite`.`boss` (`id_boss_factory`)
+    REFERENCES `GestionDeFabricas`.`boss` (`id_boss_factory`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
@@ -40,11 +40,11 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
--- Table `BootstrapWebsite`.`boss`
+-- Table `GestionDeFabricas`.`boss`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BootstrapWebsite`.`boss`;
+DROP TABLE IF EXISTS `GestionDeFabricas`.`boss`;
 
-CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`boss` (
+CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`boss` (
   `id_boss_factory` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(225) NOT NULL,
   `email` VARCHAR(225) NOT NULL,
@@ -55,11 +55,11 @@ CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`boss` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `BootstrapWebsite`.`factory`
+-- Table `GestionDeFabricas`.`factory`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BootstrapWebsite`.`factory`;
+DROP TABLE IF EXISTS `GestionDeFabricas`.`factory`;
 
-CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`factory` (
+CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`factory` (
   `id_factory` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `street_address` VARCHAR(255) NOT NULL,
@@ -74,11 +74,11 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
--- Table `BootstrapWebsite`.`category`
+-- Table `GestionDeFabricas`.`category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BootstrapWebsite`.`category`;
+DROP TABLE IF EXISTS `GestionDeFabricas`.`category`;
 
-CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`category` (
+CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`category` (
   `id_category` INT NOT NULL AUTO_INCREMENT,
   `category_name` VARCHAR(255) NOT NULL,
   `category_description` TEXT NOT NULL,
@@ -89,11 +89,11 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
--- Table `BootstrapWebsite`.`product`
+-- Table `GestionDeFabricas`.`product`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BootstrapWebsite`.`product`;
+DROP TABLE IF EXISTS `GestionDeFabricas`.`product`;
 
-CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`product` (
+CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`product` (
   `id_product` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`product` (
   INDEX `fk_product_category_idx` (`category_id_category` ASC) VISIBLE,
   CONSTRAINT `fk_product_category`
     FOREIGN KEY (`category_id_category`)
-    REFERENCES `BootstrapWebsite`.`category` (`id_category`)
+    REFERENCES `GestionDeFabricas`.`category` (`id_category`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
@@ -113,11 +113,11 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
--- Table `BootstrapWebsite`.`inventory`
+-- Table `GestionDeFabricas`.`inventory`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BootstrapWebsite`.`inventory`;
+DROP TABLE IF EXISTS `GestionDeFabricas`.`inventory`;
 
-CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`inventory` (
+CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`inventory` (
   `id_inventory` INT NOT NULL AUTO_INCREMENT,
   `available_quantity` INT NOT NULL,
   `update_date` DATE NOT NULL,
@@ -128,12 +128,12 @@ CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`inventory` (
   INDEX `fk_inventory_factory1_idx` (`factory_id_factory` ASC) VISIBLE,
   CONSTRAINT `fk_inventory_product1`
     FOREIGN KEY (`product_id_product`)
-    REFERENCES `BootstrapWebsite`.`product` (`id_product`)
+    REFERENCES `GestionDeFabricas`.`product` (`id_product`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_inventory_factory1`
     FOREIGN KEY (`factory_id_factory`)
-    REFERENCES `BootstrapWebsite`.`factory` (`id_factory`)
+    REFERENCES `GestionDeFabricas`.`factory` (`id_factory`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
@@ -142,11 +142,11 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
--- Table `BootstrapWebsite`.`inventory_history`
+-- Table `GestionDeFabricas`.`inventory_history`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BootstrapWebsite`.`inventory_history`;
+DROP TABLE IF EXISTS `GestionDeFabricas`.`inventory_history`;
 
-CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`inventory_history` (
+CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`inventory_history` (
   `id_history` INT NOT NULL AUTO_INCREMENT,
   `product_id_product` INT NOT NULL,
   `change_quantity` INT NOT NULL,
@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`inventory_history` (
   INDEX `fk_inventory_history_product1_idx` (`product_id_product` ASC) VISIBLE,
   CONSTRAINT `fk_inventory_history_product1`
     FOREIGN KEY (`product_id_product`)
-    REFERENCES `BootstrapWebsite`.`product` (`id_product`)
+    REFERENCES `GestionDeFabricas`.`product` (`id_product`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
@@ -165,11 +165,11 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
--- Table `BootstrapWebsite`.`employee`
+-- Table `GestionDeFabricas`.`employee`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BootstrapWebsite`.`employee`;
+DROP TABLE IF EXISTS `GestionDeFabricas`.`employee`;
 
-CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`employee` (
+CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`employee` (
   `id_employee` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL UNIQUE,
@@ -182,22 +182,22 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
--- Table `BootstrapWebsite`.`factory_employee`
+-- Table `GestionDeFabricas`.`factory_employee`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BootstrapWebsite`.`factory_employee`;
+DROP TABLE IF EXISTS `GestionDeFabricas`.`factory_employee`;
 
-CREATE TABLE IF NOT EXISTS `BootstrapWebsite`.`factory_employee` (
+CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`factory_employee` (
   `factory_id_factory` INT NOT NULL,
   `employee_id_employee` INT NOT NULL,
   PRIMARY KEY (`factory_id_factory`, `employee_id_employee`),
   CONSTRAINT `fk_factory_employee_factory`
     FOREIGN KEY (`factory_id_factory`)
-    REFERENCES `BootstrapWebsite`.`factory` (`id_factory`)
+    REFERENCES `GestionDeFabricas`.`factory` (`id_factory`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_factory_employee_employee`
     FOREIGN KEY (`employee_id_employee`)
-    REFERENCES `BootstrapWebsite`.`employee` (`id_employee`)
+    REFERENCES `GestionDeFabricas`.`employee` (`id_employee`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
@@ -346,14 +346,14 @@ ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
 
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -364,14 +364,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_Barbie_Signature_Look
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Look Gold Disco - Barbie The Movie')), 'Add');
 END;
 //
 DELIMITER ;
@@ -382,14 +382,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_Barbie_The_Movie_Fashion_Pack
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie The Movie Fashion Pack'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie The Movie Fashion Pack'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie The Movie Fashion Pack');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie The Movie Fashion Pack');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie The Movie Fashion Pack'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie The Movie Fashion Pack')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie The Movie Fashion Pack'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie The Movie Fashion Pack')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -400,14 +400,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_Barbie_The_Movie_Fashion_Pack
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie The Movie Fashion Pack'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie The Movie Fashion Pack'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie The Movie Fashion Pack');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie The Movie Fashion Pack');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie The Movie Fashion Pack'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie The Movie Fashion Pack')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie The Movie Fashion Pack'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie The Movie Fashion Pack')), 'Add');
 END;
 //
 DELIMITER ;
@@ -418,14 +418,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_Barbie_Signature_Ken
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -436,14 +436,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_Barbie_Signature_Ken
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Signature Ken Perfect Day - Barbie The Movie')), 'Add');
 END;
 //
 DELIMITER ;
@@ -454,14 +454,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_unicorn
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -472,14 +472,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_unicorn
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Phantasy Unicorn')), 'Add');
 END;
 //
 DELIMITER ;
@@ -490,14 +490,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_tiger
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -508,14 +508,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_tiger
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Barbie Cutie Reveal Serie Jungle Friends Tiger')), 'Add');
 END;
 //
 DELIMITER ;
@@ -526,14 +526,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_elsaAna
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -544,14 +544,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_elsaAna
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Frozen Queen Anna & Elsa Snow Queen')), 'Add');
 END;
 //
 DELIMITER ;
@@ -564,14 +564,14 @@ ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
 
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Millennium Falcon'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Millennium Falcon'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Millennium Falcon');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Millennium Falcon');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Millennium Falcon'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Millennium Falcon')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Millennium Falcon'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Millennium Falcon')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -582,14 +582,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_Millennium_Falcon
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Millennium Falcon'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Millennium Falcon'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Millennium Falcon');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Millennium Falcon');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Millennium Falcon'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Millennium Falcon')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Millennium Falcon'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Millennium Falcon')), 'Add');
 END;
 //
 DELIMITER ;
@@ -600,14 +600,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_Orient_Express_Train
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Orient Express Train'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Orient Express Train'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Orient Express Train');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Orient Express Train');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Orient Express Train'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Orient Express Train')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Orient Express Train'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Orient Express Train')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -618,14 +618,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_Orient_Express_Train
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Orient Express Train'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Orient Express Train'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Orient Express Train');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Orient Express Train');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Orient Express Train'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Orient Express Train')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Orient Express Train'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Orient Express Train')), 'Add');
 END;
 //
 DELIMITER ;
@@ -636,14 +636,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_Avengers_Tower
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Avengers Tower'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Avengers Tower'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Avengers Tower');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Avengers Tower');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Avengers Tower'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Avengers Tower')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Avengers Tower'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Avengers Tower')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -654,14 +654,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_Avengers_Tower
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Avengers Tower'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Avengers Tower'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Avengers Tower');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Avengers Tower');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Avengers Tower'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Avengers Tower')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Avengers Tower'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Avengers Tower')), 'Add');
 END;
 //
 DELIMITER ;
@@ -672,14 +672,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_cherry
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Cherry Blossoms'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Cherry Blossoms'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Cherry Blossoms');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Cherry Blossoms');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Cherry Blossoms'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Cherry Blossoms')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Cherry Blossoms'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Cherry Blossoms')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -690,14 +690,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_cherry
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Cherry Blossoms'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Cherry Blossoms'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Cherry Blossoms');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Cherry Blossoms');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Cherry Blossoms'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Cherry Blossoms')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Cherry Blossoms'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Cherry Blossoms')), 'Add');
 END;
 //
 DELIMITER ;
@@ -708,14 +708,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_ariel
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Ariel Mini Castle'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Ariel Mini Castle'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Ariel Mini Castle');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Ariel Mini Castle');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Ariel Mini Castle'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Ariel Mini Castle')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Ariel Mini Castle'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Ariel Mini Castle')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -726,14 +726,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_ariel
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Ariel Mini Castle'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Ariel Mini Castle'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Ariel Mini Castle');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Ariel Mini Castle');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Ariel Mini Castle'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Disney Ariel Mini Castle')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Ariel Mini Castle'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Disney Ariel Mini Castle')), 'Add');
 END;
 //
 DELIMITER ;
@@ -744,14 +744,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_museum
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Natural History Museum'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Natural History Museum'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Natural History Museum');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Natural History Museum');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Natural History Museum'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Natural History Museum')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Natural History Museum'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Natural History Museum')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -762,14 +762,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_museum
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Natural History Museum'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Natural History Museum'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Natural History Museum');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Natural History Museum');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Natural History Museum'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Natural History Museum')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Natural History Museum'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Natural History Museum')), 'Add');
 END;
 //
 DELIMITER ;
@@ -782,14 +782,14 @@ ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
 
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'SMG-Zesty de Nerf Fortnite'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'SMG-Zesty de Nerf Fortnite'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'SMG-Zesty de Nerf Fortnite');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'SMG-Zesty de Nerf Fortnite');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'SMG-Zesty de Nerf Fortnite'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'SMG-Zesty de Nerf Fortnite')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'SMG-Zesty de Nerf Fortnite'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'SMG-Zesty de Nerf Fortnite')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -800,14 +800,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_SMG_Zesty_de_Nerf_Fortnite
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'SMG-Zesty de Nerf Fortnite'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'SMG-Zesty de Nerf Fortnite'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'SMG-Zesty de Nerf Fortnite');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'SMG-Zesty de Nerf Fortnite');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'SMG-Zesty de Nerf Fortnite'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'SMG-Zesty de Nerf Fortnite')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'SMG-Zesty de Nerf Fortnite'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'SMG-Zesty de Nerf Fortnite')), 'Add');
 END;
 //
 DELIMITER ;
@@ -818,14 +818,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_Nerf_Ultra_Select
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Ultra Select'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Ultra Select'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Ultra Select');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Ultra Select');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Ultra Select'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Ultra Select')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Ultra Select'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Ultra Select')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -836,14 +836,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_Nerf_Ultra_Select
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Ultra Select'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Ultra Select'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Ultra Select');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Ultra Select');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Ultra Select'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Ultra Select')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Ultra Select'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Ultra Select')), 'Add');
 END;
 //
 DELIMITER ;
@@ -854,14 +854,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_Nerf_DinoSquad_Stegosmash
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Stegosmash'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Stegosmash'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Stegosmash');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Stegosmash');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Stegosmash'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Stegosmash')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Stegosmash'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Stegosmash')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -872,14 +872,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_Nerf_DinoSquad_Stegosmash
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Stegosmash'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Stegosmash'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Stegosmash');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Stegosmash');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Stegosmash'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Stegosmash')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Stegosmash'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Stegosmash')), 'Add');
 END;
 //
 DELIMITER ;
@@ -890,14 +890,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_rex
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Rex-Rampage'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Rex-Rampage'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Rex-Rampage');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Rex-Rampage');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Rex-Rampage'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Rex-Rampage')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Rex-Rampage'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Rex-Rampage')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -908,14 +908,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_rex
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Rex-Rampage'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Rex-Rampage'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Rex-Rampage');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Rex-Rampage');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Rex-Rampage'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf DinoSquad Rex-Rampage')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Rex-Rampage'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf DinoSquad Rex-Rampage')), 'Add');
 END;
 //
 DELIMITER ;
@@ -926,14 +926,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_slinger
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike Slinger SD-1'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike Slinger SD-1'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike Slinger SD-1');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike Slinger SD-1');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike Slinger SD-1'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike Slinger SD-1')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike Slinger SD-1'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike Slinger SD-1')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -944,14 +944,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_slinger
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike Slinger SD-1'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike Slinger SD-1'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike Slinger SD-1');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike Slinger SD-1');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike Slinger SD-1'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike Slinger SD-1')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike Slinger SD-1'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike Slinger SD-1')), 'Add');
 END;
 //
 DELIMITER ;
@@ -962,14 +962,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_mission
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike - Mission Set'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike - Mission Set'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike - Mission Set');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike - Mission Set');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike - Mission Set'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike - Mission Set')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike - Mission Set'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike - Mission Set')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -980,14 +980,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_mission
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike - Mission Set'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike - Mission Set'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike - Mission Set');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike - Mission Set');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike - Mission Set'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Nerf Alpha Strike - Mission Set')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike - Mission Set'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Nerf Alpha Strike - Mission Set')), 'Add');
 END;
 //
 DELIMITER ;
@@ -999,14 +999,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_bobbybearhug
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bobby BearHug'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bobby BearHug');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bobby BearHug'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bobby BearHug')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -1017,14 +1017,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_bobbybearhug
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bobby BearHug'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bobby BearHug');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bobby BearHug'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bobby BearHug')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug')), 'Add');
 END;
 //
 DELIMITER ;
@@ -1036,14 +1036,14 @@ ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
 
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bubba Bubbaphant'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bubba Bubbaphant');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bubba Bubbaphant'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bubba Bubbaphant')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -1054,14 +1054,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bubba Bubbaphant'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bubba Bubbaphant');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bubba Bubbaphant'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Bubba Bubbaphant')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant')), 'Add');
 END;
 //
 DELIMITER ;
@@ -1072,14 +1072,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_CraftyCorn
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CraftyCorn'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CraftyCorn');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CraftyCorn'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CraftyCorn')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -1090,14 +1090,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_CraftyCorn
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CraftyCorn'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CraftyCorn');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CraftyCorn'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CraftyCorn')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn')), 'Add');
 END;
 //
 DELIMITER ;
@@ -1108,14 +1108,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_DogDay
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'DogDay'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'DogDay');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'DogDay'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'DogDay')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -1126,14 +1126,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_DogDay
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'DogDay'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'DogDay');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'DogDay'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'DogDay')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay')), 'Add');
 END;
 //
 DELIMITER ;
@@ -1144,14 +1144,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_Hoppy_Hopscotch
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Hoppy Hopscotch'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Hoppy Hopscotch');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Hoppy Hopscotch'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Hoppy Hopscotch')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -1162,14 +1162,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_Hoppy_Hopscotch
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Hoppy Hopscotch'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Hoppy Hopscotch');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Hoppy Hopscotch'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Hoppy Hopscotch')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch')), 'Add');
 END;
 //
 DELIMITER ;
@@ -1180,14 +1180,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_KickinChicken
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'KickinChicken'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'KickinChicken');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'KickinChicken'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'KickinChicken')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -1198,14 +1198,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_KickinChicken
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'KickinChicken'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'KickinChicken');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'KickinChicken'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'KickinChicken')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken')), 'Add');
 END;
 //
 DELIMITER ;
@@ -1216,14 +1216,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_PickyPiggy
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'PickyPiggy'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'PickyPiggy');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'PickyPiggy'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'PickyPiggy')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -1234,14 +1234,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_PickyPiggy
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'PickyPiggy'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'PickyPiggy');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'PickyPiggy'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'PickyPiggy')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy')), 'Add');
 END;
 //
 DELIMITER ;
@@ -1252,14 +1252,14 @@ CREATE EVENT IF NOT EXISTS subtract_quantity_event_CatNap
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CatNap'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CatNap');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CatNap'),(SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'Catnap')), 'Subtract');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Catnap')), 'Subtract');
 END;
 //
 DELIMITER ;
@@ -1270,14 +1270,14 @@ CREATE EVENT IF NOT EXISTS add_quantity_event_CatNap
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CatNap'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap'));
 
-  UPDATE BootstrapWebsite.inventory
+  UPDATE GestionDeFabricas.inventory
   SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CatNap');
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap');
 
-  INSERT INTO BootstrapWebsite.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CatNap'), (SELECT available_quantity FROM BootstrapWebsite.inventory WHERE product_id_product = (SELECT id_product FROM BootstrapWebsite.product WHERE name = 'CatNap')), 'Add');
+  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap')), 'Add');
 END;
 //
 DELIMITER ;
