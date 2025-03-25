@@ -258,7 +258,7 @@ include 'db_connect.php';
                                 exit();
                             } catch (PDOException $e) {
                                 echo "<p style='color: #ffffff'>Please fill in all fields, including the factory.<p>";
-                                echo "<script>console.log($e)</script>";
+                                echo "<script>console.log($e)</script>"; 
                             }
                         }
                     }
