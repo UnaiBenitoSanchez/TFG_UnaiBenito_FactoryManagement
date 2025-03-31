@@ -310,7 +310,7 @@ INSERT INTO employee VALUES
 
 -- Asignar empleados a Lego (Fábrica 2)
 INSERT INTO factory_employee VALUES 
-('2', '21'), ('2', '22'), ('2', '23'), ('2', '24'), ('2', '25');
+('2', '11'), ('2', '12'), ('2', '13'), ('2', '14'), ('2', '15');
 
 -- Insertar empleados para Nerf (Fábrica 3)
 INSERT INTO employee VALUES 
@@ -322,7 +322,7 @@ INSERT INTO employee VALUES
 
 -- Asignar empleados a Nerf (Fábrica 3)
 INSERT INTO factory_employee VALUES 
-('3', '41'), ('3', '42'), ('3', '43'), ('3', '44'), ('3', '45');
+('3', '16'), ('3', '17'), ('3', '18'), ('3', '19'), ('3', '20');
 
 -- Insertar empleados para Playtime Co. (Fábrica 4)
 INSERT INTO employee VALUES 
@@ -334,7 +334,7 @@ INSERT INTO employee VALUES
 
 -- Asignar empleados a Playtime Co. (Fábrica 4)
 INSERT INTO factory_employee VALUES 
-('4', '61'), ('4', '62'), ('4', '63'), ('4', '64'), ('4', '65');
+('4', '21'), ('4', '22'), ('4', '23'), ('4', '24'), ('4', '25');
 
 -- Scripts----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
