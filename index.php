@@ -79,7 +79,7 @@ include 'db_connect.php';
                             $stmt->bindParam(':fullname', $fullname);
                             $stmt->bindParam(':email', $email);
                             $stmt->bindParam(':password', $encryptedPassword);
-                            $stmt->execute();
+                            $stmt->execute(); 
 
                             $bossId = $conn->lastInsertId(); // Get the new boss ID
 
