@@ -260,7 +260,6 @@ INSERT INTO inventory VALUES('17','1800','2024-01-03','17','3');
 INSERT INTO product VALUES('18','Nerf Alpha Strike - Mission Set','This 31-piece Nerf Alpha Strike Mission Set includes 4 launchers, 25 darts and targets to practice your aim and play Nerf games. Perfect for gifts, parties or play anytime! Includes 2 Stinger SD-1 launchers, 1 Cobra RC-6 launcher, 1 Tiger DB-2 launcher and 2 target pieces that can be snapped together to form 1 whole target.','24.99','img/nerf6.jpg','1');
 INSERT INTO inventory VALUES('18','2050','2024-01-03','18','3');
 
-
 -- Playtime Co.
 INSERT INTO boss VALUES ('4','Elliot Ludwig','3ll1ot@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
 INSERT INTO factory VALUES ('4','Playtime Co.','101 Maple St','Los Angeles','California','USA','8000');
@@ -282,57 +281,57 @@ INSERT INTO inventory VALUES('25','3000','2024-01-03','25','4');
 INSERT INTO product VALUES('26','CatNap','CatNap is a calming presence for the critters and ensures he and his friends always have the right amount of sleep to jumpstart the morning\'s play! End of the day, there\'s nothing CatNap enjoys more than watching his friends sleep soundly.','20.00','img/playtime8.jpg','1');
 INSERT INTO inventory VALUES('26','3000','2024-01-03','26','4');
 
--- Insertar empleados para Mattel (Fábrica 1)
+-- Insert employees for Mattel (Factory 1)
 INSERT INTO employee VALUES 
-('1', 'Alice Johnson', 'alice.mattel@email.com', 'M@ttelH4sh01', 'worker'),
-('2', 'Bob Smith', 'bob.mattel@email.com', 'M@ttelH4sh02', 'worker'),
-('3', 'Charlie Brown', 'charlie.mattel@email.com', 'M@ttelH4sh03', 'worker'),
-('4', 'David Wilson', 'david.mattel@email.com', 'M@ttelH4sh04', 'worker'),
-('5', 'Emma Davis', 'emma.mattel@email.com', 'M@ttelH4sh05', 'worker'),
-('6', 'Frank Miller', 'frank.mattel@email.com', 'M@ttelH4sh06', 'worker'),
-('7', 'Grace Lee', 'grace.mattel@email.com', 'M@ttelH4sh07', 'worker'),
-('8', 'Henry Adams', 'henry.mattel@email.com', 'M@ttelH4sh08', 'worker'),
-('9', 'Ivy White', 'ivy.mattel@email.com', 'M@ttelH4sh09', 'worker'),
-('10', 'Jack Harris', 'jack.mattel@email.com', 'M@ttelH4sh10', 'worker');
+('1', 'Alice Johnson', 'alice.mattel@email.com', '$2y$10$ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12', 'worker'),
+('2', 'Bob Smith', 'bob.mattel@email.com', '$2y$10$FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67', 'worker'),
+('3', 'Charlie Brown', 'charlie.mattel@email.com', '$2y$10$KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12', 'worker'),
+('4', 'David Wilson', 'david.mattel@email.com', '$2y$10$PQRST67890PQRST67890PQRST67890PQRST67890PQRST67890PQRST67', 'worker'),
+('5', 'Emma Davis', 'emma.mattel@email.com', '$2y$10$UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12', 'worker'),
+('6', 'Frank Miller', 'frank.mattel@email.com', '$2y$10$ABCDE67890ABCDE67890ABCDE67890ABCDE67890ABCDE67890ABCDE67', 'worker'),
+('7', 'Grace Lee', 'grace.mattel@email.com', '$2y$10$FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12', 'worker'),
+('8', 'Henry Adams', 'henry.mattel@email.com', '$2y$10$KLMNO67890KLMNO67890KLMNO67890KLMNO67890KLMNO67890KLMNO67', 'worker'),
+('9', 'Ivy White', 'ivy.mattel@email.com', '$2y$10$PQRST12345PQRST12345PQRST12345PQRST12345PQRST12345PQRST12', 'worker'),
+('10', 'Jack Harris', 'jack.mattel@email.com', '$2y$10$UVWXY67890UVWXY67890UVWXY67890UVWXY67890UVWXY67890UVWXY67', 'worker');
 
--- Asignar empleados a Mattel (Fábrica 1)
+-- Assign employees to Mattel (Factory 1)
 INSERT INTO factory_employee VALUES 
 ('1', '1'), ('1', '2'), ('1', '3'), ('1', '4'), ('1', '5'), 
 ('1', '6'), ('1', '7'), ('1', '8'), ('1', '9'), ('1', '10');
 
--- Insertar empleados para Lego (Fábrica 2)
+-- Insert employees for Lego (Factory 2)
 INSERT INTO employee VALUES 
-('11', 'Ava Nelson', 'ava.lego@email.com', 'L3g0H4sh01', 'worker'),
-('12', 'Ben Foster', 'ben.lego@email.com', 'L3g0H4sh02', 'worker'),
-('13', 'Chloe Ramirez', 'chloe.lego@email.com', 'L3g0H4sh03', 'worker'),
-('14', 'Daniel Reed', 'daniel.lego@email.com', 'L3g0H4sh04', 'worker'),
-('15', 'Ella Perry', 'ella.lego@email.com', 'L3g0H4sh05', 'worker');
+('11', 'Ava Nelson', 'ava.lego@email.com', '$2y$10$ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12', 'worker'),
+('12', 'Ben Foster', 'ben.lego@email.com', '$2y$10$FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67', 'worker'),
+('13', 'Chloe Ramirez', 'chloe.lego@email.com', '$2y$10$KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12', 'worker'),
+('14', 'Daniel Reed', 'daniel.lego@email.com', '$2y$10$PQRST67890PQRST67890PQRST67890PQRST67890PQRST67890PQRST67', 'worker'),
+('15', 'Ella Perry', 'ella.lego@email.com', '$2y$10$UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12', 'worker');
 
--- Asignar empleados a Lego (Fábrica 2)
+-- Assign employees to Lego (Factory 2)
 INSERT INTO factory_employee VALUES 
 ('2', '11'), ('2', '12'), ('2', '13'), ('2', '14'), ('2', '15');
 
--- Insertar empleados para Nerf (Fábrica 3)
+-- Insert employees for Nerf (Factory 3)
 INSERT INTO employee VALUES 
-('16', 'Aaron Phillips', 'aaron.nerf@email.com', 'N3rfH4sh01', 'worker'),
-('17', 'Bella Scott', 'bella.nerf@email.com', 'N3rfH4sh02', 'worker'),
-('18', 'Carter Adams', 'carter.nerf@email.com', 'N3rfH4sh03', 'worker'),
-('19', 'Diana Clark', 'diana.nerf@email.com', 'N3rfH4sh04', 'worker'),
-('20', 'Ethan Rodriguez', 'ethan.nerf@email.com', 'N3rfH4sh05', 'worker');
+('16', 'Aaron Phillips', 'aaron.nerf@email.com', '$2y$10$ABCDE67890ABCDE67890ABCDE67890ABCDE67890ABCDE67890ABCDE67', 'worker'),
+('17', 'Bella Scott', 'bella.nerf@email.com', '$2y$10$FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12', 'worker'),
+('18', 'Carter Adams', 'carter.nerf@email.com', '$2y$10$KLMNO67890KLMNO67890KLMNO67890KLMNO67890KLMNO67890KLMNO67', 'worker'),
+('19', 'Diana Clark', 'diana.nerf@email.com', '$2y$10$PQRST12345PQRST12345PQRST12345PQRST12345PQRST12345PQRST12', 'worker'),
+('20', 'Ethan Rodriguez', 'ethan.nerf@email.com', '$2y$10$UVWXY67890UVWXY67890UVWXY67890UVWXY67890UVWXY67890UVWXY67', 'worker');
 
--- Asignar empleados a Nerf (Fábrica 3)
+-- Assign employees to Nerf (Factory 3)
 INSERT INTO factory_employee VALUES 
 ('3', '16'), ('3', '17'), ('3', '18'), ('3', '19'), ('3', '20');
 
--- Insertar empleados para Playtime Co. (Fábrica 4)
+-- Insert employees for Playtime Co. (Factory 4)
 INSERT INTO employee VALUES 
-('21', 'Alex Carter', 'alex.playtime@email.com', 'Pl@ytimeH4sh01', 'worker'),
-('22', 'Brooke Adams', 'brooke.playtime@email.com', 'Pl@ytimeH4sh02', 'worker'),
-('23', 'Charlie Lopez', 'charlie.playtime@email.com', 'Pl@ytimeH4sh03', 'worker'),
-('24', 'Daisy Young', 'daisy.playtime@email.com', 'Pl@ytimeH4sh04', 'worker'),
-('25', 'Elliot Brooks', 'elliot.playtime@email.com', 'Pl@ytimeH4sh05', 'worker');
+('21', 'Alex Carter', 'alex.playtime@email.com', '$2y$10$ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12', 'worker'),
+('22', 'Brooke Adams', 'brooke.playtime@email.com', '$2y$10$FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67', 'worker'),
+('23', 'Charlie Lopez', 'charlie.playtime@email.com', '$2y$10$KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12', 'worker'),
+('24', 'Daisy Young', 'daisy.playtime@email.com', '$2y$10$PQRST67890PQRST67890PQRST67890PQRST67890PQRST67890PQRST67', 'worker'),
+('25', 'Elliot Brooks', 'elliot.playtime@email.com', '$2y$10$UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12', 'worker');
 
--- Asignar empleados a Playtime Co. (Fábrica 4)
+-- Assign employees to Playtime Co. (Factory 4)
 INSERT INTO factory_employee VALUES 
 ('4', '21'), ('4', '22'), ('4', '23'), ('4', '24'), ('4', '25');
 
