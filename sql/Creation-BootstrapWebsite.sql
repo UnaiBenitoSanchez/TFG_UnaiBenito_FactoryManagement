@@ -210,7 +210,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 INSERT INTO category VALUES ('1','Entertainment','Made to let children play with it');
 
 -- Mattel
-INSERT INTO boss VALUES ('1','Harold Matson','h4r0ld@gmail.com','++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++.>++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++.>++++++++++++++++++++++++++++++++++++++++++++++++++++.>');
+INSERT INTO boss VALUES ('1','Harold Matson','h4r0ld@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
 INSERT INTO factory VALUES ('1','Mattel','123 Main St','Los Angeles','California','USA','2000');
 INSERT INTO factory_boss VALUES ('1','1');
 INSERT INTO product VALUES('1','Barbie Signature Look Gold Disco - Barbie The Movie','This collectible Barbie® doll sparkles in a sequined disco jumpsuit inspired by her character\'s look in the Barbie™ movie. Her dazzling ensemble is complete with a big disco-inspired mane, metallic jewelry and gold heels.','74.99','img/mattel1.jpg','1');
@@ -227,7 +227,7 @@ INSERT INTO product VALUES('6','Disney Frozen Queen Anna & Elsa Snow Queen','Set
 INSERT INTO inventory VALUES('6','1500','2023-12-22','6','1');
 
 -- Lego
-INSERT INTO boss VALUES ('2','Ole Kirk Christiansen','0l3@gmail.com','++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++.>++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++.>++++++++++++++++++++++++++++++++++++++++++++++++++++.>');
+INSERT INTO boss VALUES ('2','Ole Kirk Christiansen','0l3@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
 INSERT INTO factory VALUES ('2','Lego','456 Oak St','Houston','Texas','USA','6000');
 INSERT INTO factory_boss VALUES ('2','2');
 INSERT INTO product VALUES('7','Millennium Falcon','Packed with authentic details! Highly realistic detailing makes this an impressive display item. Relive the Star Wars™ saga. Includes two crews, so you can recreate both classic and new movies.','849.99','img/Millennium_Falcon.jpg','1');
@@ -244,7 +244,7 @@ INSERT INTO product VALUES('12','Natural History Museum','Discover the first-eve
 INSERT INTO inventory VALUES('12','1100','2024-01-03','12','2');
 
 -- Nerf
-INSERT INTO boss VALUES ('3','Reyn Guyer','r3yn@gmail.com','++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++.>++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++.>++++++++++++++++++++++++++++++++++++++++++++++++++++.>');
+INSERT INTO boss VALUES ('3','Reyn Guyer','r3yn@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
 INSERT INTO factory VALUES ('3','Nerf','789 Pine St','Columbus','Ohio','USA','4000');
 INSERT INTO factory_boss VALUES ('3','3');
 INSERT INTO product VALUES('13','SMG-Zesty de Nerf Fortnite','The Nerf Fortnite SMG-Zesty Launcher SMG-Zesty is inspired by Fortnite\'s Zesty wrapper, which mirrors the look of the popular video game\'s wrapper. The launcher has a removable barrel and a detachable stock so you can customize it in different ways. Attach them, detach them.... It\'s up to you! Remove them when you\'re in close combat for a more compact launcher.','37.99','img/nerf1.jpg','1');
@@ -262,7 +262,7 @@ INSERT INTO inventory VALUES('18','2050','2024-01-03','18','3');
 
 
 -- Playtime Co.
-INSERT INTO boss VALUES ('4','Elliot Ludwig','3ll1ot@gmail.com','++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++.>++++++++++++++++++++++++++++++++++++++++++++++++++.>+++++++++++++++++++++++++++++++++++++++++++++++++++.>++++++++++++++++++++++++++++++++++++++++++++++++++++.>');
+INSERT INTO boss VALUES ('4','Elliot Ludwig','3ll1ot@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
 INSERT INTO factory VALUES ('4','Playtime Co.','101 Maple St','Los Angeles','California','USA','8000');
 INSERT INTO factory_boss VALUES ('4','4');
 INSERT INTO product VALUES('19','Bobby BearHug','A kind, caring soul, Bobby BearHug shows compassion for everyone, and for everything. People and places and things, large or small, are all receivers of her love. Each is enriched by this attention and affection, and in turn, so is she.','50.00','img/playtime1.jpg','1');
