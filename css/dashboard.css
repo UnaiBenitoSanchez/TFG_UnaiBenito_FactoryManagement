@@ -1,9 +1,9 @@
 .porcentaje-text {
-    color: white;
+    color: #fff;
 }
 
 .card {
-    background-color: #2c3e50;
+    background-color: #303f9f;
     border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin: 10px;
@@ -13,8 +13,8 @@
     padding: 16px;
     text-align: center;
     transition: transform 0.2s;
-    color: #ecf0f1;
-    border: 2px solid #e74c3c;
+    color: #fff;
+    border: 2px solid #2081C3;
     overflow-y: scroll;
 }
 
@@ -23,18 +23,18 @@
 }
 
 #addProductFooter {
-    background-color: #2c3e50;
-    border-top: 2px solid #e74c3c;
+    background-color: #303f9f;
+    border-top: 2px solid #2081C3;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    color: #ecf0f1;
+    color: #fff;
     padding: 10px 20px;
     max-height: 50px;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
     border-radius: 15px 15px 0 0;
 }
 
@@ -43,23 +43,42 @@
 }
 
 #addProductFooter.expanded {
-    max-height: 1100px;
-}
-
-body {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/factory.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    max-height: 600px; 
+    padding: 20px;
 }
 
 .footer-indicator {
-    background-color: #e74c3c;
+    background-color: #2081C3;
     height: 4px;
     width: 40px;
     border-radius: 2px;
     margin: 0 auto 10px;
+    cursor: pointer;
+}
+
+body {
+    background: linear-gradient(45deg, #F7F9F9, #BED8D4, #78D5D7, #63D2FF, #2081C3);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 100% 50%;
+    }
+    50% {
+        background-position: 0% 100%;
+    }
+    75% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
