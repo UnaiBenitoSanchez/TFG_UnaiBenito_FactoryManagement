@@ -1,74 +1,4 @@
-.navbar {
-    background-color: #303f9f;
-    opacity: 0.9;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    flex-wrap: wrap;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    border-bottom: 2px solid #2081C3;
-}
-
-.navbar-brand {
-    color: #fff;
-    text-decoration: none;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.navbar-toggler {
-    display: none;
-    background-color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 24px;
-}
-
-.navbar-nav {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    flex-direction: row;
-}
-
-.nav-item {
-    margin-left: 15px;
-}
-
-.nav-link {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s, background-color 0.3s;
-    padding: 8px 15px;
-    border-radius: 5px;
-}
-
-.nav-link:hover {
-    color: #2081C3;
-    background-color: #BED8D4;
-}
-
-.card {
-    background-color: #303f9f;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: 10px;
-    width: 100%;
-    padding: 16px;
-    text-align: center;
-    transition: transform 0.2s;
-    color: #fff;
-    border: 2px solid #2081C3;
-}
-
-.card:hover {
-    transform: scale(1.05);
-}
-
+/* Fondo animado */
 body {
     background: linear-gradient(45deg, #F7F9F9, #BED8D4, #78D5D7, #63D2FF, #2081C3);
     background-size: 400% 400%;
@@ -95,3 +25,196 @@ body {
         background-position: 0% 50%;
     }
 }
+
+.boss-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* Centrar contenido */
+    margin-top: 20px;
+}
+
+.wrapper {
+    background: rgba(48, 63, 159, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+    width: 300px; /* Tamaño uniforme */
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper canvas {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Navbar */
+.navbar {
+    background-color: rgba(48, 63, 159, 0.9); /* Fondo semitransparente */
+    opacity: 0.9;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid #2081C3;
+}
+
+.navbar-brand {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    color: #303f9f;
+    background-color: #BED8D4;
+}
+
+/* Contenedor principal */
+.container {
+    margin-top: 20px;
+    background: rgba(48, 63, 159, 0.8); /* Fondo elegante */
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px 40px; /* Más espacio interno */
+    color: #fff;
+    max-width: 1200px; /* Ancho máximo para centrar */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left; /* Alineación de texto */
+}
+
+.container h2 {
+    text-align: center; /* Centrar el título */
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #3affef;
+}
+
+.container p {
+    font-size: 16px;
+    line-height: 1.6; /* Mejor lectura */
+    margin-bottom: 10px;
+}
+
+/* Tarjetas */
+.card {
+    background-color: rgba(48, 63, 159, 0.9); /* Fondo semitransparente */
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Sombras suaves */
+    margin: 15px auto;
+    width: 90%; /* Anchura consistente */
+    height: 500px; /* Altura consistente */
+    padding: 20px;
+    overflow-y: auto; /* Scroll para contenido desbordado */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Efecto de zoom */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5); /* Aumentar la sombra */
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #BED8D4; /* Azul suave para los títulos */
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #fff; /* Texto en blanco */
+}
+
+/* Scroll personalizado */
+.card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.card::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.card::-webkit-scrollbar-thumb {
+    background: #2081C3;
+    border-radius: 8px;
+}
+
+.card::-webkit-scrollbar-thumb:hover {
+    background: #63D2FF;
+}
+
+/* Botones */
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #63D2FF;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #2081C3;
+}
+
+.btn-danger {
+    background-color: #FF6B6B;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger:hover {
+    background-color: #C0392B;
+}
+
+
+/* Mapa */
+/* Contenedor del mapa */
+.map-container {
+    width: 100%; /* El contenedor ocupa todo el ancho disponible */
+    max-width: 1200px; /* Limitar el ancho máximo para que no sea excesivo */
+    margin: 20px auto; /* Centrar el contenedor */
+    padding: 10px; /* Espaciado interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra elegante */
+    border-radius: 15px; /* Bordes redondeados */
+    background: rgba(255, 255, 255, 0.1); /* Fondo semitransparente */
+}
+
+#map {
+    height: 500px; /* Aumentar altura del mapa */
+    width: 100%; /* Ajustar mapa al ancho completo del contenedor */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombras para el mapa */
+}
+
+

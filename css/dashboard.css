@@ -2,24 +2,116 @@
     color: #fff;
 }
 
+.container-fluid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* Centra las tarjetas */
+    padding: 20px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .card {
-    background-color: #303f9f;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.card {
+    background-color: rgba(48, 63, 159, 0.9); /* Fondo semitransparente */
     border-radius: 15px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: 10px;
-    width: 400px;
-    min-height: 650px;
-    max-height: 650px;
-    padding: 16px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Sombras suaves */
+    margin: 15px;
+    width: 350px; /* Anchura aumentada */
+    height: 500px; /* Altura aumentada */
+    padding: 20px;
     text-align: center;
-    transition: transform 0.2s;
-    color: #fff;
-    border: 2px solid #2081C3;
-    overflow-y: scroll;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #fff; /* Texto en blanco */
+    border: 2px solid #2081C3; /* Borde azul brillante */
+    overflow-y: auto; /* Scroll para contenido desbordado */
+}
+
+.card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.card::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.card::-webkit-scrollbar-thumb {
+    background: #2081C3;
+    border-radius: 8px;
+}
+
+.card::-webkit-scrollbar-thumb:hover {
+    background: #63D2FF;
 }
 
 .card:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Efecto de zoom */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5); /* Aumentar la sombra */
+}
+
+.card h1, .card h2 {
+    font-size: 18px; /* Texto ajustado para que quepa bien en tarjetas pequeñas */
+    font-weight: bold;
+    color: #BED8D4; /* Azul suave */
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px; /* Texto más compacto */
+    line-height: 1.5;
+    color: #fff;
+    opacity: 0.9;
+}
+
+
+.card button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.card .edit-btn {
+    background-color: #63D2FF; /* Azul brillante */
+    color: #fff;
+}
+
+.card .edit-btn:hover {
+    background-color: #2081C3; /* Azul más oscuro */
+    transform: translateY(-2px);
+}
+
+.card .delete-btn {
+    background-color: #FF6B6B; /* Rojo brillante */
+    color: #fff;
+}
+
+.card .delete-btn:hover {
+    background-color: #C0392B; /* Rojo oscuro */
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 90%; /* Se ajusta al ancho de la pantalla */
+        height: auto; /* La altura se adapta al contenido */
+    }
 }
 
 #addProductFooter {
