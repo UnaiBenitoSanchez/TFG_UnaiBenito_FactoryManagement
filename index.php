@@ -68,7 +68,7 @@ include 'db_connect.php';
                     $password = $_POST['password'];
                     $factoryId = $_POST['factory'];
 
-                    // Encriptar la contraseña
+                    // Encrypt the password
                     $encryptedPassword = password_hash($password, PASSWORD_BCRYPT);
 
                     if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/', $password)) {
@@ -152,7 +152,7 @@ include 'db_connect.php';
                         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
                         if ($user) {
-                            // Verificar si la contraseña es correcta
+                            // Verify if the password is correct
                             if (password_verify($password, $user['password'])) {
                                 session_start();
                                 $_SESSION['user_email'] = $email;
