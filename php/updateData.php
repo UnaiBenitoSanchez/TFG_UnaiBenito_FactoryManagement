@@ -13,7 +13,7 @@ try {
     $conn->beginTransaction();
 
     // Update product information
-    $stmtProduct = $conn->prepare("UPDATE BootstrapWebsite.product SET name = :newName, description = :newDescription, price = :newPrice WHERE id_product = :idProduct");
+    $stmtProduct = $conn->prepare("UPDATE product SET name = :newName, description = :newDescription, price = :newPrice WHERE id_product = :idProduct");
     $stmtProduct->bindParam(':newName', $newName);
     $stmtProduct->bindParam(':newDescription', $newDesc);
     $stmtProduct->bindParam(':newPrice', $newPrice);
@@ -21,7 +21,7 @@ try {
     $stmtProduct->execute();
 
     // Update inventory information
-    $stmtInventory = $conn->prepare("UPDATE BootstrapWebsite.inventory SET available_quantity = :newQuantity WHERE product_id_product = :idProduct");
+    $stmtInventory = $conn->prepare("UPDATE inventory SET available_quantity = :newQuantity WHERE product_id_product = :idProduct");
     $stmtInventory->bindParam(':newQuantity', $newQuantity);
     $stmtInventory->bindParam(':idProduct', $idProduct);
     $stmtInventory->execute();
