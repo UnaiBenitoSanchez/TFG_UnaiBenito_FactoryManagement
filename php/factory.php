@@ -40,11 +40,14 @@ $sql1 = "SELECT boss_id_boss_factory FROM factory_boss
         try {
             $sql = "SELECT factory.id_factory, factory.name AS factory_name, 
                     CONCAT(factory.street_address, ', ', factory.city, ', ', factory.state, ', ', factory.country) AS factory_address,
-                    factory.employee_count, boss.name AS boss_name
-                    FROM factory
-                    INNER JOIN factory_boss ON factory.id_factory = factory_boss.factory_id_factory
-                    INNER JOIN boss ON factory_boss.boss_id_boss_factory = boss.id_boss_factory
-                    WHERE boss.email = :userEmail";
+                    COUNT(factory_employee.employee_id_employee) AS employee_count, 
+                    boss.name AS boss_name
+                FROM factory
+                INNER JOIN factory_boss ON factory.id_factory = factory_boss.factory_id_factory
+                INNER JOIN boss ON factory_boss.boss_id_boss_factory = boss.id_boss_factory
+                LEFT JOIN factory_employee ON factory.id_factory = factory_employee.factory_id_factory
+                WHERE boss.email = :userEmail
+                GROUP BY factory.id_factory, boss.name";
 
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':userEmail', $userEmail);
