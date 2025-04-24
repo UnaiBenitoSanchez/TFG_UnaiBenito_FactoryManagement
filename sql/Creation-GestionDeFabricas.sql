@@ -227,7 +227,7 @@ INSERT INTO inventory VALUES('6','1500','2023-12-22','6','1');
 
 -- Lego
 INSERT INTO boss VALUES ('2','Ole Kirk Christiansen','0l3@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
-INSERT INTO factory VALUES ('2', 'LEGO Group', '2400 Boulevard Nexxus ADN', 'Ciénega de Flores', 'Nuevo León', 'México');
+INSERT INTO factory VALUES ('2', 'Lego', '2400 Boulevard Nexxus ADN', 'Ciénega de Flores', 'Nuevo León', 'México');
 INSERT INTO factory_boss VALUES ('2','2');
 INSERT INTO product VALUES('7','Millennium Falcon','Packed with authentic details! Highly realistic detailing makes this an impressive display item. Relive the Star Wars™ saga. Includes two crews, so you can recreate both classic and new movies.','849.99','img/Millennium_Falcon.jpg','1');
 INSERT INTO inventory VALUES('7','1200','2024-01-03','7','2');
