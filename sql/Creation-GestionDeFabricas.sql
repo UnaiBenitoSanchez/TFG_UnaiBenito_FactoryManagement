@@ -210,7 +210,7 @@ INSERT INTO category VALUES ('1','Entertainment','Made to let children play with
 
 -- Mattel
 INSERT INTO boss VALUES ('1','Harold Matson','h4r0ld@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
-INSERT INTO factory VALUES ('1','Mattel','123 Main St','Los Angeles','California','USA');
+INSERT INTO factory VALUES ('1', 'Mattel', '333 Continental Blvd', 'El Segundo', 'California', 'USA');
 INSERT INTO factory_boss VALUES ('1','1');
 INSERT INTO product VALUES('1','Barbie Signature Look Gold Disco - Barbie The Movie','This collectible Barbie® doll sparkles in a sequined disco jumpsuit inspired by her character\'s look in the Barbie™ movie. Her dazzling ensemble is complete with a big disco-inspired mane, metallic jewelry and gold heels.','74.99','img/mattel1.jpg','1');
 INSERT INTO inventory VALUES('1','1000','2023-12-22','1','1');
@@ -227,7 +227,7 @@ INSERT INTO inventory VALUES('6','1500','2023-12-22','6','1');
 
 -- Lego
 INSERT INTO boss VALUES ('2','Ole Kirk Christiansen','0l3@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
-INSERT INTO factory VALUES ('2','Lego','456 Oak St','Houston','Texas','USA');
+INSERT INTO factory VALUES ('2', 'LEGO Group', '2400 Boulevard Nexxus ADN', 'Ciénega de Flores', 'Nuevo León', 'México');
 INSERT INTO factory_boss VALUES ('2','2');
 INSERT INTO product VALUES('7','Millennium Falcon','Packed with authentic details! Highly realistic detailing makes this an impressive display item. Relive the Star Wars™ saga. Includes two crews, so you can recreate both classic and new movies.','849.99','img/Millennium_Falcon.jpg','1');
 INSERT INTO inventory VALUES('7','1200','2024-01-03','7','2');
@@ -244,7 +244,7 @@ INSERT INTO inventory VALUES('12','1100','2024-01-03','12','2');
 
 -- Nerf
 INSERT INTO boss VALUES ('3','Reyn Guyer','r3yn@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
-INSERT INTO factory VALUES ('3','Nerf','789 Pine St','Columbus','Ohio','USA');
+INSERT INTO factory VALUES ('3', 'Nerf', '1027 New State Hwy', 'East Longmeadow', 'Massachusetts', 'USA');
 INSERT INTO factory_boss VALUES ('3','3');
 INSERT INTO product VALUES('13','SMG-Zesty de Nerf Fortnite','The Nerf Fortnite SMG-Zesty Launcher SMG-Zesty is inspired by Fortnite\'s Zesty wrapper, which mirrors the look of the popular video game\'s wrapper. The launcher has a removable barrel and a detachable stock so you can customize it in different ways. Attach them, detach them.... It\'s up to you! Remove them when you\'re in close combat for a more compact launcher.','37.99','img/nerf1.jpg','1');
 INSERT INTO inventory VALUES('13','2100','2024-01-03','13','3');
@@ -261,7 +261,7 @@ INSERT INTO inventory VALUES('18','2050','2024-01-03','18','3');
 
 -- Playtime Co.
 INSERT INTO boss VALUES ('4','Elliot Ludwig','3ll1ot@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
-INSERT INTO factory VALUES ('4','Playtime Co.','101 Maple St','Los Angeles','California','USA');
+INSERT INTO factory VALUES ('4', 'Playtime Co.', '1000 Industrial Ave', 'Los Angeles', 'California', 'USA');
 INSERT INTO factory_boss VALUES ('4','4');
 INSERT INTO product VALUES('19','Bobby BearHug','A kind, caring soul, Bobby BearHug shows compassion for everyone, and for everything. People and places and things, large or small, are all receivers of her love. Each is enriched by this attention and affection, and in turn, so is she.','50.00','img/playtime1.jpg','1');
 INSERT INTO inventory VALUES('19','1000','2024-01-03','19','4');
@@ -282,16 +282,16 @@ INSERT INTO inventory VALUES('26','3000','2024-01-03','26','4');
 
 -- Insert employees for Mattel (Factory 1)
 INSERT INTO employee VALUES 
-('1', 'Alice Johnson', 'alice.mattel@email.com', '$2y$10$ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12', 'worker'),
-('2', 'Bob Smith', 'bob.mattel@email.com', '$2y$10$FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67', 'worker'),
-('3', 'Charlie Brown', 'charlie.mattel@email.com', '$2y$10$KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12', 'worker'),
-('4', 'David Wilson', 'david.mattel@email.com', '$2y$10$PQRST67890PQRST67890PQRST67890PQRST67890PQRST67890PQRST67', 'worker'),
-('5', 'Emma Davis', 'emma.mattel@email.com', '$2y$10$UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12', 'worker'),
-('6', 'Frank Miller', 'frank.mattel@email.com', '$2y$10$ABCDE67890ABCDE67890ABCDE67890ABCDE67890ABCDE67890ABCDE67', 'worker'),
-('7', 'Grace Lee', 'grace.mattel@email.com', '$2y$10$FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12', 'worker'),
-('8', 'Henry Adams', 'henry.mattel@email.com', '$2y$10$KLMNO67890KLMNO67890KLMNO67890KLMNO67890KLMNO67890KLMNO67', 'worker'),
-('9', 'Ivy White', 'ivy.mattel@email.com', '$2y$10$PQRST12345PQRST12345PQRST12345PQRST12345PQRST12345PQRST12', 'worker'),
-('10', 'Jack Harris', 'jack.mattel@email.com', '$2y$10$UVWXY67890UVWXY67890UVWXY67890UVWXY67890UVWXY67890UVWXY67', 'worker');
+('1', 'Alice Johnson', 'alice.mattel@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('2', 'Bob Smith', 'bob.mattel@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('3', 'Charlie Brown', 'charlie.mattel@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('4', 'David Wilson', 'david.mattel@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('5', 'Emma Davis', 'emma.mattel@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('6', 'Frank Miller', 'frank.mattel@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('7', 'Grace Lee', 'grace.mattel@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('8', 'Henry Adams', 'henry.mattel@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('9', 'Ivy White', 'ivy.mattel@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('10', 'Jack Harris', 'jack.mattel@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker');
 
 -- Assign employees to Mattel (Factory 1)
 INSERT INTO factory_employee VALUES 
@@ -300,11 +300,11 @@ INSERT INTO factory_employee VALUES
 
 -- Insert employees for Lego (Factory 2)
 INSERT INTO employee VALUES 
-('11', 'Ava Nelson', 'ava.lego@email.com', '$2y$10$ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12', 'worker'),
-('12', 'Ben Foster', 'ben.lego@email.com', '$2y$10$FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67', 'worker'),
-('13', 'Chloe Ramirez', 'chloe.lego@email.com', '$2y$10$KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12', 'worker'),
-('14', 'Daniel Reed', 'daniel.lego@email.com', '$2y$10$PQRST67890PQRST67890PQRST67890PQRST67890PQRST67890PQRST67', 'worker'),
-('15', 'Ella Perry', 'ella.lego@email.com', '$2y$10$UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12', 'worker');
+('11', 'Ava Nelson', 'ava.lego@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('12', 'Ben Foster', 'ben.lego@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('13', 'Chloe Ramirez', 'chloe.lego@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('14', 'Daniel Reed', 'daniel.lego@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('15', 'Ella Perry', 'ella.lego@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker');
 
 -- Assign employees to Lego (Factory 2)
 INSERT INTO factory_employee VALUES 
@@ -312,11 +312,11 @@ INSERT INTO factory_employee VALUES
 
 -- Insert employees for Nerf (Factory 3)
 INSERT INTO employee VALUES 
-('16', 'Aaron Phillips', 'aaron.nerf@email.com', '$2y$10$ABCDE67890ABCDE67890ABCDE67890ABCDE67890ABCDE67890ABCDE67', 'worker'),
-('17', 'Bella Scott', 'bella.nerf@email.com', '$2y$10$FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12345FGHIJ12', 'worker'),
-('18', 'Carter Adams', 'carter.nerf@email.com', '$2y$10$KLMNO67890KLMNO67890KLMNO67890KLMNO67890KLMNO67890KLMNO67', 'worker'),
-('19', 'Diana Clark', 'diana.nerf@email.com', '$2y$10$PQRST12345PQRST12345PQRST12345PQRST12345PQRST12345PQRST12', 'worker'),
-('20', 'Ethan Rodriguez', 'ethan.nerf@email.com', '$2y$10$UVWXY67890UVWXY67890UVWXY67890UVWXY67890UVWXY67890UVWXY67', 'worker');
+('16', 'Aaron Phillips', 'aaron.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('17', 'Bella Scott', 'bella.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('18', 'Carter Adams', 'carter.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('19', 'Diana Clark', 'diana.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('20', 'Ethan Rodriguez', 'ethan.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker');
 
 -- Assign employees to Nerf (Factory 3)
 INSERT INTO factory_employee VALUES 
@@ -324,11 +324,11 @@ INSERT INTO factory_employee VALUES
 
 -- Insert employees for Playtime Co. (Factory 4)
 INSERT INTO employee VALUES 
-('21', 'Alex Carter', 'alex.playtime@email.com', '$2y$10$ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12345ABCDE12', 'worker'),
-('22', 'Brooke Adams', 'brooke.playtime@email.com', '$2y$10$FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67890FGHIJ67', 'worker'),
-('23', 'Charlie Lopez', 'charlie.playtime@email.com', '$2y$10$KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12345KLMNO12', 'worker'),
-('24', 'Daisy Young', 'daisy.playtime@email.com', '$2y$10$PQRST67890PQRST67890PQRST67890PQRST67890PQRST67890PQRST67', 'worker'),
-('25', 'Elliot Brooks', 'elliot.playtime@email.com', '$2y$10$UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12345UVWXY12', 'worker');
+('21', 'Alex Carter', 'alex.playtime@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('22', 'Brooke Adams', 'brooke.playtime@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('23', 'Charlie Lopez', 'charlie.playtime@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('24', 'Daisy Young', 'daisy.playtime@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('25', 'Elliot Brooks', 'elliot.playtime@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker');
 
 -- Assign employees to Playtime Co. (Factory 4)
 INSERT INTO factory_employee VALUES 
