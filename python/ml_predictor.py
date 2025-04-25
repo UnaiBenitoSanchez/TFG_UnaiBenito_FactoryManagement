@@ -2,6 +2,7 @@ import mysql.connector
 import json
 import numpy as np
 from sklearn.linear_model import LinearRegression
+import sys
 
 def get_boss_factory(boss_id):
     try:
@@ -127,6 +128,16 @@ def predict_demands(boss_id):
     return {"predictions": predictions}
 
 if __name__ == "__main__":
-    boss_id = 1 
+
+    if len(sys.argv) < 2:
+        print(json.dumps({"error": "No boss_id provided"}))
+        exit()
+
+    try:
+        boss_id = int(sys.argv[1])
+    except ValueError:
+        print(json.dumps({"error": "Invalid boss_id"}))
+        exit()
+
     result = predict_demands(boss_id)
     print(json.dumps(result))

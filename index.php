@@ -16,7 +16,7 @@ include 'db_connect.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
 
     <!-- js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
@@ -26,6 +26,18 @@ include 'db_connect.php';
     <!-- title -->
     <title>Inventory management dashboard - Login/Register</title>
 
+    <style>
+        .error-message {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        input.invalid {
+            border-color: #ff6b6b !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,10 +47,14 @@ include 'db_connect.php';
         <!-- Signup Section -->
         <div class="signup-section">
             <header style="margin-bottom: -70px">Signup</header>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" style="margin-top: 90px;">
+            <form id="signupForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" style="margin-top: 90px;">
                 <input type="text" name="fullname" id="fullname" placeholder="Full name" required>
+
                 <input type="email" name="email" id="email" placeholder="Email address" required>
+                <div id="emailError" class="error-message">Please enter a valid email address (example: x@x.xx)</div>
+
                 <input type="password" name="password" id="password" placeholder="Password" required>
+                <div id="passwordError" class="error-message">Password must be at least 8 characters long and contain at least 1 letter, 1 number, and 1 special character</div>
 
                 <label for="factory" style="color: white;">Select your factory:</label>
                 <select name="factory" id="factory" required>
@@ -59,73 +75,78 @@ include 'db_connect.php';
             <?php
             // Signup Logic
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["signup"])) {
+                $fullname = $_POST['fullname'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $factoryId = $_POST['factory'];
 
-                if (empty($_POST['fullname']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['factory'])) {
-                    echo "<div class='alert alert-danger text-center mt-3' role='alert'>Please fill in all fields, including the factory.<div>";
-                } else {
-                    $fullname = $_POST['fullname'];
-                    $email = $_POST['email'];
-                    $password = $_POST['password'];
-                    $factoryId = $_POST['factory'];
+                $valid = true;
 
-                    // Encrypt the password
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $email)) {
+                    echo "<script>document.getElementById('email').classList.add('invalid'); document.getElementById('emailError').style.display = 'block';</script>";
+                    $valid = false;
+                }
+
+                if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/', $password)) {
+                    echo "<script>document.getElementById('password').classList.add('invalid'); document.getElementById('passwordError').style.display = 'block';</script>";
+                    $valid = false;
+                }
+
+                if (empty($fullname) || empty($factoryId)) {
+                    $valid = false;
+                }
+
+                if ($valid) {
                     $encryptedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-                    if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/', $password)) {
-                        echo "<div class='alert alert-danger text-center mt-3' role='alert'>Password must contain at least one letter, one number, and be at least 8 characters long.</div>";
-                    } else {
-                        try {
-                            $stmt = $conn->prepare("SELECT id_boss_factory FROM boss WHERE email = :email");
+                    try {
+                        $stmt = $conn->prepare("SELECT id_boss_factory FROM boss WHERE email = :email");
+                        $stmt->bindParam(':email', $email);
+                        $stmt->execute();
+                        $existingBoss = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                        if ($existingBoss) {
+                            echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: This email is already registered as a factory boss.</div>";
+                        } else {
+                            $stmt = $conn->prepare("INSERT INTO boss (name, email, password) VALUES (:fullname, :email, :password)");
+                            $stmt->bindParam(':fullname', $fullname);
                             $stmt->bindParam(':email', $email);
+                            $stmt->bindParam(':password', $encryptedPassword);
                             $stmt->execute();
-                            $existingBoss = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                            if ($existingBoss) {
-                                echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: This email is already registered as a factory boss.</div>";
-                            } else {
-                                $stmt = $conn->prepare("INSERT INTO boss (name, email, password) VALUES (:fullname, :email, :password)");
-                                $stmt->bindParam(':fullname', $fullname);
-                                $stmt->bindParam(':email', $email);
-                                $stmt->bindParam(':password', $encryptedPassword);
-                                $stmt->execute();
+                            $bossId = $conn->lastInsertId();
 
-                                $bossId = $conn->lastInsertId();
-
-                                if (!$bossId) {
-                                    echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: Couldn't register the boss.</div>";
-                                    exit();
-                                }
-
-                                $stmt = $conn->prepare("INSERT INTO factory_boss (factory_id_factory, boss_id_boss_factory) VALUES (:factoryId, :bossId)");
-                                $stmt->bindParam(':factoryId', $factoryId);
-                                $stmt->bindParam(':bossId', $bossId);
-                                $stmt->execute();
-
-                                // Create JavaScript file with template code
-                                $canvasId = "c_$bossId"; // Dynamic canvas ID
-                                $newJsFileName = "./js/boss$bossId.js";
-                                $template = file_get_contents("./js/template.js"); // Contains the JavaScript template code
-
-                                // Replace the canvas ID in the template
-                                $scriptContent = str_replace("c_1", $canvasId, $template);
-
-                                // Save the updated content in the JavaScript file
-                                file_put_contents($newJsFileName, $scriptContent);
-
-                                echo "<div class='alert alert-success text-center mt-3' role='alert'>Boss registered succesfully, redirecting...</div>";
-                                session_start();
-                                $_SESSION['user_email'] = $email;
-                                echo '<script>
-                                          setTimeout(function() {
-                                              window.location.href = "./php/landing_page.php";
-                                          }, 3000);
-                                      </script>';
+                            if (!$bossId) {
+                                echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: Couldn't register the boss.</div>";
                                 exit();
                             }
-                        } catch (PDOException $e) {
-                            echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: " . $e->getMessage() . "</div>";
+
+                            $stmt = $conn->prepare("INSERT INTO factory_boss (factory_id_factory, boss_id_boss_factory) VALUES (:factoryId, :bossId)");
+                            $stmt->bindParam(':factoryId', $factoryId);
+                            $stmt->bindParam(':bossId', $bossId);
+                            $stmt->execute();
+
+                            $canvasId = "c_$bossId";
+                            $newJsFileName = "./js/boss$bossId.js";
+                            $template = file_get_contents("./js/template.js");
+                            $scriptContent = str_replace("c_1", $canvasId, $template);
+                            file_put_contents($newJsFileName, $scriptContent);
+
+                            echo "<div class='alert alert-success text-center mt-3' role='alert'>Boss registered succesfully, redirecting...</div>";
+                            session_start();
+                            $_SESSION['user_email'] = $email;
+                            echo '<script>
+                                      setTimeout(function() {
+                                          window.location.href = "./php/landing_page.php";
+                                      }, 3000);
+                                  </script>';
+                            exit();
                         }
+                    } catch (PDOException $e) {
+                        echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: " . $e->getMessage() . "</div>";
                     }
+                } else {
+                    echo "<div class='alert alert-danger text-center mt-3' role='alert'>Please correct the errors in the form.</div>";
                 }
             }
             ?>
@@ -134,9 +155,21 @@ include 'db_connect.php';
         <!-- Login Section -->
         <div class="login-section" id="login-section">
             <header>Login</header>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" style="margin-top: 90px;">
-                <input type="email" name="email" placeholder="Email address" required>
-                <input type="password" name="password" placeholder="Password" required>
+            <form id="loginForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" style="margin-top: 90px;">
+                <input type="email" name="email" id="loginEmail" placeholder="Email address" required>
+                <div id="loginEmailError" class="error-message">Please enter a valid email address (example: x@x.xx)</div>
+
+                <input type="password" name="password" id="loginPassword" placeholder="Password" required>
+
+                <!-- 🔽 NUEVO SELECT PARA ROL -->
+                <label for="role" style="color: white; margin-top: 10px;">Login as:</label>
+                <select name="role" id="role" class="form-select" required>
+                    <option value="boss">Boss</option>
+                    <option value="employee">Employee</option>
+                </select>
+
+                <div id="loginError" class="error-message" style="display: <?php echo isset($loginError) && $loginError ? 'block' : 'none'; ?>">Invalid email or password</div>
+
                 <div class="separator">
                     <div class="line"></div>
                 </div>
@@ -147,39 +180,50 @@ include 'db_connect.php';
             // Login Logic
             $loginError = false;
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $role = $_POST['role'];
 
-                if (empty($_POST['email']) || empty($_POST['password'])) {
-                    echo "<div class='alert alert-danger text-center mt-3' role='alert'>Please fill in all fields.<div>";
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    echo "<script>document.getElementById('loginEmail').classList.add('invalid'); document.getElementById('loginEmailError').style.display = 'block';</script>";
                     $loginError = true;
                 } else {
-                    $email = $_POST['email'];
-                    $password = $_POST['password'];
-
                     try {
-                        $stmt = $conn->prepare("SELECT * FROM boss WHERE email = :email");
+                        if ($role === 'boss') {
+                            $stmt = $conn->prepare("SELECT * FROM boss WHERE email = :email");
+                        } else {
+                            $stmt = $conn->prepare("SELECT * FROM employee WHERE email = :email");
+                        }
+
                         $stmt->bindParam(':email', $email);
                         $stmt->execute();
                         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                        if ($user) {
-                            // Verify if the password is correct
-                            if (password_verify($password, $user['password'])) {
-                                session_start();
-                                $_SESSION['user_email'] = $email;
+                        if ($user && password_verify($password, $user['password'])) {
+                            session_start();
+                            $_SESSION['user_email'] = $email;
+                            $_SESSION['user_role'] = $role;
+
+                            if ($role === 'boss') {
                                 echo '<script>window.location.href = "./php/landing_page.php";</script>';
-                                exit();
                             } else {
-                                echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: Incorrect password</div>";
-                                $loginError = true;
+                                echo '<script>window.location.href = "./php/employee_dashboard.php";</script>';
                             }
+
+                            exit();
                         } else {
-                            echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: User not found</div>";
                             $loginError = true;
                         }
                     } catch (PDOException $e) {
-                        echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: " . $e->getMessage() . "</div>";
                         $loginError = true;
                     }
+                }
+
+                if ($loginError) {
+                    echo "<script>
+                            document.getElementById('loginError').style.display = 'block';
+                            document.getElementById('loginPassword').classList.add('invalid');
+                          </script>";
                 }
             }
             ?>
@@ -188,6 +232,82 @@ include 'db_connect.php';
     </div>
 
     <script src="js/index.js"></script>
+    <script>
+        function validateEmail(email) {
+            const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        document.getElementById('email').addEventListener('input', function() {
+            const email = this.value;
+            const emailError = document.getElementById('emailError');
+
+            if (!validateEmail(email)) {
+                this.classList.add('invalid');
+                emailError.style.display = 'block';
+            } else {
+                this.classList.remove('invalid');
+                emailError.style.display = 'none';
+            }
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const passwordError = document.getElementById('passwordError');
+
+            if (!/(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/.test(password)) {
+                this.classList.add('invalid');
+                passwordError.style.display = 'block';
+            } else {
+                this.classList.remove('invalid');
+                passwordError.style.display = 'none';
+            }
+        });
+
+        document.getElementById('loginEmail').addEventListener('input', function() {
+            const email = this.value;
+            const emailError = document.getElementById('loginEmailError');
+
+            if (!validateEmail(email)) {
+                this.classList.add('invalid');
+                emailError.style.display = 'block';
+            } else {
+                this.classList.remove('invalid');
+                emailError.style.display = 'none';
+            }
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            let valid = true;
+
+            const email = document.getElementById('email').value;
+            if (!validateEmail(email)) {
+                document.getElementById('email').classList.add('invalid');
+                document.getElementById('emailError').style.display = 'block';
+                valid = false;
+            }
+
+            const password = document.getElementById('password').value;
+            if (!/(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/.test(password)) {
+                document.getElementById('password').classList.add('invalid');
+                document.getElementById('passwordError').style.display = 'block';
+                valid = false;
+            }
+
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            const email = document.getElementById('loginEmail').value;
+            if (!validateEmail(email)) {
+                document.getElementById('loginEmail').classList.add('invalid');
+                document.getElementById('loginEmailError').style.display = 'block';
+                e.preventDefault();
+            }
+        });
+    </script>
 
 </body>
 

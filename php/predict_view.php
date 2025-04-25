@@ -1,5 +1,24 @@
 <?php
-$output = shell_exec("python3 ../python/ml_predictor.py");
+session_start();
+$userEmail = $_SESSION['user_email'];
+
+include '../db_connect.php';
+
+$stmt = $conn->prepare("SELECT boss_id_boss_factory FROM factory_boss 
+    WHERE factory_id_factory IN (
+        SELECT id_factory FROM factory 
+        INNER JOIN factory_boss ON factory.id_factory = factory_boss.factory_id_factory
+        INNER JOIN boss ON factory_boss.boss_id_boss_factory = boss.id_boss_factory
+        WHERE boss.email = :userEmail
+    )");
+$stmt->bindParam(':userEmail', $userEmail);
+$stmt->execute();
+$bossId = $stmt->fetchColumn();
+
+$escapedBossId = escapeshellarg($bossId);
+
+$output = shell_exec("python ../python/ml_predictor.py $escapedBossId");
+
 $data = json_decode($output, true);
 ?>
 
@@ -26,15 +45,19 @@ $data = json_decode($output, true);
             0% {
                 background-position: 0% 50%;
             }
+
             25% {
                 background-position: 100% 50%;
             }
+
             50% {
                 background-position: 0% 100%;
             }
+
             75% {
                 background-position: 100% 100%;
             }
+
             100% {
                 background-position: 0% 50%;
             }
@@ -45,6 +68,7 @@ $data = json_decode($output, true);
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -146,9 +170,9 @@ $data = json_decode($output, true);
         }
 
         .prediction-card h1 {
-            font-size: 20px; 
+            font-size: 20px;
             font-weight: 600;
-            color: #F0F8FF; 
+            color: #F0F8FF;
             margin-bottom: 10px;
         }
 
@@ -159,6 +183,7 @@ $data = json_decode($output, true);
         }
 
         @media (max-width: 768px) {
+
             .card,
             .prediction-card {
                 width: 90%;
@@ -190,4 +215,5 @@ $data = json_decode($output, true);
         </div>
     </div>
 </body>
-</html> 
+
+</html>
