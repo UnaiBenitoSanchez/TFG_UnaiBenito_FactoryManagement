@@ -56,6 +56,12 @@ include 'db_connect.php';
                 <input type="password" name="password" id="password" placeholder="Password" required>
                 <div id="passwordError" class="error-message">Password must be at least 8 characters long and contain at least 1 letter, 1 number, and 1 special character</div>
 
+                <label for="role" style="color: white;">Register as:</label> <!-- NUEVO -->
+                <select name="role" id="role" required> <!-- NUEVO -->
+                    <option value="boss">Boss</option> <!-- NUEVO -->
+                    <option value="employee">Employee</option> <!-- NUEVO -->
+                </select> <!-- NUEVO -->
+
                 <label for="factory" style="color: white;">Select your factory:</label>
                 <select name="factory" id="factory" required>
                     <?php
@@ -79,6 +85,7 @@ include 'db_connect.php';
                 $email = $_POST['email'];
                 $password = $_POST['password'];
                 $factoryId = $_POST['factory'];
+                $role = $_POST['role']; // <-- NUEVO
 
                 $valid = true;
 
@@ -100,46 +107,86 @@ include 'db_connect.php';
                     $encryptedPassword = password_hash($password, PASSWORD_BCRYPT);
 
                     try {
-                        $stmt = $conn->prepare("SELECT id_boss_factory FROM boss WHERE email = :email");
+                        if ($role === "boss") {
+                            $stmt = $conn->prepare("SELECT id_boss_factory FROM boss WHERE email = :email");
+                        } else {
+                            $stmt = $conn->prepare("SELECT id_employee FROM employee WHERE email = :email");
+                        }
+
                         $stmt->bindParam(':email', $email);
                         $stmt->execute();
-                        $existingBoss = $stmt->fetch(PDO::FETCH_ASSOC);
+                        $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                        if ($existingBoss) {
-                            echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: This email is already registered as a factory boss.</div>";
+                        if ($existingUser) {
+                            echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: This email is already registered as a $role.</div>";
                         } else {
-                            $stmt = $conn->prepare("INSERT INTO boss (name, email, password) VALUES (:fullname, :email, :password)");
-                            $stmt->bindParam(':fullname', $fullname);
-                            $stmt->bindParam(':email', $email);
-                            $stmt->bindParam(':password', $encryptedPassword);
-                            $stmt->execute();
+                            if ($role === "boss") {
+                                $stmt = $conn->prepare("INSERT INTO boss (name, email, password) VALUES (:fullname, :email, :password)");
+                                $stmt->bindParam(':fullname', $fullname);
+                                $stmt->bindParam(':email', $email);
+                                $stmt->bindParam(':password', $encryptedPassword);
+                                $stmt->execute();
 
-                            $bossId = $conn->lastInsertId();
+                                $bossId = $conn->lastInsertId();
 
-                            if (!$bossId) {
-                                echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: Couldn't register the boss.</div>";
-                                exit();
+                                if (!$bossId) {
+                                    echo "<div class='alert alert-danger text-center mt-3' role='alert'>Error: Couldn't register the boss.</div>";
+                                    exit();
+                                }
+
+                                $stmt = $conn->prepare("INSERT INTO factory_boss (factory_id_factory, boss_id_boss_factory) VALUES (:factoryId, :bossId)");
+                                $stmt->bindParam(':factoryId', $factoryId);
+                                $stmt->bindParam(':bossId', $bossId);
+                                $stmt->execute();
+
+                                $canvasId = "c_$bossId";
+                                $newJsFileName = "./js/boss$bossId.js";
+                                $template = file_get_contents("./js/template.js");
+                                $scriptContent = str_replace("c_1", $canvasId, $template);
+                                file_put_contents($newJsFileName, $scriptContent);
+
+                                echo "<div class='alert alert-success text-center mt-3' role='alert'>Boss registered successfully, redirecting...</div>";
+                                session_start();
+                                $_SESSION['user_email'] = $email;
+                                $_SESSION['user_role'] = $role;
+                                echo '<script>
+                            setTimeout(function() {
+                                window.location.href = "./php/landing_page.php";
+                            }, 3000);
+                          </script>';
+                            } else {
+                                $roleE = "worker";
+                                $stmt = $conn->prepare("INSERT INTO employee (name, email, password, role) 
+                                            VALUES (:fullname, :email, :password, :role)");
+                                $stmt->bindParam(':fullname', $fullname);
+                                $stmt->bindParam(':email', $email);
+                                $stmt->bindParam(':password', $encryptedPassword);
+                                $stmt->bindParam(':role', $roleE);
+                                $stmt->execute();
+
+                                $employeeId = $conn->lastInsertId();
+
+                                $stmt = $conn->prepare("
+                                INSERT INTO GestionDeFabricas.factory_employee (factory_id_factory, employee_id_employee)
+                                VALUES (:factoryId, :employeeId)
+                            ");
+
+                                $stmt->bindParam(':factoryId', $factoryId);
+                                $stmt->bindParam(':employeeId', $employeeId);
+
+                                $stmt->execute();
+
+                                echo "<div class='alert alert-success text-center mt-3' role='alert'>Employee registered successfully, redirecting...</div>";
+                                session_start();
+                                $_SESSION['user_email'] = $email;
+                                $_SESSION['user_role'] = $role;
+                                echo '<script>
+                            setTimeout(function() {
+                                window.location.href = "./php/employee_dashboard.php";
+                            }, 3000);
+                          </script>';
                             }
 
-                            $stmt = $conn->prepare("INSERT INTO factory_boss (factory_id_factory, boss_id_boss_factory) VALUES (:factoryId, :bossId)");
-                            $stmt->bindParam(':factoryId', $factoryId);
-                            $stmt->bindParam(':bossId', $bossId);
-                            $stmt->execute();
-
-                            $canvasId = "c_$bossId";
-                            $newJsFileName = "./js/boss$bossId.js";
-                            $template = file_get_contents("./js/template.js");
-                            $scriptContent = str_replace("c_1", $canvasId, $template);
-                            file_put_contents($newJsFileName, $scriptContent);
-
-                            echo "<div class='alert alert-success text-center mt-3' role='alert'>Boss registered succesfully, redirecting...</div>";
-                            session_start();
-                            $_SESSION['user_email'] = $email;
-                            echo '<script>
-                                      setTimeout(function() {
-                                          window.location.href = "./php/landing_page.php";
-                                      }, 3000);
-                                  </script>';
                             exit();
                         }
                     } catch (PDOException $e) {
@@ -150,6 +197,7 @@ include 'db_connect.php';
                 }
             }
             ?>
+
         </div>
 
         <!-- Login Section -->
