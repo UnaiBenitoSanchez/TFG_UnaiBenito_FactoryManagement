@@ -56,11 +56,11 @@ include 'db_connect.php';
                 <input type="password" name="password" id="password" placeholder="Password" required>
                 <div id="passwordError" class="error-message">Password must be at least 8 characters long and contain at least 1 letter, 1 number, and 1 special character</div>
 
-                <label for="role" style="color: white;">Register as:</label> <!-- NUEVO -->
-                <select name="role" id="role" required> <!-- NUEVO -->
-                    <option value="boss">Boss</option> <!-- NUEVO -->
-                    <option value="employee">Employee</option> <!-- NUEVO -->
-                </select> <!-- NUEVO -->
+                <label for="role" style="color: white;">Register as:</label> 
+                <select name="role" id="role" required> 
+                    <option value="boss">Boss</option> 
+                    <option value="employee">Employee</option> 
+                </select> 
 
                 <label for="factory" style="color: white;">Select your factory:</label>
                 <select name="factory" id="factory" required>
@@ -85,7 +85,7 @@ include 'db_connect.php';
                 $email = $_POST['email'];
                 $password = $_POST['password'];
                 $factoryId = $_POST['factory'];
-                $role = $_POST['role']; // <-- NUEVO
+                $role = $_POST['role']; 
 
                 $valid = true;
 
