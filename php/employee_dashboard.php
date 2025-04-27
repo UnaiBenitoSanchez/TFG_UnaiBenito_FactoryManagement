@@ -1,6 +1,11 @@
 <?php
 include '../db_connect.php';
 session_start();
+
+if (!isset($_SESSION['user_email'])) {
+    die("Error: No se ha encontrado el correo del usuario. Por favor, inicia sesión.");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -133,7 +138,7 @@ session_start();
             $('a').on('click', function(event) {
                 let link = $(this).attr('href');
 
-                if (link.includes('employee_dashboard.php') || link.includes('../logout.php')) {
+                if (link.includes('employee_dashboard.php') || link.includes('../logout.php') || link.includes('chatEmployee.php')) {
                     return;
                 }
 
@@ -164,6 +169,9 @@ session_start();
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="factory.php">Your factory</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="chatEmployee.php">Chat</a>
             </li>
             <li class="nav-item" style="margin-top: 8px;">
                 <a class="nav-logout-inline" href="../logout.php">Logout</a>
@@ -220,7 +228,6 @@ session_start();
             </form>
         </div>
     </footer>
-
 
     <?php
 

@@ -40,10 +40,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="factory.php">Your factory</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="chat.php">Chat</a>
+            </li>
             <li class="nav-item" style="margin-top: 8px;">
                 <a class="nav-logout-inline" href="../logout.php">Logout</a>
             </li>
-
         </ul>
     </nav>
 

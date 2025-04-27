@@ -3,6 +3,27 @@
     "@splinetool/react-spline": "^2.2.6",
     "@splinetool/runtime": "^1.0.8",
     "bootstrap": "^5.3.2",
+    "express": "^5.1.0",
+    "php-express": "^0.0.3",
     "python": "^0.0.4"
-  }
+  },
+  "name": "gestion_fabricas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UnaiBenitoSanchez/gestion_fabricas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/UnaiBenitoSanchez/gestion_fabricas/issues"
+  },
+  "homepage": "https://github.com/UnaiBenitoSanchez/gestion_fabricas#readme"
 }
