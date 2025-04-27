@@ -255,6 +255,10 @@ session_start();
                             $_SESSION['user_email'] = $email;
                             $_SESSION['user_role'] = $role;
 
+                            if ($role === 'employee') {
+                                $_SESSION['employee_user'] = $user['name'];  // Asumimos que 'name' es el campo del nombre en la tabla employee
+                            }
+
                             if ($role === 'boss') {
                                 echo '<script>window.location.href = "./php/landing_page.php";</script>';
                             } else {

@@ -1,6 +1,6 @@
 <?php
 include '../db_connect.php';
-session_start();
+session_start();  
 ?>
 
 <!DOCTYPE html>
@@ -257,6 +257,7 @@ session_start();
 
     <script>
         let username = "<?php echo $_SESSION['user_email']; ?>";
+        let nameuser = "<?php echo $_SESSION['employee_user']; ?>";
 
         let socket = new WebSocket('ws://localhost:8080');
         socket.binaryType = "text";
@@ -303,7 +304,7 @@ session_start();
                 let msg = messageInput.value.trim();
 
                 let messageData = {
-                    user: username,
+                    user: nameuser,
                     text: msg
                 };
 
@@ -315,7 +316,7 @@ session_start();
 
                 let senderName = document.createElement('div');
                 senderName.classList.add('sender-name');
-                senderName.textContent = username;
+                senderName.textContent = nameuser;
 
                 let myMessage = document.createElement('div');
                 myMessage.classList.add('message', 'my-message');
