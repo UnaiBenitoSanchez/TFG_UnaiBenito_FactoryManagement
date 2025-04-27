@@ -212,7 +212,6 @@ session_start();
 
                 <input type="password" name="password" id="loginPassword" placeholder="Password" required>
 
-                <!-- 🔽 NUEVO SELECT PARA ROL -->
                 <label for="role" style="color: white; margin-top: 10px;">Login as:</label>
                 <select name="role" id="role" class="form-select" required>
                     <option value="boss">Boss</option>
@@ -256,7 +255,7 @@ session_start();
                             $_SESSION['user_role'] = $role;
 
                             if ($role === 'employee') {
-                                $_SESSION['employee_user'] = $user['name'];  // Asumimos que 'name' es el campo del nombre en la tabla employee
+                                $_SESSION['employee_user'] = $user['name']; 
                             }
 
                             if ($role === 'boss') {
