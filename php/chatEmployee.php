@@ -223,7 +223,7 @@ session_start();
 
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" style="height: 46px;">
         <a class="navbar-brand" href="landing_page.php">TFG_UnaiBenitoSánchez</a>
         <button class="navbar-toggler" onclick="toggleNavbar()">☰</button>
         <ul class="navbar-nav" id="navbarNav">
@@ -242,7 +242,7 @@ session_start();
             <li class="nav-item">
                 <a class="nav-link" href="chatEmployee.php">Chat</a>
             </li>
-            <li class="nav-item" style="margin-top: 8px;">
+            <li class="nav-item">
                 <a class="nav-logout-inline" href="../logout.php">Logout</a>
             </li>
         </ul>

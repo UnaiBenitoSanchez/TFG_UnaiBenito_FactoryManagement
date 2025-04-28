@@ -223,12 +223,12 @@ session_start();
 
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" style="height: 46px;">
         <a class="navbar-brand" href="landing_page.php">TFG_UnaiBenitoSánchez</a>
         <button class="navbar-toggler" onclick="toggleNavbar()">☰</button>
         <ul class="navbar-nav" id="navbarNav">
             <li class="nav-item">
-                <a class="nav-link" href="employee_dashboard.php">Products from your factory</a>
+                <a class="nav-link" href="dashboard.php">Products from your factory</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="graphics.php">Production graphics</a>
@@ -240,9 +240,9 @@ session_start();
                 <a class="nav-link" href="factory.php">Your factory</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="chatEmployee.php">Chat</a>
+                <a class="nav-link" href="chat.php">Chat</a>
             </li>
-            <li class="nav-item" style="margin-top: 8px;">
+            <li class="nav-item">
                 <a class="nav-logout-inline" href="../logout.php">Logout</a>
             </li>
         </ul>
