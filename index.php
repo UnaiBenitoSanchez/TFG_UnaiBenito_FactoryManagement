@@ -3,8 +3,6 @@ include 'db_connect.php';
 session_start();
 ?>
 
-<!-- Run node server.js too -->
-
 <!DOCTYPE html>
 <html lang="en">
 
