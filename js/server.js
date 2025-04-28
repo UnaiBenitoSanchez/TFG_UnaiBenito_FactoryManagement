@@ -1,11 +1,11 @@
-const WebSocket = require('ws'); 
-const wss = new WebSocket.Server({ port: 8080 }); 
+let WebSocket = require('ws'); 
+let wss = new WebSocket.Server({ port: 8080 }); 
 
 wss.on('connection', (ws) => {
     console.log('A new client connected');
 
     ws.on('message', (message) => {
-        const messageData = JSON.parse(message);  
+        let messageData = JSON.parse(message);  
 
         console.log('Message: ', messageData);
 
