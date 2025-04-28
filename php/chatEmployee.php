@@ -1,6 +1,6 @@
 <?php
 include '../db_connect.php';
-session_start();  
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -9,9 +9,13 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factory Chat</title>
+    <title>Factory Chat - Employee</title>
     <!-- Navbar -->
     <link rel="stylesheet" href="../css/navbar.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <!-- Style -->
     <style>
@@ -255,88 +259,179 @@ session_start();
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
     <script>
+        // Configuration of Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAJYqhxwF5kIqLRtdAAYFCwc7EUBGl23fw",
+            authDomain: "gestionfabricas.firebaseapp.com",
+            databaseURL: "https://gestionfabricas-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "gestionfabricas",
+            storageBucket: "gestionfabricas.appspot.com",
+            messagingSenderId: "498818502316",
+            appId: "1:498818502316:web:f0be8009c7ba25198fd909",
+            measurementId: "G-959F79765K"
+        };
+
+        // Initialization of Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const database = firebase.database();
+
+        // Variables
         let username = "<?php echo $_SESSION['user_email']; ?>";
-        let nameuser = "<?php echo $_SESSION['employee_user']; ?>";
-
-        let socket = new WebSocket('ws://localhost:8080');
-        socket.binaryType = "text";
-
+        let nameuser = "<?php echo $_SESSION['employee_user'] ?? $_SESSION['boss_user'] ?? 'Usuario'; ?>";
         let chatBox = document.getElementById('chat-box');
         let messageInput = document.getElementById('message-input');
         let sendButton = document.getElementById('send-button');
+        let messagesRef = database.ref('factory_chat/messages');
 
-        let sentMessages = new Set();
+        let displayedMessages = {};
 
-        socket.addEventListener('message', async function(event) {
-            let data;
-            if (event.data instanceof Blob) {
-                data = await event.data.text();
-            } else {
-                data = event.data;
-            }
+        console.log("Chat iniciado para:", nameuser);
 
-            let messageData = JSON.parse(data);
-            if (sentMessages.has(messageData.text)) {
-                sentMessages.delete(messageData.text);
-                return;
-            }
+        // Show messages
+        function displayMessage(user, text, timestamp, messageId) {
+            console.log("Mostrando mensaje:", {
+                user,
+                text,
+                timestamp,
+                messageId
+            });
+
+            let isCurrentUser = user === nameuser;
 
             let messageWrapper = document.createElement('div');
             messageWrapper.classList.add('message-wrapper');
+            if (isCurrentUser) {
+                messageWrapper.classList.add('my-message-wrapper');
+            }
 
             let senderName = document.createElement('div');
             senderName.classList.add('sender-name');
-            senderName.textContent = messageData.user;
+            senderName.textContent = user;
 
             let message = document.createElement('div');
-            message.classList.add('message', 'other-message');
-            message.textContent = messageData.text;
+            message.classList.add('message');
+            message.classList.add(isCurrentUser ? 'my-message' : 'other-message');
+            message.textContent = text;
+
+            let timeElement = document.createElement('div');
+            timeElement.style.fontSize = '10px';
+            timeElement.style.color = '#ccc';
+            timeElement.style.marginTop = '2px';
+            timeElement.style.textAlign = isCurrentUser ? 'right' : 'left';
+
+            if (timestamp) {
+                let date = new Date(timestamp);
+                timeElement.textContent = date.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
 
             messageWrapper.appendChild(senderName);
             messageWrapper.appendChild(message);
+            messageWrapper.appendChild(timeElement);
             chatBox.appendChild(messageWrapper);
+
             chatBox.scrollTop = chatBox.scrollHeight;
-        });
+        }
 
+        // Send messages
         function sendMessage() {
-            if (messageInput.value.trim() !== '') {
-                let msg = messageInput.value.trim();
+            let messageText = messageInput.value.trim();
+            if (messageText !== '') {
+                let timestamp = Date.now();
 
-                let messageData = {
+                console.log("Sending message:", messageText);
+
+                messagesRef.push({
                     user: nameuser,
-                    text: msg
-                };
-
-                socket.send(JSON.stringify(messageData));
-                sentMessages.add(msg);
-
-                let messageWrapper = document.createElement('div');
-                messageWrapper.classList.add('message-wrapper', 'my-message-wrapper');
-
-                let senderName = document.createElement('div');
-                senderName.classList.add('sender-name');
-                senderName.textContent = nameuser;
-
-                let myMessage = document.createElement('div');
-                myMessage.classList.add('message', 'my-message');
-                myMessage.textContent = msg;
-
-                messageWrapper.appendChild(senderName);
-                messageWrapper.appendChild(myMessage);
-                chatBox.appendChild(messageWrapper);
-
-                chatBox.scrollTop = chatBox.scrollHeight;
-                messageInput.value = '';
+                    text: messageText,
+                    timestamp: timestamp,
+                    email: username
+                }).then(() => {
+                    messageInput.value = '';
+                }).catch((error) => {
+                    console.error("Error sendiong message:", error);
+                    alert("Error sendiong message. More details in console.");
+                });
             }
         }
 
-        sendButton.addEventListener('click', sendMessage);
+        // Configure listeners of Firebase
+        function setupFirebaseListeners() {
+            messagesRef.off();
 
-        messageInput.addEventListener('keypress', function(event) {
+            // Load new messages
+            messagesRef.limitToLast(50).once('value')
+                .then((snapshot) => {
+                    chatBox.innerHTML = '';
+                    displayedMessages = {};
+
+                    snapshot.forEach((childSnapshot) => {
+                        let messageId = childSnapshot.key;
+                        let messageData = childSnapshot.val();
+
+                        if (!displayedMessages[messageId]) {
+                            displayMessage(
+                                messageData.user,
+                                messageData.text,
+                                messageData.timestamp,
+                                messageId
+                            );
+                            displayedMessages[messageId] = true;
+                        }
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error loading messages:", error);
+                });
+
+            // Listen new messages
+            messagesRef.limitToLast(100).on('child_added', (snapshot) => {
+                let messageId = snapshot.key;
+                let messageData = snapshot.val();
+
+                if (!displayedMessages[messageId]) {
+                    displayMessage(
+                        messageData.user,
+                        messageData.text,
+                        messageData.timestamp,
+                        messageId
+                    );
+                    displayedMessages[messageId] = true;
+                }
+            }, (error) => {
+                console.error("Error listening messages:", error);
+            });
+        }
+
+        // Event listeners
+        sendButton.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
                 sendMessage();
             }
+        });
+
+        // Initialize chat
+        setupFirebaseListeners();
+
+        // Verify connection
+        let connectedRef = database.ref(".info/connected");
+        connectedRef.on("value", (snapshot) => {
+            console.log(snapshot.val() ? "Connected to Firebase" : "Disconnected from Firebase");
+        });
+
+        window.addEventListener('beforeunload', () => {
+            messagesRef.off();
+            connectedRef.off();
         });
     </script>
 

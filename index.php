@@ -59,11 +59,11 @@ session_start();
                 <input type="password" name="password" id="password" placeholder="Password" required>
                 <div id="passwordError" class="error-message">Password must be at least 8 characters long and contain at least 1 letter, 1 number, and 1 special character</div>
 
-                <label for="role" style="color: white;">Register as:</label> 
-                <select name="role" id="role" required> 
-                    <option value="boss">Boss</option> 
-                    <option value="employee">Employee</option> 
-                </select> 
+                <label for="role" style="color: white;">Register as:</label>
+                <select name="role" id="role" required>
+                    <option value="boss">Boss</option>
+                    <option value="employee">Employee</option>
+                </select>
 
                 <label for="factory" style="color: white;">Select your factory:</label>
                 <select name="factory" id="factory" required>
@@ -88,7 +88,7 @@ session_start();
                 $email = $_POST['email'];
                 $password = $_POST['password'];
                 $factoryId = $_POST['factory'];
-                $role = $_POST['role']; 
+                $role = $_POST['role'];
 
                 $valid = true;
 
@@ -152,6 +152,9 @@ session_start();
                                 session_start();
                                 $_SESSION['user_email'] = $email;
                                 $_SESSION['user_role'] = $role;
+                                $_SESSION['boss_user'] = $fullname;
+                                $_SESSION['boss_id'] = $bossId;
+
                                 echo '<script>
                             setTimeout(function() {
                                 window.location.href = "./php/landing_page.php";
@@ -183,6 +186,9 @@ session_start();
                                 session_start();
                                 $_SESSION['user_email'] = $email;
                                 $_SESSION['user_role'] = $role;
+                                $_SESSION['employee_user'] = $fullname;
+                                $_SESSION['employee_id'] = $employeeId;
+
                                 echo '<script>
                             setTimeout(function() {
                                 window.location.href = "./php/employee_dashboard.php";
@@ -255,7 +261,9 @@ session_start();
                             $_SESSION['user_role'] = $role;
 
                             if ($role === 'employee') {
-                                $_SESSION['employee_user'] = $user['name']; 
+                                $_SESSION['employee_user'] = $user['name'];
+                            } else {
+                                $_SESSION['boss_user'] = $user['name'];
                             }
 
                             if ($role === 'boss') {
