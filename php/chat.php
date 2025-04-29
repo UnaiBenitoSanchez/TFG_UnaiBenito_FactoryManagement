@@ -42,6 +42,12 @@ session_start();
             margin: 0;
         }
 
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+        
         @keyframes gradientBG {
             0% {
                 background-position: 0% 50%;

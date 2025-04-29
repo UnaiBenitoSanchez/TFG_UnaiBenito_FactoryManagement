@@ -41,6 +41,13 @@ session_start();
             animation: gradientBG 15s ease infinite;
             font-family: 'Poppins', sans-serif;
             margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
         }
 
         @keyframes gradientBG {
