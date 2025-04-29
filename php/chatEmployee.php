@@ -12,6 +12,7 @@ session_start();
     <title>Factory Chat - Employee</title>
     <!-- Navbar -->
     <link rel="stylesheet" href="../css/navbar.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -185,6 +186,79 @@ session_start();
         #send-button:hover {
             background-color: #2081C3;
         }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: rgba(48, 63, 159, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 80%;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+
+        .close-btn {
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #63D2FF;
+            text-decoration: none;
+        }
+
+        .modal button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: rgb(238, 81, 60);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .modal button:hover {
+            background-color: rgb(163, 31, 26);
+            transform: translateY(-2px);
+        }
+
+        .modal h2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #BED8D4;
+            margin-bottom: 20px;
+            text-decoration: underline;
+        }
+
+        .modal p {
+            font-size: 16px;
+            color: #fff;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
     </style>
 
     <script>
@@ -247,6 +321,16 @@ session_start();
             </li>
         </ul>
     </nav>
+
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Access Denied</h2>
+            <p>As an employee, you can't access this section.</p>
+            <p>Only the bosses can access there.</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
 
     <div class="card">
         <h1>Factory Live Chat</h1>
@@ -334,10 +418,10 @@ session_start();
                 });
             }
 
-            messageWrapper.appendChild(senderName);
-            messageWrapper.appendChild(message);
-            messageWrapper.appendChild(timeElement);
-            chatBox.appendChild(messageWrapper);
+            messageWrapper.append(senderName);
+            messageWrapper.append(message);
+            messageWrapper.append(timeElement);
+            chatBox.append(messageWrapper);
 
             chatBox.scrollTop = chatBox.scrollHeight;
         }

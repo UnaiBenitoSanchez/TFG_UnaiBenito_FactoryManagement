@@ -334,10 +334,10 @@ session_start();
                 });
             }
 
-            messageWrapper.appendChild(senderName);
-            messageWrapper.appendChild(message);
-            messageWrapper.appendChild(timeElement);
-            chatBox.appendChild(messageWrapper);
+            messageWrapper.append(senderName);
+            messageWrapper.append(message);
+            messageWrapper.append(timeElement);
+            chatBox.append(messageWrapper);
 
             chatBox.scrollTop = chatBox.scrollHeight;
         }

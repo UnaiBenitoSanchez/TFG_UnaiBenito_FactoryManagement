@@ -17,6 +17,7 @@ if (!isset($_SESSION['user_email'])) {
     <title>Inventory Management Dashboard - Products</title>
 
     <?php include '../controller/head.php'; ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- JS -->
     <script src="../js/dashboardEmployee.js"></script>
@@ -189,7 +190,6 @@ if (!isset($_SESSION['user_email'])) {
             <button onclick="closeModal()">Close</button>
         </div>
     </div>
-
 
     <div class="container mt-4 mb-5 col-lg-10 z">
         <div class="row" id="products-container">
