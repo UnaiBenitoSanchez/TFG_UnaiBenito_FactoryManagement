@@ -1,9 +1,10 @@
 <?php
+ob_start();
 include '../db_connect.php';
 session_start();
 
 if (!isset($_SESSION['user_email'])) {
-    die("Error: No se ha encontrado el correo del usuario. Por favor, inicia sesión.");
+    die("Error: No email found for this user. Please, log in.");
 }
 
 ?>
@@ -17,7 +18,9 @@ if (!isset($_SESSION['user_email'])) {
     <title>Inventory Management Dashboard - Products</title>
 
     <?php include '../controller/head.php'; ?>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- JS -->
     <script src="../js/dashboardEmployee.js"></script>
@@ -181,6 +184,97 @@ if (!isset($_SESSION['user_email'])) {
         </ul>
     </nav>
 
+    <?php
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addProd"])) {
+        $productName = $_POST["product_name"];
+        $productDescription = $_POST["product_description"];
+        $productPrice = $_POST["product_price"];
+        $initialQuantity = $_POST["product_quantity"];
+
+        $bossEmail = $_SESSION['user_email'];
+
+        if (isset($_FILES["product_image"]) && $_FILES["product_image"]["error"] == 0) {
+            $nameFile = basename($_FILES["product_image"]["name"]);
+        }
+
+        $nameFile1 = "img/" . $nameFile;
+
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM product WHERE name = ?");
+        $stmt->execute([$productName]);
+        $productExists = $stmt->fetchColumn();
+
+        if ($productExists > 0) {
+            echo "<div class='alert alert-danger text-center'>Error: There is already a product with this name on the factory.</div>";
+        } else {
+            try {
+                $stmt = $conn->prepare("INSERT INTO product (name, description, price, image, category_id_category) VALUES (?, ?, ?, ?, 1)");
+                $stmt->execute([$productName, $productDescription, $productPrice, $nameFile1]);
+
+                $productId = $conn->lastInsertId();
+
+                $stmt = $conn->prepare("SELECT factory_id_factory FROM factory_employee WHERE employee_id_employee = (SELECT id_employee FROM employee WHERE email = :email)");
+                $stmt->bindParam(':email', $bossEmail);
+                $stmt->execute();
+                $factoryId = $stmt->fetchColumn();
+
+                $stmt = $conn->prepare("INSERT INTO inventory (available_quantity, update_date, product_id_product, factory_id_factory) VALUES (?, CURRENT_DATE, ?, ?)");
+                $stmt->execute([$initialQuantity, $productId, $factoryId]);
+
+                $stmt = $conn->prepare("INSERT INTO inventory_history (product_id_product, change_quantity, change_type) VALUES (?, ?, 'Add')");
+                $stmt->execute([$productId, $initialQuantity]);
+
+                $subtractEventSQL = "
+                CREATE EVENT IF NOT EXISTS subtract_quantity_event_$productName
+                ON SCHEDULE EVERY 1 HOUR
+                DO
+                BEGIN
+
+                  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'));
+                
+                  UPDATE GestionDeFabricas.inventory
+                  SET available_quantity = GREATEST(available_quantity - RAND()*(100-50)+50, 0)
+                  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName');
+                
+                  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+                  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName')), 'Subtract');
+                END;
+                ";
+                $stmt = $conn->prepare($subtractEventSQL);
+                $stmt->execute();
+
+                $addEventSQL = "
+                CREATE EVENT IF NOT EXISTS add_quantity_event_$productName
+                ON SCHEDULE EVERY 1 HOUR
+                DO
+                BEGIN
+           
+                  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'));
+                
+                  UPDATE GestionDeFabricas.inventory
+                  SET available_quantity = available_quantity + RAND()*(100-50)+50
+                  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName');
+                
+                  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+                  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName')), 'Add');
+                
+                  END;
+                ";
+
+                $stmt = $conn->prepare($addEventSQL);
+                $stmt->execute();
+                $conn = null;
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit();
+            } catch (PDOException $e) {
+                echo "Error inserting data: " . $e->getMessage();
+            }
+            exit();
+        }
+    }
+    $conn = null;
+    ?>
+
     <div id="errorModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -229,87 +323,6 @@ if (!isset($_SESSION['user_email'])) {
         </div>
     </footer>
 
-    <?php
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addProd"])) {
-        $productName = $_POST["product_name"];
-        $productDescription = $_POST["product_description"];
-        $productPrice = $_POST["product_price"];
-        $initialQuantity = $_POST["product_quantity"];
-
-        $bossEmail = $_SESSION['user_email'];
-
-        if (isset($_FILES["product_image"]) && $_FILES["product_image"]["error"] == 0) {
-            $nombreArchivo = basename($_FILES["product_image"]["name"]);
-        }
-
-        $nombreArchivo1 = "img/" . $nombreArchivo;
-
-        try {
-            $stmt = $conn->prepare("INSERT INTO product (name, description, price, image, category_id_category) VALUES (?, ?, ?, ?, 1)");
-            $stmt->execute([$productName, $productDescription, $productPrice, $nombreArchivo1]);
-
-            $productId = $conn->lastInsertId();
-
-            $stmt = $conn->prepare("SELECT factory_id_factory FROM factory_employee WHERE employee_id_employee = (SELECT id_employee FROM employee WHERE email = :email)");
-            $stmt->bindParam(':email', $bossEmail);
-            $stmt->execute();
-            $factoryId = $stmt->fetchColumn();
-
-            $stmt = $conn->prepare("INSERT INTO inventory (available_quantity, update_date, product_id_product, factory_id_factory) VALUES (?, CURRENT_DATE, ?, ?)");
-            $stmt->execute([$initialQuantity, $productId, $factoryId]);
-
-            $stmt = $conn->prepare("INSERT INTO inventory_history (product_id_product, change_quantity, change_type) VALUES (?, ?, 'Add')");
-            $stmt->execute([$productId, $initialQuantity]);
-
-            $subtractEventSQL = "
-                CREATE EVENT IF NOT EXISTS subtract_quantity_event_$productName
-                ON SCHEDULE EVERY 1 HOUR
-                DO
-                BEGIN
-
-                  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'));
-                
-                  UPDATE GestionDeFabricas.inventory
-                  SET available_quantity = GREATEST(available_quantity - RAND()*(100-50)+50, 0)
-                  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName');
-                
-                  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-                  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName')), 'Subtract');
-                END;
-                ";
-            $stmt = $conn->prepare($subtractEventSQL);
-            $stmt->execute();
-
-            $addEventSQL = "
-                CREATE EVENT IF NOT EXISTS add_quantity_event_$productName
-                ON SCHEDULE EVERY 1 HOUR
-                DO
-                BEGIN
-           
-                  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'));
-                
-                  UPDATE GestionDeFabricas.inventory
-                  SET available_quantity = available_quantity + RAND()*(100-50)+50
-                  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName');
-                
-                  INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-                  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName')), 'Add');
-                
-                  END;
-                ";
-
-            $stmt = $conn->prepare($addEventSQL);
-            $stmt->execute();
-            $conn = null;
-        } catch (PDOException $e) {
-            echo "Error inserting data: " . $e->getMessage();
-        }
-        exit();
-    }
-    $conn = null;
-    ?>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var addProductFooter = document.getElementById("addProductFooter");
@@ -326,5 +339,7 @@ if (!isset($_SESSION['user_email'])) {
     </script>
 
 </body>
+
+<?php ob_end_flush(); ?>
 
 </html>

@@ -154,10 +154,10 @@ session_start();
                                 $_SESSION['boss_id'] = $bossId;
 
                                 echo '<script>
-                            setTimeout(function() {
-                                window.location.href = "./php/landing_page.php";
-                            }, 3000);
-                          </script>';
+                                        setTimeout(function() {
+                                            window.location.href = "./php/landing_page.php";
+                                        }, 3000);
+                                    </script>';
                             } else {
                                 $roleE = "worker";
                                 $stmt = $conn->prepare("INSERT INTO employee (name, email, password, role) 
