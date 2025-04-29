@@ -251,7 +251,7 @@ if (!isset($_SESSION['user_email'])) {
 
             $productId = $conn->lastInsertId();
 
-            $stmt = $conn->prepare("SELECT factory_id_factory FROM factory_boss WHERE boss_id_boss_factory = (SELECT id_boss_factory FROM boss WHERE email = :email)");
+            $stmt = $conn->prepare("SELECT factory_id_factory FROM factory_employee WHERE employee_id_employee = (SELECT id_employee FROM employee WHERE email = :email)");
             $stmt->bindParam(':email', $bossEmail);
             $stmt->execute();
             $factoryId = $stmt->fetchColumn();
