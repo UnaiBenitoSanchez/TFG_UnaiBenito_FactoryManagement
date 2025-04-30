@@ -38,8 +38,14 @@ session_start();
         input.invalid {
             border-color: #ff6b6b !important;
         }
+
+        .signup-section {
+            max-height: 515px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
     </style>
-    
+
 </head>
 
 <body>
@@ -48,38 +54,6 @@ session_start();
 
         <!-- Signup Section -->
         <div class="signup-section">
-            <header style="margin-bottom: -70px">Signup</header>
-            <form id="signupForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" style="margin-top: 90px;">
-                <input type="text" name="fullname" id="fullname" placeholder="Full name" required>
-
-                <input type="email" name="email" id="email" placeholder="Email address" required>
-                <div id="emailError" class="error-message">Please enter a valid email address (example: x@x.xx)</div>
-
-                <input type="password" name="password" id="password" placeholder="Password" required>
-                <div id="passwordError" class="error-message">Password must be at least 8 characters long and contain at least 1 letter, 1 number, and 1 special character</div>
-
-                <label for="role" style="color: white;">Register as:</label>
-                <select name="role" id="role" required>
-                    <option value="boss">Boss</option>
-                    <option value="employee">Employee</option>
-                </select>
-
-                <label for="factory" style="color: white;">Select your factory:</label>
-                <select name="factory" id="factory" required>
-                    <?php
-                    $stmt = $conn->query("SELECT id_factory, name FROM factory");
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        echo "<option value='{$row['id_factory']}'>{$row['name']}</option>";
-                    }
-                    ?>
-                </select>
-
-                <div class="separator">
-                    <div class="line"></div>
-                </div>
-                <button type="submit" class="btn" name="signup" style="background-color: white;">Signup</button>
-            </form>
-
             <?php
             // Signup Logic
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["signup"])) {
@@ -205,6 +179,41 @@ session_start();
                 }
             }
             ?>
+
+            <header style="margin-bottom: -70px">Signup</header>
+
+            <form id="signupForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" style="margin-top: 90px;">
+                <input type="text" name="fullname" id="fullname" placeholder="Full name" required>
+
+                <input type="email" name="email" id="email" placeholder="Email address" required>
+                <div id="emailError" class="error-message">Please enter a valid email address (example: x@x.xx)</div>
+
+                <input type="password" name="password" id="password" placeholder="Password" required>
+                <div id="passwordError" class="error-message">Password must be at least 8 characters long and contain at least 1 letter, 1 number, and 1 special character</div>
+
+                <label for="role" style="color: white;">Register as:</label>
+                <select name="role" id="role" required>
+                    <option value="boss">Boss</option>
+                    <option value="employee">Employee</option>
+                </select>
+
+                <label for="factory" style="color: white;">Select your factory:</label>
+                <select name="factory" id="factory" required>
+                    <?php
+                    $stmt = $conn->query("SELECT id_factory, name FROM factory");
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<option value='{$row['id_factory']}'>{$row['name']}</option>";
+                    }
+                    ?>
+                </select>
+
+                <div class="separator">
+                    <div class="line"></div>
+                </div>
+                <button type="submit" class="btn" name="signup" style="background-color: white;">Signup</button>
+            </form>
+
+
 
         </div>
 
