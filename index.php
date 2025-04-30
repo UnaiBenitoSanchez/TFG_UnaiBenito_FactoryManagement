@@ -54,6 +54,7 @@ session_start();
 
         <!-- Signup Section -->
         <div class="signup-section">
+            
             <?php
             // Signup Logic
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["signup"])) {
