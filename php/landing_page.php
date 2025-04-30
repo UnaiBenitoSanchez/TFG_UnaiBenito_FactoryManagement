@@ -127,12 +127,12 @@ $factoryName = getFactoryNameByBoss($bossEmail);
     ['WowWee', 23983746, 36240000, 3000000]
   ];
 
-  $playtimeCoChartData = [
+  $playtmobilChartData = [
     ['Company', 'Sales', 'Production', 'Profit'],
     ['Naipes Heraclio Fournier', 38983746, 43240000, 4000000],
     ['Bandai', 50983746, 62240000, 8000000],
     ['MGA Entertainment', 23983746, 36240000, 4000000],
-    ['Playtime Co.', 63983746, 75240000, 10000000]
+    ['Playmobil', 63983746, 75240000, 10000000]
   ];
   ?>
 
@@ -241,35 +241,35 @@ $factoryName = getFactoryNameByBoss($bossEmail);
     </div>
   <?php endif; ?>
 
-  <?php if ($factoryName == 'Playtime Co.') : ?>
+  <?php if ($factoryName == 'Playmobil') : ?>
     <div class="container">
       <div id="columnchart_material4" style="width: 100%; height: 500px;"></div>
     </div>
 
-    <!-- Display Playtime Co. cards -->
+    <!-- Display Playmobil cards -->
     <div class="container">
       Our most sold toys:
       <br>
       <div style="justify-content: center; display: flex; flex-wrap: wrap;">
         <div class="card" style="width: 18rem; margin-bottom: 10px; margin-left: 10px;">
-          <img src="../img/playtime4.jpg" class="card-img-top" alt="...">
+          <img src="../img/playmobil8.jpg" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">DogDay</h5>
-            <p class="card-text">This is DogDay, the sunny, strong, and determined leader of our critters! Each trusts him to find the bright side in any situation, and to have a friendly word of encouragement should they feel down. He'll always keep his friends going, no matter what.</p>
+            <h5 class="card-title">Playmobil Space Station</h5>
+            <p class="card-text">Space base with astronauts, spacecraft and accessories for space exploration.</p>
           </div>
         </div>
         <div class="card" style="width: 18rem; margin-bottom: 10px; margin-left: 10px;">
-          <img src="../img/playtime8.jpg" class="card-img-top" alt="...">
+          <img src="../img/playmobil4.jpg" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">CatNap</h5>
-            <p class="card-text">CatNap is a calming presence for the critters and ensures he and his friends always have the right amount of sleep to jumpstart the morning's play! End of the day, there's nothing CatNap enjoys more than watching his friends sleep soundly.</p>
+            <h5 class="card-title">Playmobil Hospital</h5>
+            <p class="card-text">Complete hospital with emergency room, medical equipment and doctor/patient figures.</p>
           </div>
         </div>
         <div class="card" style="width: 18rem; margin-bottom: 10px; margin-left: 10px;">
-          <img src="../img/playtime2.jpg" class="card-img-top" alt="...">
+          <img src="../img/playmobil1.jpg" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Bubba Bubbaphant</h5>
-            <p class="card-text">Bubba Bubbaphant is the brains of the critters. Bright and attentive, he keeps his friends steady and always steers them to make smart choices, that way they all might grow up to be bright and brilliant, each in their own right.</p>
+          <h5 class="card-title">Playmobil City Life Family</h5>
+          <p class="card-text">Modern family figure set with accessories for playing everyday life scenes.</p>
           </div>
         </div>
       </div>
@@ -282,7 +282,7 @@ $factoryName = getFactoryNameByBoss($bossEmail);
     echo 'google.charts.setOnLoadCallback(function() { drawChart(' . json_encode($mattelChartData) . ', "columnchart_material1", "Mattel Sales, Production, and Profit"); });';
     echo 'google.charts.setOnLoadCallback(function() { drawChart(' . json_encode($legoChartData) . ', "columnchart_material2", "Lego Sales, Production, and Profit"); });';
     echo 'google.charts.setOnLoadCallback(function() { drawChart(' . json_encode($nerfChartData) . ', "columnchart_material3", "Nerf Sales, Production, and Profit"); });';
-    echo 'google.charts.setOnLoadCallback(function() { drawChart(' . json_encode($playtimeCoChartData) . ', "columnchart_material4", "Playtime Co. Sales, Production, and Profit"); });';
+    echo 'google.charts.setOnLoadCallback(function() { drawChart(' . json_encode($playtmobilChartData) . ', "columnchart_material4", "Playmobil. Sales, Production, and Profit"); });';
     ?>
   </script>
 </body>

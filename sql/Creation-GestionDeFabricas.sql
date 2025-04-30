@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`boss` (
   `id_boss_factory` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(225) NOT NULL,
   `email` VARCHAR(225) NOT NULL,
-  `password` VARCHAR(1000) NOT NULL, 
+  `password` VARCHAR(10000) NOT NULL, 
   PRIMARY KEY (`id_boss_factory`),
   INDEX `idx_boss_email` (`email` ASC) VISIBLE
 )
@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`employee` (
   `id_employee` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL UNIQUE,
-  `password` VARCHAR(1000) NOT NULL,
+  `password` VARCHAR(10000) NOT NULL,
   `role` ENUM('worker', 'manager', 'admin') NOT NULL DEFAULT 'worker',
   PRIMARY KEY (`id_employee`)
 )
@@ -259,26 +259,26 @@ INSERT INTO inventory VALUES('17','1800','2024-01-03','17','3');
 INSERT INTO product VALUES('18','Nerf Alpha Strike - Mission Set','This 31-piece Nerf Alpha Strike Mission Set includes 4 launchers, 25 darts and targets to practice your aim and play Nerf games. Perfect for gifts, parties or play anytime! Includes 2 Stinger SD-1 launchers, 1 Cobra RC-6 launcher, 1 Tiger DB-2 launcher and 2 target pieces that can be snapped together to form 1 whole target.','24.99','img/nerf6.jpg','1');
 INSERT INTO inventory VALUES('18','2050','2024-01-03','18','3');
 
--- Playtime Co.
-INSERT INTO boss VALUES ('4','Elliot Ludwig','3ll1ot@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
-INSERT INTO factory VALUES ('4', 'Playtime Co.', '1000 Industrial Ave', 'Los Angeles', 'California', 'USA');
+-- Playmobil
+INSERT INTO boss VALUES ('4','Hans Beck','h4ns@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
+INSERT INTO factory VALUES ('4', 'Playmobil', 'Brandstätterstraße 2-10', 'Zirndorf', 'Bavaria', 'Germany');
 INSERT INTO factory_boss VALUES ('4','4');
-INSERT INTO product VALUES('19','Bobby BearHug','A kind, caring soul, Bobby BearHug shows compassion for everyone, and for everything. People and places and things, large or small, are all receivers of her love. Each is enriched by this attention and affection, and in turn, so is she.','50.00','img/playtime1.jpg','1');
-INSERT INTO inventory VALUES('19','1000','2024-01-03','19','4');
-INSERT INTO product VALUES('20','Bubba Bubbaphant','Bubba Bubbaphant is the brains of the critters. Bright and attentive, he keeps his friends steady and always steers them to make smart choices, that way they all might grow up to be bright and brilliant, each in their own right.','30.00','img/playtime2.jpg','1');
-INSERT INTO inventory VALUES('20','2000','2024-01-03','20','4');
-INSERT INTO product VALUES('21','CraftyCorn','A conscious observer of both color and creativity in the world. CraftyCorn understands the importance of art, and sharing it with others. Crayons, pencils, paint, or words on the page. CraftyCorn can see beauty in anything imagined given shape.','20.00','img/playtime3.jpg','1');
-INSERT INTO inventory VALUES('21','3000','2024-01-03','21','4');
-INSERT INTO product VALUES('22','DogDay','This is DogDay, the sunny, strong, and determined leader of our critters! Each trusts him to find the bright side in any situation, and to have a friendly word of encouragement should they feel down. He\'ll always keep his friends going, no matter what.','50.00','img/playtime4.jpg','1');
-INSERT INTO inventory VALUES('22','1000','2024-01-03','22','4');
-INSERT INTO product VALUES('23','Hoppy Hopscotch','Unafraid to hop where others might sit, Hoppy is the friend everyone needs to maintain their energy and enthusiasm. While sometimes loud or impatient, she\'ll always hop besides her friends, even if it means slowing up once in a while to keep their pace.','30.00','img/playtime5.jpg','1');
-INSERT INTO inventory VALUES('23','2000','2024-01-03','23','4');
-INSERT INTO product VALUES('24','KickinChicken','This is KickinChicken, the cool kid of the crew, and he maintains that sense of cool through anything, even in the most tense of situations. Knock him down, and he\'ll pick himself up, brush himself off, and ask: "What\'s next?"','20.00','img/playtime6.jpg','1');
-INSERT INTO inventory VALUES('24','3000','2024-01-03','24','4');
-INSERT INTO product VALUES('25','PickyPiggy','What\'s more important than play and learning? PickyPiggy knows the answer. A playful body and keen mind are fueled by what\'s put into them, which is why she encourages her friends to eat a well-balanced diet. Secretly, PB&J\'s are her favorite food.','20.00','img/playtime7.jpg','1');
-INSERT INTO inventory VALUES('25','3000','2024-01-03','25','4');
-INSERT INTO product VALUES('26','CatNap','CatNap is a calming presence for the critters and ensures he and his friends always have the right amount of sleep to jumpstart the morning\'s play! End of the day, there\'s nothing CatNap enjoys more than watching his friends sleep soundly.','20.00','img/playtime8.jpg','1');
-INSERT INTO inventory VALUES('26','3000','2024-01-03','26','4');
+INSERT INTO product VALUES('19','Playmobil City Life Family','Modern family figure set with accessories for playing everyday life scenes.', '29.99','img/playmobil1.jpg','1');
+INSERT INTO inventory VALUES('19','1500','2024-01-03','19','4');
+INSERT INTO product VALUES('20','Playmobil Pirate Ship','Detailed pirate ship with pirate figures, cannons and treasure for exciting adventures.', '89.99','img/playmobil2.jpg','1');
+INSERT INTO inventory VALUES('20','800','2024-01-03','20','4');
+INSERT INTO product VALUES('21','Playmobil Police Car','Police vehicle with lights and sound, includes officer figures for rescue missions.', '34.99','img/playmobil3.jpg','1');
+INSERT INTO inventory VALUES('21','1200','2024-01-03','21','4');
+INSERT INTO product VALUES('22','Playmobil Hospital','Complete hospital with emergency room, medical equipment and doctor/patient figures.', '119.99','img/playmobil4.jpg','1');
+INSERT INTO inventory VALUES('22','600','2024-01-03','22','4');
+INSERT INTO product VALUES('23','Playmobil Farm with Animals','Traditional farm with animals, tractor and farmer figures for rural play.', '59.99','img/playmobil5.jpg','1');
+INSERT INTO inventory VALUES('23','900','2024-01-03','23','4');
+INSERT INTO product VALUES('24','Playmobil Medieval Castle','Impressive castle with knights, dragon and accessories for epic battles.', '149.99','img/playmobil6.jpg','1');
+INSERT INTO inventory VALUES('24','500','2024-01-03','24','4');
+INSERT INTO product VALUES('25','Playmobil Passenger Plane','Commercial airplane with passenger and crew figures, perfect for travel play.', '79.99','img/playmobil7.jpg','1');
+INSERT INTO inventory VALUES('25','700','2024-01-03','25','4');
+INSERT INTO product VALUES('26','Playmobil Space Station','Space base with astronauts, spacecraft and accessories for space exploration.', '99.99','img/playmobil8.jpg','1');
+INSERT INTO inventory VALUES('26','650','2024-01-03','26','4');
 
 -- Insert employees for Mattel (Factory 1)
 INSERT INTO employee VALUES 
@@ -322,15 +322,15 @@ INSERT INTO employee VALUES
 INSERT INTO factory_employee VALUES 
 ('3', '16'), ('3', '17'), ('3', '18'), ('3', '19'), ('3', '20');
 
--- Insert employees for Playtime Co. (Factory 4)
+-- Insert employees for Playmobil (Factory 4)
 INSERT INTO employee VALUES 
-('21', 'Alex Carter', 'alex.playtime@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
-('22', 'Brooke Adams', 'brooke.playtime@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
-('23', 'Charlie Lopez', 'charlie.playtime@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
-('24', 'Daisy Young', 'daisy.playtime@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
-('25', 'Elliot Brooks', 'elliot.playtime@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker');
+('21', 'Klaus Müller', 'klaus.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('22', 'Anna Schmidt', 'anna.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('23', 'Thomas Fischer', 'thomas.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('24', 'Sabine Weber', 'sabine.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker'),
+('25', 'Michael Wagner', 'michael.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker');
 
--- Assign employees to Playtime Co. (Factory 4)
+-- Assign employees to Playmobil (Factory 4)
 INSERT INTO factory_employee VALUES 
 ('4', '21'), ('4', '22'), ('4', '23'), ('4', '24'), ('4', '25');
 
@@ -989,293 +989,292 @@ BEGIN
 END;
 //
 DELIMITER ;
+-- Playmobil Events ------------------------------------------------------------------------------------------------------
 
--- Playtime Co.------------------------------------------------------------------------------------------------------
--- Event to delete from Bobby BearHug
+-- Event to subtract from Playmobil City Life Family
 DELIMITER //
-CREATE EVENT IF NOT EXISTS subtract_quantity_event_bobbybearhug
+CREATE EVENT IF NOT EXISTS subtract_quantity_event_city_life
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil City Life Family'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug');
+  SET available_quantity = GREATEST(available_quantity - 50, 0)
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil City Life Family');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug')), 'Subtract');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil City Life Family'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil City Life Family')), 'Subtract');
 END;
 //
 DELIMITER ;
 
--- Event to add to Bobby BearHug
+-- Event to add to Playmobil City Life Family
 DELIMITER //
-CREATE EVENT IF NOT EXISTS add_quantity_event_bobbybearhug
+CREATE EVENT IF NOT EXISTS add_quantity_event_city_life
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil City Life Family'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug');
+  SET available_quantity = available_quantity + 50
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil City Life Family');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bobby BearHug')), 'Add');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil City Life Family'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil City Life Family')), 'Add');
 END;
 //
 DELIMITER ;
 
--- Event to delete from Bubba Bubbaphant
+-- Event to subtract from Playmobil Pirate Ship
 DELIMITER //
-CREATE EVENT IF NOT EXISTS subtract_quantity_event
+CREATE EVENT IF NOT EXISTS subtract_quantity_event_pirate_ship
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Pirate Ship'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant');
+  SET available_quantity = GREATEST(available_quantity - 20, 0)
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Pirate Ship');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant')), 'Subtract');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Pirate Ship'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Pirate Ship')), 'Subtract');
 END;
 //
 DELIMITER ;
 
--- Event to add to Bubba Bubbaphant
+-- Event to add to Playmobil Pirate Ship
 DELIMITER //
-CREATE EVENT IF NOT EXISTS add_quantity_event
+CREATE EVENT IF NOT EXISTS add_quantity_event_pirate_ship
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Pirate Ship'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant');
+  SET available_quantity = available_quantity + 20
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Pirate Ship');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Bubba Bubbaphant')), 'Add');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Pirate Ship'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Pirate Ship')), 'Add');
 END;
 //
 DELIMITER ;
 
--- Event to delete from CraftyCorn
+-- Event to subtract from Playmobil Police Car
 DELIMITER //
-CREATE EVENT IF NOT EXISTS subtract_quantity_event_CraftyCorn
+CREATE EVENT IF NOT EXISTS subtract_quantity_event_police_car
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Police Car'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn');
+  SET available_quantity = GREATEST(available_quantity - 40, 0)
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Police Car');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn')), 'Subtract');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Police Car'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Police Car')), 'Subtract');
 END;
 //
 DELIMITER ;
 
--- Event to add to CraftyCorn
+-- Event to add to Playmobil Police Car
 DELIMITER //
-CREATE EVENT IF NOT EXISTS add_quantity_event_CraftyCorn
+CREATE EVENT IF NOT EXISTS add_quantity_event_police_car
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Police Car'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn');
+  SET available_quantity = available_quantity + 40
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Police Car');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CraftyCorn')), 'Add');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Police Car'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Police Car')), 'Add');
 END;
 //
 DELIMITER ;
 
--- Event to delete from DogDay
+-- Event to subtract from Playmobil Hospital
 DELIMITER //
-CREATE EVENT IF NOT EXISTS subtract_quantity_event_DogDay
+CREATE EVENT IF NOT EXISTS subtract_quantity_event_hospital
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Hospital'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay');
+  SET available_quantity = GREATEST(available_quantity - 15, 0)
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Hospital');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay')), 'Subtract');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Hospital'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Hospital')), 'Subtract');
 END;
 //
 DELIMITER ;
 
--- Event to add to DogDay
+-- Event to add to Playmobil Hospital
 DELIMITER //
-CREATE EVENT IF NOT EXISTS add_quantity_event_DogDay
+CREATE EVENT IF NOT EXISTS add_quantity_event_hospital
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Hospital'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay');
+  SET available_quantity = available_quantity + 15
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Hospital');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'DogDay')), 'Add');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Hospital'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Hospital')), 'Add');
 END;
 //
 DELIMITER ;
 
--- Event to delete from Hoppy Hopscotch
+-- Event to subtract from Playmobil Farm with Animals
 DELIMITER //
-CREATE EVENT IF NOT EXISTS subtract_quantity_event_Hoppy_Hopscotch
+CREATE EVENT IF NOT EXISTS subtract_quantity_event_farm
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Farm with Animals'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch');
+  SET available_quantity = GREATEST(available_quantity - 30, 0)
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Farm with Animals');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch')), 'Subtract');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Farm with Animals'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Farm with Animals')), 'Subtract');
 END;
 //
 DELIMITER ;
 
--- Event to add to Hoppy Hopscotch
+-- Event to add to Playmobil Farm with Animals
 DELIMITER //
-CREATE EVENT IF NOT EXISTS add_quantity_event_Hoppy_Hopscotch
+CREATE EVENT IF NOT EXISTS add_quantity_event_farm
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Farm with Animals'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch');
+  SET available_quantity = available_quantity + 30
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Farm with Animals');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Hoppy Hopscotch')), 'Add');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Farm with Animals'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Farm with Animals')), 'Add');
 END;
 //
 DELIMITER ;
 
--- Event to delete from KickinChicken
+-- Event to subtract from Playmobil Medieval Castle
 DELIMITER //
-CREATE EVENT IF NOT EXISTS subtract_quantity_event_KickinChicken
+CREATE EVENT IF NOT EXISTS subtract_quantity_event_castle
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Medieval Castle'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken');
+  SET available_quantity = GREATEST(available_quantity - 10, 0)
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Medieval Castle');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken')), 'Subtract');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Medieval Castle'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Medieval Castle')), 'Subtract');
 END;
 //
 DELIMITER ;
 
--- Event to add to KickinChicken
+-- Event to add to Playmobil Medieval Castle
 DELIMITER //
-CREATE EVENT IF NOT EXISTS add_quantity_event_KickinChicken
+CREATE EVENT IF NOT EXISTS add_quantity_event_castle
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Medieval Castle'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken');
+  SET available_quantity = available_quantity + 10
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Medieval Castle');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'KickinChicken')), 'Add');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Medieval Castle'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Medieval Castle')), 'Add');
 END;
 //
 DELIMITER ;
 
--- Event to delete from PickyPiggy 
+-- Event to subtract from Playmobil Passenger Plane
 DELIMITER //
-CREATE EVENT IF NOT EXISTS subtract_quantity_event_PickyPiggy 
+CREATE EVENT IF NOT EXISTS subtract_quantity_event_plane
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Passenger Plane'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy');
+  SET available_quantity = GREATEST(available_quantity - 25, 0)
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Passenger Plane');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy')), 'Subtract');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Passenger Plane'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Passenger Plane')), 'Subtract');
 END;
 //
 DELIMITER ;
 
--- Event to add to PickyPiggy 
+-- Event to add to Playmobil Passenger Plane
 DELIMITER //
-CREATE EVENT IF NOT EXISTS add_quantity_event_PickyPiggy 
+CREATE EVENT IF NOT EXISTS add_quantity_event_plane
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Passenger Plane'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy');
+  SET available_quantity = available_quantity + 25
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Passenger Plane');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'PickyPiggy')), 'Add');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Passenger Plane'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Passenger Plane')), 'Add');
 END;
 //
 DELIMITER ;
 
--- Event to delete from CatNap 
+-- Event to subtract from Playmobil Space Station
 DELIMITER //
-CREATE EVENT IF NOT EXISTS subtract_quantity_event_CatNap 
+CREATE EVENT IF NOT EXISTS subtract_quantity_event_space_station
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Space Station'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = GREATEST(available_quantity - 100, 0)
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap');
+  SET available_quantity = GREATEST(available_quantity - 20, 0)
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Space Station');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Catnap')), 'Subtract');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Space Station'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Space Station')), 'Subtract');
 END;
 //
 DELIMITER ;
 
--- Event to add to CatNap 
+-- Event to add to Playmobil Space Station
 DELIMITER //
-CREATE EVENT IF NOT EXISTS add_quantity_event_CatNap 
+CREATE EVENT IF NOT EXISTS add_quantity_event_space_station
 ON SCHEDULE EVERY 30 MINUTE
 DO
 BEGIN
-  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap'));
+  SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Space Station'));
 
   UPDATE GestionDeFabricas.inventory
-  SET available_quantity = available_quantity + 100
-  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap');
+  SET available_quantity = available_quantity + 20
+  WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Space Station');
 
   INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'CatNap')), 'Add');
+  VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Space Station'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = 'Playmobil Space Station')), 'Add');
 END;
 //
 DELIMITER ;

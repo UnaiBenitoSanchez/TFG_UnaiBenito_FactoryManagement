@@ -122,7 +122,6 @@ session_start();
                                 file_put_contents($newJsFileName, $scriptContent);
 
                                 echo "<div class='alert alert-success text-center mt-3' role='alert'>Boss registered successfully, redirecting...</div>";
-                                session_start();
                                 $_SESSION['user_email'] = $email;
                                 $_SESSION['user_role'] = $role;
                                 $_SESSION['boss_user'] = $fullname;
@@ -156,7 +155,7 @@ session_start();
                                 $stmt->execute();
 
                                 echo "<div class='alert alert-success text-center mt-3' role='alert'>Employee registered successfully, redirecting...</div>";
-                                session_start();
+                                
                                 $_SESSION['user_email'] = $email;
                                 $_SESSION['user_role'] = $role;
                                 $_SESSION['employee_user'] = $fullname;
