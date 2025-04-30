@@ -1,0 +1,7 @@
+cloudflared tunnel --url http://localhost/unai/gestion/fabricas
+
+To the generated link i remove "dashboard/" and add "unai/gestion_fabricas/".
+
+I copy and paste it to "bit.ly".
+
+I use the generated link.
