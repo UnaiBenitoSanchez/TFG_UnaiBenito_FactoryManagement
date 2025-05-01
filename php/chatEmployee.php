@@ -387,7 +387,7 @@ session_start();
 
         // Show messages
         function displayMessage(user, text, timestamp, messageId) {
-            console.log("Mostrando mensaje:", {
+            console.log("Showing message:", {
                 user,
                 text,
                 timestamp,
@@ -450,7 +450,7 @@ session_start();
                     messageInput.value = '';
                 }).catch((error) => {
                     console.error("Error sendiong message:", error);
-                    alert("Error sendiong message. More details in console.");
+                    alert("Error sending message. More details in console.");
                 });
             }
         }

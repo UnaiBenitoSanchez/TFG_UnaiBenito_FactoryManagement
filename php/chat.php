@@ -302,7 +302,7 @@ session_start();
 
         // Show messages
         function displayMessage(user, text, timestamp, messageId) {
-            console.log("Mostrando mensaje:", {
+            console.log("Showing message:", {
                 user,
                 text,
                 timestamp,
