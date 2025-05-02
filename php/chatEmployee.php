@@ -353,7 +353,7 @@ session_start();
 
 <body>
 
-<nav class="navbar" style="height: 46px;">
+    <nav class="navbar" style="height: 46px;">
         <a class="navbar-brand" href="landing_page.php" style="font-size: 20px">TFG_UnaiBenitoSánchez</a>
         <button class="navbar-toggler" onclick="toggleNavbar()" style="color: black;">☰</button>
         <ul class="navbar-nav" id="navbarNav">
@@ -579,7 +579,7 @@ session_start();
     </script>
 
     <?php include '../controller/session.php'; ?>
-    
+
 </body>
 
 </html>
