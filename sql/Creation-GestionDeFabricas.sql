@@ -244,7 +244,7 @@ INSERT INTO inventory VALUES('12','1100','2024-01-03','12','2');
 
 -- Nerf
 INSERT INTO boss VALUES ('3','Reyn Guyer','r3yn@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
-INSERT INTO factory VALUES ('3', 'Nerf', '1027 New State Hwy', 'East Longmeadow', 'Massachusetts', 'USA');
+INSERT INTO factory VALUES ('3', 'Nerf', 'Cartamundi Shaker Road', 'East Longmeadow', 'MA 01028', 'USA');
 INSERT INTO factory_boss VALUES ('3','3');
 INSERT INTO product VALUES('13','SMG-Zesty de Nerf Fortnite','The Nerf Fortnite SMG-Zesty Launcher SMG-Zesty is inspired by Fortnite\'s Zesty wrapper, which mirrors the look of the popular video game\'s wrapper. The launcher has a removable barrel and a detachable stock so you can customize it in different ways. Attach them, detach them.... It\'s up to you! Remove them when you\'re in close combat for a more compact launcher.','37.99','img/nerf1.jpg','1');
 INSERT INTO inventory VALUES('13','2100','2024-01-03','13','3');

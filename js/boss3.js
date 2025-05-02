@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
     function init() {
       let MODEL_PATH =
         "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb";
-      let canvasId = "c_3"; // ID dinámico del canvas
-      let canvas = document.getElementById(canvasId); // Selecciona el canvas existente en el DOM
+      let canvasId = "c_3"; 
+      let canvas = document.getElementById(canvasId); 
 
       if (!canvas) {
         console.error("Canvas element not found.");
@@ -26,21 +26,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
       let backgroundColor = 0xf1f1f1;
 
-      // Configuración de la escena
       scene = new THREE.Scene();
       scene.background = new THREE.Color(backgroundColor);
       scene.fog = new THREE.Fog(backgroundColor, 60, 100);
 
-      // Configuración del renderizador para usar el canvas existente
       renderer = new THREE.WebGLRenderer({
-        canvas: canvas, // Vincula al canvas seleccionado
+        canvas: canvas, 
         antialias: true,
       });
       renderer.shadowMap.enabled = true;
       renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(canvas.clientWidth, canvas.clientHeight, false); // Ajusta el tamaño al canvas
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
 
-      // Configuración de la cámara
       camera = new THREE.PerspectiveCamera(
         50,
         canvas.clientWidth / canvas.clientHeight,
@@ -51,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
       camera.position.x = 0;
       camera.position.y = -3;
 
-      // Carga de textura y modelo
       let stacy_txt = new THREE.TextureLoader().load(
         "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy.jpg"
       );
@@ -114,7 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       );
 
-      // Configuración de luces
       let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.61);
       hemiLight.position.set(0, 50, 0);
       scene.add(hemiLight);
@@ -132,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
       dirLight.shadow.camera.bottom = d * -1;
       scene.add(dirLight);
 
-      // Configuración del suelo
       let floorGeometry = new THREE.PlaneGeometry(5000, 5000, 1, 1);
       let floorMaterial = new THREE.MeshPhongMaterial({
         color: 0xeeeeee,
@@ -145,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
       floor.position.y = -11;
       scene.add(floor);
 
-      // Render loop
       function update() {
         if (mixer) {
           mixer.update(clock.getDelta());
@@ -162,7 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       update();
 
-      // Redimensiona el canvas si cambia el tamaño del contenedor
       function resizeRendererToDisplaySize(renderer) {
         let width = canvas.clientWidth;
         let height = canvas.clientHeight;
