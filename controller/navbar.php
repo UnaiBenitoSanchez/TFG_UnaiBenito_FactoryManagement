@@ -38,6 +38,9 @@
                 <a class="nav-link" href="./predict_view.php">Demand prediction</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="employees_table.php">Employees table</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="factory.php">Your factory</a>
             </li>
             <li class="nav-item">

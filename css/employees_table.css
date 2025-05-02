@@ -1,0 +1,245 @@
+/* Estilos base del cuerpo */
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    background: linear-gradient(45deg, #F7F9F9, #BED8D4, #78D5D7, #63D2FF, #2081C3);
+    background-size: 400% 400%;
+    background-attachment: fixed;
+    animation: gradientBG 15s ease infinite;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 100% 50%;
+    }
+    50% {
+        background-position: 0% 100%;
+    }
+    75% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.navbar { 
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 46px;
+    background-color: rgb(48, 63, 159);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: auto;
+}
+
+.nav-item {
+    margin: 0 10px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 991px) {
+    .navbar-nav {
+        display: none;
+        position: absolute;
+        top: 46px;
+        left: 0;
+        right: 0;
+        background-color: rgb(48, 63, 159);
+        flex-direction: column;
+        padding: 10px 0;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar-nav.show {
+        display: flex;
+    }
+    
+    .nav-item {
+        margin: 5px 20px;
+    }
+    
+    .navbar-toggler {
+        display: block;
+    }
+    
+    .main-container {
+        transition: margin-top 0.3s ease;
+    }
+    
+    .navbar.expanded ~ .main-container {
+        margin-top: calc(60px + var(--navbar-expanded-height, 200px)) !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar-toggler {
+        display: none;
+    }
+}
+
+.main-container {
+    max-width: 1000px;
+    margin: 60px auto 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 30px;
+}
+
+.employees-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.employees-table thead {
+    background-color: #2081C3;
+    color: #fff;
+    font-weight: 600;
+}
+
+.employees-table th,
+.employees-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.employees-table tbody tr:hover {
+    background-color: rgba(99, 210, 255, 0.2);
+}
+
+.employees-table .edit-btn,
+.employees-table .delete-btn,
+.employees-table .save-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 0.85rem;
+}
+
+.employees-table .edit-btn {
+    background-color: #63D2FF;
+    color: white;
+}
+
+.employees-table .edit-btn:hover {
+    background-color: #2081C3;
+}
+
+.employees-table .delete-btn {
+    background-color: #FF6B6B;
+    color: white;
+}
+
+.employees-table .delete-btn:hover {
+    background-color: #C0392B;
+}
+
+.employees-table .save-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.employees-table .save-btn:hover {
+    background-color: #45a049;
+}
+
+.table-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 20px;
+    background-color: rgba(32, 129, 195, 0.7);
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.no-employees {
+    text-align: center;
+    padding: 30px;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+}
+
+.nav-logout-inline {
+    color: white;
+    background-color: rgb(203, 35, 35);
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+.nav-logout-inline:hover {
+    background-color: rgb(255, 90, 90);
+    color: #fff;
+}

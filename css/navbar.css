@@ -1,7 +1,7 @@
 .navbar {
     background-color: #303f9f; 
     opacity: 0.9;
-    z-index: 100;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;

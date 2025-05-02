@@ -266,14 +266,60 @@ session_start();
             opacity: 0.9;
             margin-bottom: 20px;
         }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-wrap: wrap;
+                height: auto;
+                min-height: 46px;
+            }
+
+            .navbar-toggler {
+                display: block;
+            }
+
+            .navbar-nav {
+                flex-direction: column;
+                width: 100%;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease;
+            }
+
+            .navbar-nav.show {
+                max-height: 300px;
+            }
+
+            .nav-item {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .card {
+                
+                transition: margin-top 0.5s ease;
+            }
+
+            body.nav-expanded .card {
+                margin-top: 260px;
+            }
+        }
     </style>
 
     <script>
         function toggleNavbar() {
             var navbarNav = document.getElementById('navbarNav');
             navbarNav.classList.toggle('show');
-        }
 
+            document.body.classList.toggle('nav-expanded');
+
+            if (document.body.classList.contains('nav-expanded')) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        }
         $(document).ready(function() {
             $('#errorModal').hide();
 

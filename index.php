@@ -54,7 +54,7 @@ session_start();
 
         <!-- Signup Section -->
         <div class="signup-section">
-            
+
             <?php
             // Signup Logic
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["signup"])) {
@@ -156,7 +156,7 @@ session_start();
                                 $stmt->execute();
 
                                 echo "<div class='alert alert-success text-center mt-3' role='alert'>Employee registered successfully, redirecting...</div>";
-                                
+
                                 $_SESSION['user_email'] = $email;
                                 $_SESSION['user_role'] = $role;
                                 $_SESSION['employee_user'] = $fullname;
@@ -267,6 +267,7 @@ session_start();
                             session_start();
                             $_SESSION['user_email'] = $email;
                             $_SESSION['user_role'] = $role;
+                            $_SESSION['user_id'] = $user['id_boss_factory']; 
 
                             if ($role === 'employee') {
                                 $_SESSION['employee_user'] = $user['name'];
