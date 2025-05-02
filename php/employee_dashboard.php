@@ -27,6 +27,30 @@ if (!isset($_SESSION['user_email'])) {
 
     <!-- CSS -->
     <link rel="stylesheet" href="../css/dashboard.css">
+    <style>
+        .session-popup {
+            position: fixed;
+            bottom: 60px;
+            left: 15px;
+            background-color: rgba(83, 226, 70, 0.9);
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            border: 1px solid #ddd;
+        }
+
+        .session-popup .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+        }
+    </style>
 
     <!-- Navbar -->
     <link rel="stylesheet" href="../css/navbar.css">
@@ -159,8 +183,8 @@ if (!isset($_SESSION['user_email'])) {
 <body>
 
     <nav class="navbar">
-        <a class="navbar-brand" href="landing_page.php">TFG_UnaiBenitoSánchez</a>
-        <button class="navbar-toggler" onclick="toggleNavbar()">☰</button>
+        <a class="navbar-brand" href="landing_page.php" style="font-size: 20px">TFG_UnaiBenitoSánchez</a>
+        <button class="navbar-toggler" onclick="toggleNavbar()" style="color: black;">☰</button>
         <ul class="navbar-nav" id="navbarNav">
             <li class="nav-item">
                 <a class="nav-link" href="employee_dashboard.php">Products from your factory</a>
@@ -172,6 +196,9 @@ if (!isset($_SESSION['user_email'])) {
                 <a class="nav-link" href="./predict_view.php">Demand prediction</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="employees_table.php">Employees table</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="factory.php">Your factory</a>
             </li>
             <li class="nav-item">
@@ -180,7 +207,6 @@ if (!isset($_SESSION['user_email'])) {
             <li class="nav-item" style="margin-top: 8px;">
                 <a class="nav-logout-inline" href="../logout.php">Logout</a>
             </li>
-
         </ul>
     </nav>
 
@@ -337,6 +363,8 @@ if (!isset($_SESSION['user_email'])) {
 
         });
     </script>
+
+    <?php include '../controller/session.php'; ?>
 
 </body>
 

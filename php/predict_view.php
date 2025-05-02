@@ -191,6 +191,10 @@ $data = json_decode($output, true);
             }
         }
     </style>
+
+    <!-- css -->
+    <link rel="stylesheet" href="../css/session.css">
+    
 </head>
 
 <body>
@@ -214,6 +218,9 @@ $data = json_decode($output, true);
             <?php endif; ?>
         </div>
     </div>
+
+    <?php include '../controller/session.php'; ?>
+
 </body>
 
 </html>

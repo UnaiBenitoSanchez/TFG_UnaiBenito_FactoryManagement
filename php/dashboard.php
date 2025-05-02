@@ -22,6 +22,31 @@ session_start();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <style>
+        .session-popup {
+            position: fixed;
+            bottom: 60px;
+            left: 15px;
+            background-color: rgba(83, 226, 70, 0.9);
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            border: 1px solid #ddd;
+        }
+
+        .session-popup .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -52,7 +77,7 @@ session_start();
             echo "<div class='alert alert-danger text-center'>Error: There is already a product with this name on the factory.</div>";
         } else {
             try {
-                $stmt = $conn->prepare("INSERT INTO product (name, description, price, image, category_id_category) VALUES (?, ?, ?, ?, 1)"); 
+                $stmt = $conn->prepare("INSERT INTO product (name, description, price, image, category_id_category) VALUES (?, ?, ?, ?, 1)");
                 $stmt->execute([$productName, $productDescription, $productPrice, $nameFile1]);
                 $productId = $conn->lastInsertId();
 
@@ -170,6 +195,8 @@ session_start();
 
         });
     </script>
+
+    <?php include '../controller/session.php'; ?>
 
 </body>
 

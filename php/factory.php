@@ -25,6 +25,7 @@ $sql1 = "SELECT boss_id_boss_factory FROM factory_boss
     <!-- CSS -->
     <link rel="stylesheet" href="../css/three.css">
     <link rel="stylesheet" href="../css/factory.css">
+    <link rel="stylesheet" href="../css/session.css">
 
 </head>
 
@@ -216,6 +217,8 @@ $sql1 = "SELECT boss_id_boss_factory FROM factory_boss
     ?>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js'></script>
     <script src='https://cdn.jsdelivr.net/gh/mrdoob/Three.js@r92/examples/js/loaders/GLTFLoader.js'></script>
+
+    <?php include '../controller/session.php'; ?>
 
 </body>
 

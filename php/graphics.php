@@ -84,15 +84,15 @@
                     },
                     hAxis: {
                         textStyle: {
-                            color: '#fff' 
+                            color: '#fff'
                         }
                     },
                     vAxis: {
                         textStyle: {
-                            color: '#fff' 
+                            color: '#fff'
                         }
                     },
-                    colors: ['#2081C3'] 
+                    colors: ['#2081C3']
                 };
 
 
@@ -111,6 +111,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="../css/graphics.css">
+    <link rel="stylesheet" href="../css/session.css">
 
 </head>
 
@@ -136,6 +137,9 @@
     <?php
     $conn = null;
     ?>
+
+    <?php include '../controller/session.php'; ?>
+
 </body>
 
 </html>

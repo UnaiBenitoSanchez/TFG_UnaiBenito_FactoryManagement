@@ -47,7 +47,7 @@ session_start();
             height: 100%;
             overflow: hidden;
         }
-        
+
         @keyframes gradientBG {
             0% {
                 background-position: 0% 50%;
@@ -221,7 +221,7 @@ session_start();
             }
 
             .card {
-                
+
                 transition: margin-top 0.5s ease;
             }
 
@@ -271,6 +271,9 @@ session_start();
             window.closeModal = closeModal;
         });
     </script>
+
+    <!-- css -->
+    <link rel="stylesheet" href="../css/session.css">
 
 </head>
 
@@ -357,7 +360,7 @@ session_start();
                 text,
                 timestamp,
                 messageId
-            }); 
+            });
 
             let isCurrentUser = user === nameuser;
 
@@ -490,6 +493,8 @@ session_start();
             connectedRef.off();
         });
     </script>
+
+    <?php include '../controller/session.php'; ?>
 
 </body>
 

@@ -43,6 +43,7 @@ $factoryName = getFactoryNameByBoss($bossEmail);
 
   <!-- css -->
   <link rel="stylesheet" href="../css/landing_page.css">
+  <link rel="stylesheet" href="../css/session.css">
 
   <!-- js -->
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -268,8 +269,8 @@ $factoryName = getFactoryNameByBoss($bossEmail);
         <div class="card" style="width: 18rem; margin-bottom: 10px; margin-left: 10px;">
           <img src="../img/playmobil1.jpg" class="card-img-top" alt="...">
           <div class="card-body">
-          <h5 class="card-title">Playmobil City Life Family</h5>
-          <p class="card-text">Modern family figure set with accessories for playing everyday life scenes.</p>
+            <h5 class="card-title">Playmobil City Life Family</h5>
+            <p class="card-text">Modern family figure set with accessories for playing everyday life scenes.</p>
           </div>
         </div>
       </div>
@@ -285,6 +286,9 @@ $factoryName = getFactoryNameByBoss($bossEmail);
     echo 'google.charts.setOnLoadCallback(function() { drawChart(' . json_encode($playtmobilChartData) . ', "columnchart_material4", "Playmobil. Sales, Production, and Profit"); });';
     ?>
   </script>
+
+  <?php include '../controller/session.php'; ?>
+
 </body>
 
 </html>

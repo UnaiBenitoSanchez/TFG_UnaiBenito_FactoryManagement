@@ -296,7 +296,7 @@ session_start();
             }
 
             .card {
-                
+
                 transition: margin-top 0.5s ease;
             }
 
@@ -346,13 +346,16 @@ session_start();
         });
     </script>
 
+    <!-- css -->
+    <link rel="stylesheet" href="../css/session.css">
+
 </head>
 
 <body>
 
-    <nav class="navbar" style="height: 46px;">
-        <a class="navbar-brand" href="landing_page.php">TFG_UnaiBenitoSánchez</a>
-        <button class="navbar-toggler" onclick="toggleNavbar()">☰</button>
+<nav class="navbar" style="height: 46px;">
+        <a class="navbar-brand" href="landing_page.php" style="font-size: 20px">TFG_UnaiBenitoSánchez</a>
+        <button class="navbar-toggler" onclick="toggleNavbar()" style="color: black;">☰</button>
         <ul class="navbar-nav" id="navbarNav">
             <li class="nav-item">
                 <a class="nav-link" href="employee_dashboard.php">Products from your factory</a>
@@ -362,6 +365,9 @@ session_start();
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="./predict_view.php">Demand prediction</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="employees_table.php">Employees table</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="factory.php">Your factory</a>
@@ -572,6 +578,8 @@ session_start();
         });
     </script>
 
+    <?php include '../controller/session.php'; ?>
+    
 </body>
 
 </html>

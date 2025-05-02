@@ -135,6 +135,9 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- css -->
+    <link rel="stylesheet" href="../css/session.css">
+
 </head>
 
 <body>
@@ -330,6 +333,8 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
             updateConnectionStatus();
         });
     </script>
+
+    <?php include '../controller/session.php'; ?>
 
 </body>
 
