@@ -243,3 +243,30 @@ body {
     background-color: rgb(255, 90, 90);
     color: #fff;
 }
+
+
+
+
+.active-session {
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+.status-active {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-inactive {
+    color: #6c757d;
+}
+
+.badge {
+    margin-left: 5px;
+    font-size: 0.8em;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+
+.badge.bg-success {
+    background-color: #28a745;
+}

@@ -38,12 +38,12 @@ try {
     $factory = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $stmt = $conn->prepare("
-        SELECT e.id_employee, e.name, e.email, e.role 
-        FROM employee e
-        JOIN factory_employee fe ON e.id_employee = fe.employee_id_employee
-        WHERE fe.factory_id_factory = :factory_id
-        ORDER BY e.name
-    ");
+    SELECT e.id_employee, e.name, e.email, e.role, e.is_logged_in 
+    FROM employee e
+    JOIN factory_employee fe ON e.id_employee = fe.employee_id_employee
+    WHERE fe.factory_id_factory = :factory_id
+    ORDER BY e.name
+");
     $stmt->bindParam(':factory_id', $factoryId);
     $stmt->execute();
     $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -52,6 +52,8 @@ try {
 } catch (Exception $e) {
     die("Error: " . $e->getMessage());
 }
+
+$currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee_id'] : null;
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +62,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empleados de <?php echo htmlspecialchars($factory['name']); ?></title>
+    <title>Employees from <?php echo htmlspecialchars($factory['name']); ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/employees_table.css">
 
@@ -86,7 +88,6 @@ try {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Smooth navbar toggle
             function toggleNavbar() {
                 var navbar = document.querySelector('.navbar');
                 var navbarNav = document.getElementById('navbarNav');
@@ -94,14 +95,12 @@ try {
                 navbarNav.classList.toggle('show');
                 navbar.classList.toggle('expanded');
 
-                // Calcular altura del menú expandido y establecerla como variable CSS
                 if (navbarNav.classList.contains('show')) {
                     const navbarExpandedHeight = navbarNav.offsetHeight;
                     document.documentElement.style.setProperty('--navbar-expanded-height', navbarExpandedHeight + 'px');
                 }
             }
 
-            // Set up the event listener
             const navbarToggler = document.querySelector('.navbar-toggler');
             if (navbarToggler) {
                 navbarToggler.addEventListener('click', function(e) {
@@ -176,21 +175,32 @@ try {
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($employees as $employee): ?>
-                            <tr>
-                                <td contenteditable="false"><?php echo htmlspecialchars($employee['name']); ?></td>
+                            <tr <?php echo ($employee['is_logged_in']) ? 'class="active-session"' : ''; ?> data-employee-id="<?php echo $employee['id_employee']; ?>">
+                                <td contenteditable="false">
+                                    <?php echo htmlspecialchars($employee['name']); ?>
+                                    <?php if (isset($_SESSION['employee_id']) && $_SESSION['employee_id'] == $employee['id_employee']): ?>
+                                        <span class="badge bg-success">You</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td contenteditable="false"><?php echo htmlspecialchars($employee['email']); ?></td>
-
+                                <td>
+                                    <?php if ($employee['is_logged_in']): ?>
+                                        <span class="status-active">Online</span>
+                                    <?php else: ?>
+                                        <span class="status-inactive">Offline</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td>
                                     <button class="edit-btn" onclick="enableEdit(this)">Edit</button>
                                     <button class="save-btn" style="display:none;" onclick="saveEdit(this, <?php echo $employee['id_employee']; ?>)">
                                         💾 Save
                                     </button>
-
                                     <button class="delete-btn" onclick="deleteEmployee(<?php echo $employee['id_employee']; ?>, this)">Delete</button>
                                 </td>
                             </tr>
@@ -270,6 +280,55 @@ try {
                     }
                 });
         }
+    </script>
+
+    <script>
+        function updateConnectionStatus() {
+            fetch('get_connection_status.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        console.error('Error:', data.error);
+                        return;
+                    }
+
+                    data.forEach(employee => {
+                        const rows = document.querySelectorAll('tbody tr');
+                        rows.forEach(row => {
+                            const saveBtn = row.querySelector('.save-btn');
+                            if (saveBtn) {
+                                const onclickAttr = saveBtn.getAttribute('onclick');
+                                const match = onclickAttr.match(/saveEdit\(this, (\d+)\)/);
+                                if (match && match[1] == employee.id) {
+                                    const statusCell = row.querySelector('td:nth-child(3)');
+                                    if (employee.is_logged_in) {
+                                        statusCell.innerHTML = '<span class="status-active">Online</span>';
+                                        row.classList.add('active-session');
+                                    } else {
+                                        statusCell.innerHTML = '<span class="status-inactive">Offline</span>';
+                                        row.classList.remove('active-session');
+                                    }
+                                }
+                            }
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching connection status:', error);
+                })
+                .finally(() => {
+                    setTimeout(updateConnectionStatus, 1000);
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateConnectionStatus();
+        });
     </script>
 
 </body>

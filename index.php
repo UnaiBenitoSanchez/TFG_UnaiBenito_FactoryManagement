@@ -267,7 +267,7 @@ session_start();
                             session_start();
                             $_SESSION['user_email'] = $email;
                             $_SESSION['user_role'] = $role;
-                            $_SESSION['user_id'] = $user['id_boss_factory']; 
+                            $_SESSION['user_id'] = $user['id_boss_factory'];
 
                             if ($role === 'employee') {
                                 $_SESSION['employee_user'] = $user['name'];
@@ -277,8 +277,16 @@ session_start();
 
                             if ($role === 'boss') {
                                 echo '<script>window.location.href = "./php/landing_page.php";</script>';
-                            } else {
+                            } else if ($role === 'employee') {
+                                $stmt = $conn->prepare("UPDATE employee SET is_logged_in = TRUE WHERE id_employee = :id");
+
+                                $stmt->bindParam(':id', $user['id_employee']);
+                                $stmt->execute();
+                                $_SESSION['employee_user'] = $user['name'];
+                                $_SESSION['employee_id'] = $user['id_employee'];
+
                                 echo '<script>window.location.href = "./php/employee_dashboard.php";</script>';
+                                exit();
                             }
 
                             exit();

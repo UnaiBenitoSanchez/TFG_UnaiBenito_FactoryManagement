@@ -6,7 +6,9 @@
     "express": "^5.1.0",
     "firebase-admin": "^13.3.0",
     "php-express": "^0.0.3",
-    "python": "^0.0.4"
+    "python": "^0.0.4",
+    "sqlite3": "^5.1.7",
+    "ws": "^8.18.1"
   },
   "name": "gestion_fabricas",
   "version": "1.0.0",
