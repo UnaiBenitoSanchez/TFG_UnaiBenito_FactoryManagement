@@ -70,12 +70,16 @@
 }
 
 .card p {
+    margin-top: 20px;
     font-size: 14px; 
     line-height: 1.5;
     color: #fff;
     opacity: 0.9;
 }
 
+.card .card-text{
+    margin-top: 0px;
+}
 
 .card button {
     border: none;

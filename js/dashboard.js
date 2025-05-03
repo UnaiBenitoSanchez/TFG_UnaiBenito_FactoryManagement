@@ -48,7 +48,7 @@ $(document).ready(function () {
         productDiv.html('<div class="card">\
                 <div class="card-body">\
                     <h5 class="card-title">' + product.name + '</h5>\
-                    <img src="../' + product.image + '" style="max-width: 200px; max-height: 200px;" class="card-img-top" alt="Product Image" onerror="handleImageError(this)">\
+                    <img src="../' + product.image + '" style="max-width: 150px; max-height: 100px; margin-bottom: 10px" class="card-img-top" alt="Product Image" onerror="handleImageError(this)">\
                     <p class="card-text">Product description: ' + product.description + '</p>\
                     <p class="card-text">Quantity: ' + availableQuantity + '</p>\
                     <p class="card-text">Price: $<span class="price-editable" data-product-id="' + product.id_product + '">' + price.toFixed(2) + '</span></p>\
