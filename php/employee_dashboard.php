@@ -27,6 +27,7 @@ if (!isset($_SESSION['user_email'])) {
 
     <!-- CSS -->
     <link rel="stylesheet" href="../css/dashboard.css">
+
     <style>
         .session-popup {
             position: fixed;
@@ -73,7 +74,7 @@ if (!isset($_SESSION['user_email'])) {
         }
 
         /* Modal */
-        .modal {
+        .modalError {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -87,7 +88,7 @@ if (!isset($_SESSION['user_email'])) {
             align-items: center;
         }
 
-        .modal-content {
+        .modalError-content {
             background-color: rgba(48, 63, 159, 0.9);
             padding: 30px;
             border-radius: 15px;
@@ -114,7 +115,7 @@ if (!isset($_SESSION['user_email'])) {
             text-decoration: none;
         }
 
-        .modal button {
+        .modalError button {
             padding: 10px 20px;
             font-size: 16px;
             background-color: rgb(238, 81, 60);
@@ -125,12 +126,12 @@ if (!isset($_SESSION['user_email'])) {
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        .modal button:hover {
+        .modalError button:hover {
             background-color: rgb(163, 31, 26);
             transform: translateY(-2px);
         }
 
-        .modal h2 {
+        .modalError h2 {
             font-size: 24px;
             font-weight: bold;
             color: #BED8D4;
@@ -138,7 +139,7 @@ if (!isset($_SESSION['user_email'])) {
             text-decoration: underline;
         }
 
-        .modal p {
+        .modalError p {
             font-size: 16px;
             color: #fff;
             opacity: 0.9;
@@ -176,6 +177,8 @@ if (!isset($_SESSION['user_email'])) {
 
             window.closeModal = closeModal;
         });
+
+        
     </script>
 
 </head>
@@ -301,8 +304,8 @@ if (!isset($_SESSION['user_email'])) {
     $conn = null;
     ?>
 
-    <div id="errorModal" class="modal">
-        <div class="modal-content">
+    <div id="errorModal" class="modalError">
+        <div class="modalError-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <h2>Access Denied</h2>
             <p>As an employee, you can't access this section.</p>

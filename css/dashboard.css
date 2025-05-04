@@ -1,4 +1,4 @@
-.porcentaje-text {
+.percentage-text {
     color: #fff;
 }
 
@@ -15,6 +15,7 @@
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -28,56 +29,70 @@
 .card {
     background-color: rgba(48, 63, 159, 0.9);
     border-radius: 15px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
     margin: 15px;
-    width: 350px; 
-    height: 500px;
+    width: 350px;
+    height: 450px;
     padding: 20px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: #fff; 
-    border: 2px solid #2081C3; 
-    overflow-y: auto;
+    color: #fff;
+    border: 2px solid #2081C3;
+    display: flex;
+    flex-direction: column;
 }
 
-.card::-webkit-scrollbar {
-    width: 8px;
+.card-body {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.card::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+.product-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+    height: 180px;
 }
 
-.card::-webkit-scrollbar-thumb {
-    background: #2081C3;
-    border-radius: 8px;
-}
-
-.card::-webkit-scrollbar-thumb:hover {
-    background: #63D2FF;
+.product-image {
+    max-width: 90%;
+    max-height: 170px;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
 }
 
 .card:hover {
-    transform: scale(1.05); 
+    transform: scale(1.05);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
 
-.card h1, .card h2 {
-    font-size: 18px; 
+.card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.card h1,
+.card h2 {
+    font-size: 18px;
     font-weight: bold;
-    color: #BED8D4; 
+    color: #BED8D4;
     margin-bottom: 10px;
 }
 
 .card p {
-    margin-top: 20px;
-    font-size: 14px; 
+    font-size: 14px;
     line-height: 1.5;
     color: #fff;
     opacity: 0.9;
 }
 
-.card .card-text{
+.card .card-text {
     margin-top: 0px;
 }
 
@@ -91,30 +106,120 @@
     font-weight: 600;
 }
 
-.card .edit-btn {
-    background-color: #63D2FF; 
+.card .btn-edit {
+    background-color: #63D2FF;
     color: #fff;
 }
 
-.card .edit-btn:hover {
-    background-color: #2081C3; 
+.card .btn-edit:hover {
+    background-color: #2081C3;
     transform: translateY(-2px);
 }
 
-.card .delete-btn {
+.card .btn-delete {
     background-color: #FF6B6B;
     color: #fff;
 }
 
-.card .delete-btn:hover {
+.card .btn-delete:hover {
     background-color: #C0392B;
     transform: translateY(-2px);
 }
 
+.card-footer {
+    background-color: rgba(48, 63, 159, 0.7);
+    border-top: 1px solid #2081C3;
+    padding: 5px;
+    border-radius: 0 0 13px 13px;
+}
+
+.action-buttons {
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+#productDetailModal .modal-content {
+    background-color: rgba(48, 63, 159, 0.95);
+    color: #fff;
+    border-radius: 15px;
+    border: 2px solid #2081C3;
+}
+
+#productDetailModal .modal-header {
+    border-bottom: 1px solid #2081C3;
+}
+
+#productDetailModal .modal-header .btn-close {
+    color: #fff;
+    opacity: 1;
+}
+
+#productDetailModal .modal-title {
+    color: #BED8D4;
+    font-weight: bold;
+}
+
+#productDetailModal label {
+    color: #BED8D4;
+}
+
+#productDetailModal input,
+#productDetailModal textarea {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #2081C3;
+    color: #fff;
+}
+
+#productDetailModal input:focus,
+#productDetailModal textarea:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: #63D2FF;
+    box-shadow: 0 0 0 0.25rem rgba(99, 210, 255, 0.25);
+    color: #fff;
+}
+
+.modal-product-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.modal-product-image {
+    max-width: 100%;
+    max-height: 280px;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.product-details {
+    background-color: rgba(32, 129, 195, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 4px solid #63D2FF;
+}
+
+.modal-action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
 @media (max-width: 768px) {
     .card {
-        width: 90%; 
-        height: auto; 
+        width: 90%;
+        height: auto;
+        overflow-y: auto;
+    }
+
+    .card-body {
+        overflow-y: auto;
+    }
+
+    .description-text {
+        -webkit-line-clamp: initial;
+        max-height: none;
     }
 }
 
@@ -132,6 +237,7 @@
     overflow: hidden;
     transition: max-height 0.3s ease-out, padding 0.3s ease-out;
     border-radius: 15px 15px 0 0;
+    z-index: 50;
 }
 
 #addProductFooter h5 {
@@ -139,7 +245,7 @@
 }
 
 #addProductFooter.expanded {
-    max-height: 600px; 
+    max-height: 600px;
     padding: 20px;
 }
 
@@ -159,22 +265,103 @@ body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
+    padding-bottom: 70px;
 }
 
 @keyframes gradientBG {
     0% {
         background-position: 0% 50%;
     }
+
     25% {
         background-position: 100% 50%;
     }
+
     50% {
         background-position: 0% 100%;
     }
+
     75% {
         background-position: 100% 100%;
     }
+
     100% {
         background-position: 0% 50%;
+    }
+}
+
+.btn-modal-edit {
+    background-color: #63D2FF;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.btn-modal-edit:hover {
+    background-color: #2081C3;
+}
+
+.btn-modal-delete {
+    background-color: #FF6B6B;
+    color: #fff;
+}
+
+.btn-modal-delete:hover {
+    background-color: #C0392B;
+}
+
+.btn-modal-confirm {
+    background-color: #4CAF50;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.btn-modal-confirm:hover {
+    background-color: #388E3C;
+}
+
+/* Dynamic footer */
+.card-footer {
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
+    background-color: rgba(48, 63, 159, 0.7);
+    border-top: 1px solid #2081C3;
+    border-radius: 0 0 13px 13px;
+    transition: all 0.3s ease;
+}
+
+.card:hover .card-footer {
+    height: auto;
+    padding: 5px;
+    opacity: 1;
+    background-color: rgba(32, 129, 195, 0.5);
+}
+
+.card-footer small {
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+/* Modal description */
+
+#modal-product-description {
+    min-height: 200px;
+    min-width: 400px;
+    resize: horizontal;
+}
+
+textarea.form-control {
+    min-height: 100px;
+}
+
+@media (max-width: 768px) {
+    #modal-product-description {
+        min-height: 100px;
+        min-width: 300px;
+    }
+
+    .modal-product-image{
+        margin-top: -30px;
     }
 }
