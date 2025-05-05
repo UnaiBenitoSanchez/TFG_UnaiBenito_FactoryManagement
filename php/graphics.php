@@ -92,7 +92,7 @@
                             color: '#fff'
                         }
                     },
-                    colors: ['#2081C3']
+                    colors: ['#fff200']
                 };
 
 
