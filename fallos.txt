@@ -1,4 +1,4 @@
-Cambiar el estado de login de empleado con logs de websocket
+Cambiar el estado de login de empleado con logs de websocket o con cookies o algo por el estilo
 
 -----------OPCIONAL-----------
 
