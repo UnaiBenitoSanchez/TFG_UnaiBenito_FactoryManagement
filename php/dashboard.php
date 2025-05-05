@@ -45,6 +45,27 @@ session_start();
             cursor: pointer;
             font-size: 12px;
         }
+
+
+
+        .modal-product-image-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.modal-product-image {
+    max-height: 300px;
+    width: auto;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.image-caption {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
     </style>
 
 </head>
@@ -145,8 +166,13 @@ session_start();
 
     <div class="container mt-4 mb-5 col-lg-10 z">
         <div class="row" id="products-container">
-
+            <!-- Products will be loaded here dynamically -->
         </div>
+    </div>
+
+    <!-- Unsaved changes alert -->
+    <div class="unsaved-changes-alert" id="unsavedChangesAlert">
+        <strong>You have unsaved changes!</strong> Save or cancel your changes before leaving.
     </div>
 
     <footer class="text-center text-lg-start fixed-bottom" id="addProductFooter">
@@ -212,6 +238,19 @@ session_start();
                     }, 500);
                 }, 5000);
             }
+            
+            // Add instructions tooltip for inline editing
+            $('body').append(`
+                <div class="alert alert-info alert-dismissible fade show" role="alert" style="position: fixed; top: 70px; right: 15px; z-index: 1050;">
+                    <strong>Tip:</strong> Double-click on product name, quantity or price to edit directly!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `);
+            
+            // Auto-dismiss tip after 8 seconds
+            setTimeout(function() {
+                $('.alert-info').alert('close');
+            }, 8000);
         });
     </script>
 
