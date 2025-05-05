@@ -49,23 +49,22 @@ session_start();
 
 
         .modal-product-image-container {
-    text-align: center;
-    margin-bottom: 15px;
-}
+            text-align: center;
+            margin-bottom: 15px;
+        }
 
-.modal-product-image {
-    max-height: 300px;
-    width: auto;
-    max-width: 100%;
-    display: block;
-    margin: 0 auto;
-}
+        .modal-product-image {
+            max-height: 300px;
+            width: auto;
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+        }
 
-.image-caption {
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-radius: 5px;
-}
+        .image-caption {
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 
 </head>
@@ -238,15 +237,15 @@ session_start();
                     }, 500);
                 }, 5000);
             }
-            
+
             // Add instructions tooltip for inline editing
             $('body').append(`
                 <div class="alert alert-info alert-dismissible fade show" role="alert" style="position: fixed; top: 70px; right: 15px; z-index: 1050;">
-                    <strong>Tip:</strong> Double-click on product name, quantity or price to edit directly!
+                    <strong>Tip:</strong> Click on a product card to view the full details of a product!
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             `);
-            
+
             // Auto-dismiss tip after 8 seconds
             setTimeout(function() {
                 $('.alert-info').alert('close');

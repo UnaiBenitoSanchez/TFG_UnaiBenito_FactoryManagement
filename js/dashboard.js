@@ -306,7 +306,7 @@ $(document).ready(function () {
                 <img src="../${productData.image}" class="modal-product-image img-fluid" alt="Product Image" onerror="handleImageError(this)">
             </div>
             <div class="image-caption mt-3">
-                <h5 class="text-center">(Double-click product name, quantity or price to edit directly!)</h5>
+                <h5 class="text-center">(Double-click product name, description, quantity or price to edit directly!)</h5>
             </div>
         </div>
         <div class="col-md-7">
