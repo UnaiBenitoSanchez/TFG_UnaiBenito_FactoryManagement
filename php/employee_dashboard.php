@@ -177,8 +177,6 @@ if (!isset($_SESSION['user_email'])) {
 
             window.closeModal = closeModal;
         });
-
-        
     </script>
 
 </head>
@@ -368,6 +366,23 @@ if (!isset($_SESSION['user_email'])) {
     </script>
 
     <?php include '../controller/session.php'; ?>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sessionPopup = document.querySelector('.session-popup');
+
+            if (sessionPopup) {
+                setTimeout(function() {
+                    sessionPopup.style.transition = 'opacity 0.5s ease-out';
+                    sessionPopup.style.opacity = '0';
+
+                    setTimeout(function() {
+                        sessionPopup.remove();
+                    }, 500);
+                }, 5000);
+            }
+        });
+    </script>
 
 </body>
 

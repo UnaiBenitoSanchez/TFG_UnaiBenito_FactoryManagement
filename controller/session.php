@@ -1,4 +1,5 @@
 <!-- Session pop-up -->
+
 <div class="session-popup" id="sessionPopup">
     <button class="close-btn" id="closeSessionPopup">&times;</button>
     <div>Logged in as <strong id="sessionEmail"></strong></div>

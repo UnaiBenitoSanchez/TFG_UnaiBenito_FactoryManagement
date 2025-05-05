@@ -1,3 +1,9 @@
+Poder editar producto en los propios campos donde se muestra
+
+Si se ha cambiado algo del producto que no se pueda cerrar la pestaña, que diga algo como "Hay cambios sin guardar" y pida confirmacion
+
+Cambiar el estado de login de empleado con logs de websocket
+
 -----------OPCIONAL-----------
 
 //INTENTAR SI TENGO TODO TERMINADO SEPARAR HTML Y PHP
