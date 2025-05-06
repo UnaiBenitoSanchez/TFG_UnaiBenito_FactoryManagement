@@ -152,31 +152,6 @@ if (!isset($_SESSION['user_email'])) {
             var navbarNav = document.getElementById('navbarNav');
             navbarNav.classList.toggle('show');
         }
-
-        $(document).ready(function() {
-            $('#errorModal').hide();
-
-            function openModal() {
-                $('#errorModal').fadeIn();
-            }
-
-            function closeModal() {
-                $('#errorModal').fadeOut();
-            }
-
-            $('a').on('click', function(event) {
-                let link = $(this).attr('href');
-
-                if (link.includes('employee_dashboard.php') || link.includes('../logout.php') || link.includes('chatEmployee.php')) {
-                    return;
-                }
-
-                event.preventDefault();
-                openModal();
-            });
-
-            window.closeModal = closeModal;
-        });
     </script>
 
 </head>
@@ -184,23 +159,11 @@ if (!isset($_SESSION['user_email'])) {
 <body>
 
     <nav class="navbar">
-        <a class="navbar-brand" href="landing_page.php" style="font-size: 20px">TFG_UnaiBenitoSánchez</a>
+        <p class="navbar-brand" style="font-size: 20px; margin-top: 12px;">TFG_UnaiBenitoSánchez</p>
         <button class="navbar-toggler" onclick="toggleNavbar()" style="color: black;">☰</button>
         <ul class="navbar-nav" id="navbarNav">
             <li class="nav-item">
                 <a class="nav-link" href="employee_dashboard.php">Products from your factory</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="graphics.php">Production graphics</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./predict_view.php">Demand prediction</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="employees_table.php">Employees table</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="factory.php">Your factory</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="chatEmployee.php">Chat</a>
@@ -301,16 +264,6 @@ if (!isset($_SESSION['user_email'])) {
     }
     $conn = null;
     ?>
-
-    <div id="errorModal" class="modalError">
-        <div class="modalError-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2>Access Denied</h2>
-            <p>As an employee, you can't access this section.</p>
-            <p>Only the bosses can access there.</p>
-            <button onclick="closeModal()">Close</button>
-        </div>
-    </div>
 
     <div class="container mt-4 mb-5 col-lg-10 z">
         <div class="row" id="products-container">
