@@ -115,35 +115,99 @@ if (!isset($_SESSION['user_email'])) {
             text-decoration: none;
         }
 
-        .modalError button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: rgb(238, 81, 60);
-            color: white;
-            border: none;
+        /* Estilos para el modal de confirmación */
+        .custom-confirm-modal .modal-dialog {
+            max-width: 400px;
+        }
+
+        .custom-confirm-modal .modal-content {
             border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: none;
         }
 
-        .modalError button:hover {
-            background-color: rgb(163, 31, 26);
-            transform: translateY(-2px);
+        .custom-confirm-modal .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            padding: 15px 20px;
         }
 
-        .modalError h2 {
-            font-size: 24px;
-            font-weight: bold;
-            color: #BED8D4;
-            margin-bottom: 20px;
-            text-decoration: underline;
+        .custom-confirm-modal .modal-title {
+            font-weight: 600;
+            color: #212529;
         }
 
-        .modalError p {
+        .custom-confirm-modal .modal-body {
+            padding: 20px;
             font-size: 16px;
-            color: #fff;
-            opacity: 0.9;
-            margin-bottom: 20px;
+            background-color: #63D2FF;
+        }
+
+        .custom-confirm-modal .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        /* Botones en el modal */
+        .custom-confirm-modal .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .custom-confirm-modal .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .custom-confirm-modal .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .custom-confirm-modal .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .custom-confirm-modal .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        /* Animación del modal */
+        .modal.fade .modal-dialog {
+            transition: transform 0.3s ease-out;
+            transform: translateY(-50px);
+        }
+
+        .modal.show .modal-dialog {
+            transform: translateY(0);
+        }
+
+        /* Overlay del modal más oscuro */
+        .modal-backdrop.show {
+            opacity: 0.6;
+        }
+
+        /* Estilo para el modal de salir sin guardar */
+        #unsavedChangesModal .modal-header {
+            background-color:rgb(56, 135, 215);
+            color: #721c24;
+        }
+
+        /* Estilo para el modal de eliminar producto */
+        #deleteProductModal .modal-header {
+            background-color:rgb(56, 135, 215);
+            color: #721c24;
+        }
+
+        #deleteProductModal .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
         }
     </style>
 
@@ -187,19 +251,19 @@ if (!isset($_SESSION['user_email'])) {
         if (isset($_FILES["product_image"]) && $_FILES["product_image"]["error"] == 0) {
             $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
             $fileType = $_FILES["product_image"]["type"];
-            
+
             if (!in_array($fileType, $allowedTypes)) {
                 die("Error: Solo se permiten imágenes JPEG, PNG o GIF.");
             }
-            
+
             if ($_FILES["product_image"]["size"] > 2000000) {
                 die("Error: La imagen es demasiado grande (máx 2MB).");
             }
-            
+
             $nameFile = preg_replace("/[^a-zA-Z0-9\.\-]/", "", basename($_FILES["product_image"]["name"]));
             $extension = strtolower(pathinfo($nameFile, PATHINFO_EXTENSION));
             $nameFile = uniqid() . '.' . $extension;
-            
+
             $targetFile = "../img/" . $nameFile;
             if (!move_uploaded_file($_FILES["product_image"]["tmp_name"], $targetFile)) {
                 die("Error al subir la imagen.");

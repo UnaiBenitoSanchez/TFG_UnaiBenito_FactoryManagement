@@ -7,6 +7,60 @@ $(document).ready(function () {
   // Charge data at start
   loadData();
 
+  // Function to create a custom confirmation modal
+  function createConfirmModal(
+    title,
+    message,
+    confirmBtnText,
+    cancelBtnText,
+    confirmCallback
+  ) {
+    // Remove any existing confirm modal
+    $("#customConfirmModal").remove();
+
+    // Create a new modal structure
+    const modalHTML = `
+      <div class="modal fade" id="customConfirmModal" tabindex="-1" aria-labelledby="customConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="customConfirmModalLabel">${title}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>${message}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${cancelBtnText}</button>
+              <button type="button" class="btn btn-danger" id="confirmModalBtn">${confirmBtnText}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Append modal to body
+    $("body").append(modalHTML);
+
+    // Initialize the modal
+    const confirmModal = new bootstrap.Modal(
+      document.getElementById("customConfirmModal")
+    );
+
+    // Handle confirm button click
+    $("#confirmModalBtn").on("click", function () {
+      confirmModal.hide();
+      if (typeof confirmCallback === "function") {
+        confirmCallback();
+      }
+    });
+
+    // Show the modal
+    confirmModal.show();
+
+    return confirmModal;
+  }
+
   // Function to charge data by AJAX
   function loadData() {
     $.ajax({
@@ -47,34 +101,43 @@ $(document).ready(function () {
     // Add modal to body if not exists
     if ($("#productDetailModal").length === 0) {
       $("body").append(`
-                <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="productDetailModalLabel">Product Details</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body" id="productDetailContent">
-                                <!-- Product details will be injected here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `);
+                  <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="productDetailModalLabel">Product Details</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body" id="productDetailContent">
+                                  <!-- Product details will be injected here -->
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              `);
 
       // Add event handler for modal close attempt when changes are pending
       $("#productDetailModal").on("hide.bs.modal", function (e) {
         if (hasUnsavedChanges) {
-          if (
-            !confirm(
-              "You have unsaved changes. Are you sure you want to close?"
-            )
-          ) {
-            e.preventDefault();
-          } else {
-            hasUnsavedChanges = false;
-            updateBeforeUnloadListener();
-          }
+          e.preventDefault(); // Prevent modal from closing immediately
+
+          // Show custom confirmation modal
+          createConfirmModal(
+            "Unsaved Changes",
+            "You have unsaved changes. Are you sure you want to close?",
+            "Close Anyway",
+            "Cancel",
+            function () {
+              // If confirmed, reset changes flag and close the modal
+              hasUnsavedChanges = false;
+              updateBeforeUnloadListener();
+              // Use Bootstrap's API to hide the modal programmatically
+              const productModal = bootstrap.Modal.getInstance(
+                document.getElementById("productDetailModal")
+              );
+              productModal.hide();
+            }
+          );
         }
       });
     }
@@ -92,44 +155,44 @@ $(document).ready(function () {
       '<div class="card product-card" data-product-id="' +
         product.id_product +
         '">\
-                <div class="card-body">\
-                    <h5 class="card-title" data-field="name" data-original="' +
+                  <div class="card-body">\
+                      <h5 class="card-title" data-field="name" data-original="' +
         product.name +
         '">' +
         product.name +
         '</h5>\
-                    <div class="product-image-container">\
-                        <img src="../' +
+                      <div class="product-image-container">\
+                          <img src="../' +
         product.image +
         '" class="product-image" alt="Product Image" onerror="handleImageError(this)">\
-                    </div>\
-                    <p class="card-text"><span class="field-label">Quantity: </span><span data-field="quantity" data-original="' +
+                      </div>\
+                      <p class="card-text"><span class="field-label">Quantity: </span><span data-field="quantity" data-original="' +
         availableQuantity +
         '">' +
         availableQuantity +
         '</span></p>\
-                    <p class="card-text"><span class="field-label">Price: $</span><span data-field="price" data-original="' +
+                      <p class="card-text"><span class="field-label">Price: $</span><span data-field="price" data-original="' +
         price.toFixed(2) +
         '">' +
         price.toFixed(2) +
         '</span></p>\
-                    <p>Percentage from the total:</p>\
-                    <div class="progress">\
-                        <div class="progress-bar" role="progressbar" style="width: ' +
+                      <p>Percentage from the total:</p>\
+                      <div class="progress">\
+                          <div class="progress-bar" role="progressbar" style="width: ' +
         percentage +
         '%;" aria-valuenow="' +
         percentage +
         '" aria-valuemin="0" aria-valuemax="100">\
-                            <span class="percentage-text">' +
+                              <span class="percentage-text">' +
         percentage.toFixed(2) +
         '%</span>\
-                        </div>\
-                    </div>\
-                </div>\
-                <div class="card-footer text-center">\
-                    <small class="text-light">Click for details and options</small>\
-                </div>\
-            </div>'
+                          </div>\
+                      </div>\
+                  </div>\
+                  <div class="card-footer text-center">\
+                      <small class="text-light">Click for details and options</small>\
+                  </div>\
+              </div>'
     );
 
     // Store full product data for modal
@@ -299,49 +362,49 @@ $(document).ready(function () {
 
     // Display full product details in modal
     let modalContent = `
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-5">
-            <div class="modal-product-image-container">
-                <img src="../${
-                  productData.image
-                }" class="modal-product-image img-fluid" alt="Product Image" onerror="handleImageError(this)">
-            </div>
-            <div class="image-caption mt-3">
-                <h5 class="text-center">(Double-click product name, description, quantity or price to edit directly!)</h5>
-            </div>
-        </div>
-        <div class="col-md-7">
-            <h3 class="modal-editable" data-field="name" data-original="${
-              productData.name
-            }" data-product-id="${productId}">${productData.name}</h3>
-            <div class="product-details">
-                <p><strong>Description:</strong> <span class="modal-editable" data-field="description" data-original="${
-                  productData.description
-                }" data-product-id="${productId}">${
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-5">
+              <div class="modal-product-image-container">
+                  <img src="../${
+                    productData.image
+                  }" class="modal-product-image img-fluid" alt="Product Image" onerror="handleImageError(this)">
+              </div>
+              <div class="image-caption mt-3">
+                  <h5 class="text-center">(Double-click product name, description, quantity or price to edit directly!)</h5>
+              </div>
+          </div>
+          <div class="col-md-7">
+              <h3 class="modal-editable" data-field="name" data-original="${
+                productData.name
+              }" data-product-id="${productId}">${productData.name}</h3>
+              <div class="product-details">
+                  <p><strong>Description:</strong> <span class="modal-editable" data-field="description" data-original="${
+                    productData.description
+                  }" data-product-id="${productId}">${
       productData.description
     }</span></p>
-                <p><strong>Quantity:</strong> <span class="modal-editable" data-field="quantity" data-original="${
-                  productData.available_quantity
-                }" data-product-id="${productId}">${
+                  <p><strong>Quantity:</strong> <span class="modal-editable" data-field="quantity" data-original="${
+                    productData.available_quantity
+                  }" data-product-id="${productId}">${
       productData.available_quantity
     }</span></p>
-                <p><strong>Price:</strong> <span class="modal-editable" data-field="price" data-original="${parseFloat(
-                  productData.price
-                ).toFixed(2)}" data-product-id="${productId}">${parseFloat(
+                  <p><strong>Price:</strong> <span class="modal-editable" data-field="price" data-original="${parseFloat(
+                    productData.price
+                  ).toFixed(2)}" data-product-id="${productId}">${parseFloat(
       productData.price
     ).toFixed(2)}</span></p>
-            </div>
-            
-            <div class="mt-4 modal-action-buttons">
-                <button class="btn btn-success btn-modal-save" data-product-id="${productId}" style="display: none;">Save Changes</button>
-                <button class="btn btn-secondary btn-modal-cancel" style="display: none;">Cancel</button>
-                <button class="btn btn-danger btn-modal-delete" data-product-id="${productId}">Delete Product</button>
-            </div>
-        </div>
-    </div>
-</div>
-`;
+              </div>
+              
+              <div class="mt-4 modal-action-buttons">
+                  <button class="btn btn-success btn-modal-save" data-product-id="${productId}" style="display: none;">Save Changes</button>
+                  <button class="btn btn-secondary btn-modal-cancel" style="display: none;">Cancel</button>
+                  <button class="btn btn-danger btn-modal-delete" data-product-id="${productId}">Delete Product</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  `;
 
     $("#productDetailContent").html(modalContent);
     const productModal = new bootstrap.Modal(
@@ -430,31 +493,31 @@ $(document).ready(function () {
     };
 
     let editForm = `
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="mb-3">
-                            <label for="modal-product-name" class="form-label">Product Name</label>
-                            <input type="text" class="form-control" id="modal-product-name" value="${productData.name}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="modal-product-description" class="form-label">Product Description</label>
-                            <textarea class="form-control" id="modal-product-description" rows="3">${productData.description}</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="modal-product-quantity" class="form-label">Quantity</label>
-                            <input type="number" class="form-control" id="modal-product-quantity" value="${productData.available_quantity}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="modal-product-price" class="form-label">Price</label>
-                            <input type="number" step="0.01" class="form-control" id="modal-product-price" value="${productData.price}">
-                        </div>
-                        <button class="btn btn-success btn-modal-confirm" data-product-id="${productId}">Save Changes</button>
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        `;
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-12">
+                          <div class="mb-3">
+                              <label for="modal-product-name" class="form-label">Product Name</label>
+                              <input type="text" class="form-control" id="modal-product-name" value="${productData.name}">
+                          </div>
+                          <div class="mb-3">
+                              <label for="modal-product-description" class="form-label">Product Description</label>
+                              <textarea class="form-control" id="modal-product-description" rows="3">${productData.description}</textarea>
+                          </div>
+                          <div class="mb-3">
+                              <label for="modal-product-quantity" class="form-label">Quantity</label>
+                              <input type="number" class="form-control" id="modal-product-quantity" value="${productData.available_quantity}">
+                          </div>
+                          <div class="mb-3">
+                              <label for="modal-product-price" class="form-label">Price</label>
+                              <input type="number" step="0.01" class="form-control" id="modal-product-price" value="${productData.price}">
+                          </div>
+                          <button class="btn btn-success btn-modal-confirm" data-product-id="${productId}">Save Changes</button>
+                          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      </div>
+                  </div>
+              </div>
+          `;
 
     modalBody.html(editForm);
 
@@ -595,23 +658,31 @@ $(document).ready(function () {
   $(document).on("click", ".btn-modal-delete", function () {
     const productId = $(this).data("product-id");
 
-    if (confirm("Are you sure you want to delete this product?")) {
-      $.ajax({
-        url: "deleteData.php",
-        method: "POST",
-        data: {
-          id_product: productId,
-        },
-        success: function (response) {
-          console.log(response);
-          $("#productDetailModal").modal("hide");
-          loadData();
-        },
-        error: function (error) {
-          console.error("Error:", error);
-        },
-      });
-    }
+    // Show custom confirmation modal instead of browser confirm
+    createConfirmModal(
+      "Delete Product",
+      "Are you sure you want to delete this product?",
+      "Delete",
+      "Cancel",
+      function () {
+        // If confirmed, proceed with deletion
+        $.ajax({
+          url: "deleteData.php",
+          method: "POST",
+          data: {
+            id_product: productId,
+          },
+          success: function (response) {
+            console.log(response);
+            $("#productDetailModal").modal("hide");
+            loadData();
+          },
+          error: function (error) {
+            console.error("Error:", error);
+          },
+        });
+      }
+    );
   });
 
   // Helper function to handle image errors
@@ -635,4 +706,39 @@ $(document).ready(function () {
     // Standard text will be displayed regardless of this returned value
     return "You have unsaved changes. Are you sure you want to leave?";
   }
+
+  // Add custom style for modal overlay
+  $("<style>")
+    .prop("type", "text/css")
+    .html(
+      `
+      #customConfirmModal .modal-dialog {
+        max-width: 400px;
+      }
+      #customConfirmModal .modal-content {
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      }
+      #customConfirmModal .modal-header {
+        border-bottom: 1px solid #dee2e6;
+        background-color:rgb(43, 147, 188);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+        #customConfirmModal .modal-title {
+        color: white;
+      }
+        #customConfirmModal .modal-body {
+        background-color: #63D2FF;
+      }
+      #customConfirmModal .modal-footer {
+        border-top: 1px solid #dee2e6;
+        background-color: #63D2FF;
+      }
+      #customConfirmModal #confirmModalBtn {
+        min-width: 100px;
+      }
+    `
+    )
+    .appendTo("head");
 });
