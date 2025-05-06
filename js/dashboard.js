@@ -303,18 +303,34 @@ $(document).ready(function () {
     <div class="row">
         <div class="col-md-5">
             <div class="modal-product-image-container">
-                <img src="../${productData.image}" class="modal-product-image img-fluid" alt="Product Image" onerror="handleImageError(this)">
+                <img src="../${
+                  productData.image
+                }" class="modal-product-image img-fluid" alt="Product Image" onerror="handleImageError(this)">
             </div>
             <div class="image-caption mt-3">
                 <h5 class="text-center">(Double-click product name, description, quantity or price to edit directly!)</h5>
             </div>
         </div>
         <div class="col-md-7">
-            <h3 class="modal-editable" data-field="name" data-original="${productData.name}" data-product-id="${productId}">${productData.name}</h3>
+            <h3 class="modal-editable" data-field="name" data-original="${
+              productData.name
+            }" data-product-id="${productId}">${productData.name}</h3>
             <div class="product-details">
-                <p><strong>Description:</strong> <span class="modal-editable" data-field="description" data-original="${productData.description}" data-product-id="${productId}">${productData.description}</span></p>
-                <p><strong>Quantity:</strong> <span class="modal-editable" data-field="quantity" data-original="${productData.available_quantity}" data-product-id="${productId}">${productData.available_quantity}</span></p>
-                <p><strong>Price:</strong> <span class="modal-editable" data-field="price" data-original="${parseFloat(productData.price).toFixed(2)}" data-product-id="${productId}">${parseFloat(productData.price).toFixed(2)}</span></p>
+                <p><strong>Description:</strong> <span class="modal-editable" data-field="description" data-original="${
+                  productData.description
+                }" data-product-id="${productId}">${
+      productData.description
+    }</span></p>
+                <p><strong>Quantity:</strong> <span class="modal-editable" data-field="quantity" data-original="${
+                  productData.available_quantity
+                }" data-product-id="${productId}">${
+      productData.available_quantity
+    }</span></p>
+                <p><strong>Price:</strong> <span class="modal-editable" data-field="price" data-original="${parseFloat(
+                  productData.price
+                ).toFixed(2)}" data-product-id="${productId}">${parseFloat(
+      productData.price
+    ).toFixed(2)}</span></p>
             </div>
             
             <div class="mt-4 modal-action-buttons">
