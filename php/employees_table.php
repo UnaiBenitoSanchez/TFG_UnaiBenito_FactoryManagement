@@ -37,14 +37,33 @@ try {
     $stmt->execute();
     $factory = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    // Pagination configuration
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $perPage = 5;
+    $offset = ($page - 1) * $perPage;
+
+    $stmt = $conn->prepare("
+    SELECT COUNT(*) as total 
+    FROM employee e
+    JOIN factory_employee fe ON e.id_employee = fe.employee_id_employee
+    WHERE fe.factory_id_factory = :factory_id
+");
+    $stmt->bindParam(':factory_id', $factoryId);
+    $stmt->execute();
+    $totalEmployees = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    $totalPages = ceil($totalEmployees / $perPage);
+
     $stmt = $conn->prepare("
     SELECT e.id_employee, e.name, e.email, e.role, e.is_logged_in 
     FROM employee e
     JOIN factory_employee fe ON e.id_employee = fe.employee_id_employee
     WHERE fe.factory_id_factory = :factory_id
     ORDER BY e.name
+    LIMIT :limit OFFSET :offset
 ");
     $stmt->bindParam(':factory_id', $factoryId);
+    $stmt->bindParam(':limit', $perPage, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
     $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -54,6 +73,7 @@ try {
 }
 
 $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee_id'] : null;
+
 ?>
 
 <!DOCTYPE html>
@@ -64,28 +84,8 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employees from <?php echo htmlspecialchars($factory['name']); ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/employees_table.css">
 
-    <!-- Navbar -->
-    <link rel="stylesheet" href="../css/navbar.css">
-
-    <style>
-        /* Navbar */
-        .nav-logout-inline {
-            color: white;
-            background-color: rgb(203, 35, 35);
-            text-decoration: none;
-            transition: color 0.3s, background-color 0.3s;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-
-        .nav-logout-inline:hover {
-            background-color: rgb(255, 90, 90);
-            color: #fff;
-        }
-    </style>
-
+    <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             function toggleNavbar() {
@@ -132,11 +132,61 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
             });
         });
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- css -->
     <link rel="stylesheet" href="../css/session.css">
+    <link rel="stylesheet" href="../css/employees_table.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <style>
+        /* Navbar */
+        .nav-logout-inline {
+            color: white;
+            background-color: rgb(203, 35, 35);
+            text-decoration: none;
+            transition: color 0.3s, background-color 0.3s;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-logout-inline:hover {
+            background-color: rgb(255, 90, 90);
+            color: #fff;
+        }
+
+        /* Pagination controls */
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        .pagination-arrow {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .pagination-arrow:hover:not(.disabled) {
+            background-color: #45a049;
+        }
+
+        .pagination-arrow.disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            font-weight: 500;
+            color: #333;
+        }
+    </style>
 
 </head>
 
@@ -210,6 +260,22 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <!-- Controles de paginación -->
+                <div class="pagination-controls">
+                    <?php if ($page > 1): ?>
+                        <a href="?page=<?php echo $page - 1; ?>" class="pagination-arrow">← Previous</a>
+                    <?php else: ?>
+                        <span class="pagination-arrow disabled">← Previous</span>
+                    <?php endif; ?>
+
+                    <span class="page-info">Page <?php echo $page; ?> of <?php echo $totalPages; ?></span>
+
+                    <?php if ($page < $totalPages): ?>
+                        <a href="?page=<?php echo $page + 1; ?>" class="pagination-arrow">Next →</a>
+                    <?php else: ?>
+                        <span class="pagination-arrow disabled">Next →</span>
+                    <?php endif; ?>
+                </div>
             </div>
         <?php else: ?>
             <div class="no-employees">
@@ -353,6 +419,49 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
         });
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.pagination-arrow:not(.disabled)').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = new URL(this.href).searchParams.get('page');
+                    fetchEmployees(page);
+                });
+            });
+        });
+
+        function fetchEmployees(page) {
+            fetch(`employees_table.php?page=${page}`)
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newTable = doc.querySelector('.table-container');
+                    document.querySelector('.table-container').innerHTML = newTable.innerHTML;
+
+                    document.querySelectorAll('.edit-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            enableEdit(this);
+                        });
+                    });
+
+                    document.querySelectorAll('.save-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const id = this.closest('tr').dataset.employeeId;
+                            saveEdit(this, id);
+                        });
+                    });
+
+                    document.querySelectorAll('.delete-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const id = this.closest('tr').dataset.employeeId;
+                            deleteEmployee(id, this);
+                        });
+                    });
+                });
+        }
+    </script>
+    
 </body>
 
 </html>
