@@ -7,26 +7,22 @@ session_start();
 <html lang="en">
 
 <head>
-    <!-- meta -->
+    <!-- Meta -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- css -->
+    <!-- CSS-Imported -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
 
-    <!-- js -->
+    <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
-    <!-- css -->
-    <link rel="stylesheet" href="css/index.css">
-
-    <!-- title -->
-    <title>Inventory management dashboard - Login/Register</title>
-
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/index.css">
     <style>
         .error-message {
             color: #ff6b6b;
@@ -34,17 +30,10 @@ session_start();
             margin-top: 5px;
             display: none;
         }
-
-        input.invalid {
-            border-color: #ff6b6b !important;
-        }
-
-        .signup-section {
-            max-height: 515px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
     </style>
+
+    <!-- Title -->
+    <title>Inventory management dashboard - Login/Register</title>
 
 </head>
 
@@ -310,7 +299,7 @@ session_start();
 
     </div>
 
-    <script src="js/index.js"></script>
+    <script src="./js/index.js"></script>
     <script>
         function validateEmail(email) {
             const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

@@ -1,6 +1,35 @@
 <?php
 include '../db_connect.php';
 session_start();
+
+$user_email = $_SESSION['user_email'];
+$user_factory_id = null;
+
+if (isset($_SESSION['employee_user'])) {
+    $query = "SELECT fe.factory_id_factory 
+              FROM employee e
+              JOIN factory_employee fe ON e.id_employee = fe.employee_id_employee
+              WHERE e.email = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(1, $user_email);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC); // Cambio aquí
+    if ($result) {
+        $user_factory_id = $result['factory_id_factory'];
+    }
+} elseif (isset($_SESSION['boss_user'])) {
+    $query = "SELECT fb.factory_id_factory 
+              FROM boss b
+              JOIN factory_boss fb ON b.id_boss_factory = fb.boss_id_boss_factory
+              WHERE b.email = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(1, $user_email);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC); // Cambio aquí
+    if ($result) {
+        $user_factory_id = $result['factory_id_factory'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -10,298 +39,20 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factory Chat - Employee</title>
-    <!-- Navbar -->
-    <link rel="stylesheet" href="../css/navbar.css">
+
+    <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
-    <!-- Style -->
-    <style>
-        /* Navbar */
-        .nav-logout-inline {
-            color: white;
-            background-color: rgb(203, 35, 35);
-            text-decoration: none;
-            transition: color 0.3s, background-color 0.3s;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/session.css">
+    <link rel="stylesheet" href="../css/chatEmployee.css">
 
-        .nav-logout-inline:hover {
-            background-color: rgb(255, 90, 90);
-            color: #fff;
-        }
-
-        body {
-            background: linear-gradient(45deg, #F7F9F9, #BED8D4, #78D5D7, #63D2FF, #2081C3);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        html,
-        body {
-            height: 100%;
-            overflow: hidden;
-        }
-
-        @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            25% {
-                background-position: 100% 50%;
-            }
-
-            50% {
-                background-position: 0% 100%;
-            }
-
-            75% {
-                background-position: 100% 100%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .card {
-            background-color: rgba(48, 63, 159, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-            margin: 20px auto;
-            width: 80%;
-            height: 600px;
-            padding: 20px;
-            text-align: center;
-            color: #fff;
-            border: 2px solid #2081C3;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .card h1 {
-            font-size: 22px;
-            font-weight: bold;
-            color: #BED8D4;
-            margin-bottom: 15px;
-        }
-
-        #chat-box {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 10px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-            border: 1px solid #2081C3;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .message {
-            max-width: 70%;
-            padding: 10px;
-            border-radius: 15px;
-            word-break: break-word;
-            display: inline-block;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .message-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .message-wrapper.my-message-wrapper {
-            align-items: flex-end;
-        }
-
-        .message-wrapper .sender-name {
-            font-weight: bold;
-            color: rgb(195, 165, 32);
-            font-size: 14px;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: color 0.3s, transform 0.3s;
-            text-align: right;
-        }
-
-        .my-message {
-            align-self: flex-end;
-            background-color: #63D2FF;
-            color: white;
-            border-bottom-right-radius: 0;
-            text-align: right;
-        }
-
-        .other-message {
-            align-self: flex-start;
-            background-color: #BED8D4;
-            color: #333;
-            border-bottom-left-radius: 0;
-        }
-
-        #chat-box {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 10px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-            border: 1px solid #2081C3;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .input-group {
-            display: flex;
-        }
-
-        #message-input {
-            width: calc(100% - 90px);
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            margin-right: 10px;
-        }
-
-        #send-button {
-            padding: 10px 20px;
-            background-color: #63D2FF;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        #send-button:hover {
-            background-color: #2081C3;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: rgba(48, 63, 159, 0.9);
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 400px;
-            width: 80%;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-            color: #fff;
-        }
-
-        .close-btn {
-            color: #fff;
-            font-size: 28px;
-            font-weight: bold;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-        }
-
-        .close-btn:hover,
-        .close-btn:focus {
-            color: #63D2FF;
-            text-decoration: none;
-        }
-
-        .modal button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: rgb(238, 81, 60);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .modal button:hover {
-            background-color: rgb(163, 31, 26);
-            transform: translateY(-2px);
-        }
-
-        .modal h2 {
-            font-size: 24px;
-            font-weight: bold;
-            color: #BED8D4;
-            margin-bottom: 20px;
-            text-decoration: underline;
-        }
-
-        .modal p {
-            font-size: 16px;
-            color: #fff;
-            opacity: 0.9;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-wrap: wrap;
-                height: auto;
-                min-height: 46px;
-            }
-
-            .navbar-toggler {
-                display: block;
-            }
-
-            .navbar-nav {
-                flex-direction: column;
-                width: 100%;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.5s ease;
-            }
-
-            .navbar-nav.show {
-                max-height: 300px;
-            }
-
-            .nav-item {
-                margin: 10px 0;
-                text-align: center;
-            }
-
-            .card {
-                transition: margin-top 0.5s ease;
-            }
-
-        }
-    </style>
-
+    <!-- JavaScript -->
     <script>
         function toggleNavbar() {
             var navbarNav = document.getElementById('navbarNav');
@@ -316,11 +67,21 @@ session_start();
                 });
             }
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            const sessionPopup = document.querySelector('.session-popup');
 
+            if (sessionPopup) {
+                setTimeout(function() {
+                    sessionPopup.style.transition = 'opacity 0.5s ease-out';
+                    sessionPopup.style.opacity = '0';
+
+                    setTimeout(function() {
+                        sessionPopup.remove();
+                    }, 500);
+                }, 5000);
+            }
+        });
     </script>
-
-    <!-- css -->
-    <link rel="stylesheet" href="../css/session.css">
 
 </head>
 
@@ -354,9 +115,6 @@ session_start();
     </div>
 
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
     <script>
         // Configuration of Firebase
         const firebaseConfig = {
@@ -448,11 +206,12 @@ session_start();
                     user: nameuser,
                     text: messageText,
                     timestamp: timestamp,
-                    email: username
+                    email: username,
+                    factory_id: "<?php echo $user_factory_id; ?>" // Añadir el ID de la fábrica al mensaje
                 }).then(() => {
                     messageInput.value = '';
                 }).catch((error) => {
-                    console.error("Error sendiong message:", error);
+                    console.error("Error sending message:", error);
                     alert("Error sending message. More details in console.");
                 });
             }
@@ -462,7 +221,7 @@ session_start();
         function setupFirebaseListeners() {
             messagesRef.off();
 
-            // Load new messages
+            // Cargar mensajes existentes filtrados por fábrica
             messagesRef.limitToLast(50).once('value')
                 .then((snapshot) => {
                     chatBox.innerHTML = '';
@@ -472,7 +231,8 @@ session_start();
                         let messageId = childSnapshot.key;
                         let messageData = childSnapshot.val();
 
-                        if (!displayedMessages[messageId]) {
+                        // Solo mostrar si el mensaje tiene la misma fábrica que el usuario
+                        if (!displayedMessages[messageId] && messageData.factory_id === "<?php echo $user_factory_id; ?>") {
                             displayMessage(
                                 messageData.user,
                                 messageData.text,
@@ -487,12 +247,12 @@ session_start();
                     console.error("Error loading messages:", error);
                 });
 
-            // Listen new messages
+            // Escuchar nuevos mensajes filtrados por fábrica
             messagesRef.limitToLast(100).on('child_added', (snapshot) => {
                 let messageId = snapshot.key;
                 let messageData = snapshot.val();
 
-                if (!displayedMessages[messageId]) {
+                if (!displayedMessages[messageId] && messageData.factory_id === "<?php echo $user_factory_id; ?>") {
                     displayMessage(
                         messageData.user,
                         messageData.text,
@@ -531,23 +291,6 @@ session_start();
 
     <?php include '../controller/session.php'; ?>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const sessionPopup = document.querySelector('.session-popup');
-
-            if (sessionPopup) {
-                setTimeout(function() {
-                    sessionPopup.style.transition = 'opacity 0.5s ease-out';
-                    sessionPopup.style.opacity = '0';
-
-                    setTimeout(function() {
-                        sessionPopup.remove();
-                    }, 500);
-                }, 5000);
-            }
-        });
-    </script>
-    
 </body>
 
 </html>

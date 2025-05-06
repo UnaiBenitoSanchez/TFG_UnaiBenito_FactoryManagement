@@ -25,15 +25,19 @@ body {
     0% {
         background-position: 0% 50%;
     }
+
     25% {
         background-position: 100% 50%;
     }
+
     50% {
         background-position: 0% 100%;
     }
+
     75% {
         background-position: 100% 100%;
     }
+
     100% {
         background-position: 0% 50%;
     }
@@ -192,4 +196,14 @@ form .btnn {
     .container {
         width: 80%;
     }
+}
+
+input.invalid {
+    border-color: #ff6b6b !important;
+}
+
+.signup-section {
+    max-height: 515px;
+    overflow-y: auto;
+    padding-right: 5px;
 }

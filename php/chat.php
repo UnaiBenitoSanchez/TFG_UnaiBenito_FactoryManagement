@@ -1,6 +1,35 @@
 <?php
 include '../db_connect.php';
 session_start();
+
+$user_email = $_SESSION['user_email'];
+$user_factory_id = null;
+
+if (isset($_SESSION['employee_user'])) {
+    $query = "SELECT fe.factory_id_factory 
+              FROM employee e
+              JOIN factory_employee fe ON e.id_employee = fe.employee_id_employee
+              WHERE e.email = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(1, $user_email);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($result) {
+        $user_factory_id = $result['factory_id_factory'];
+    }
+} elseif (isset($_SESSION['boss_user'])) {
+    $query = "SELECT fb.factory_id_factory 
+              FROM boss b
+              JOIN factory_boss fb ON b.id_boss_factory = fb.boss_id_boss_factory
+              WHERE b.email = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(1, $user_email);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($result) {
+        $user_factory_id = $result['factory_id_factory'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,220 +46,7 @@ session_start();
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
-    <!-- Style -->
-    <style>
-        /* Navbar */
-        .nav-logout-inline {
-            color: white;
-            background-color: rgb(203, 35, 35);
-            text-decoration: none;
-            transition: color 0.3s, background-color 0.3s;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-
-        .nav-logout-inline:hover {
-            background-color: rgb(255, 90, 90);
-            color: #fff;
-        }
-
-        body {
-            background: linear-gradient(45deg, #F7F9F9, #BED8D4, #78D5D7, #63D2FF, #2081C3);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-        }
-
-        html,
-        body {
-            height: 100%;
-            overflow: hidden;
-        }
-
-        @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            25% {
-                background-position: 100% 50%;
-            }
-
-            50% {
-                background-position: 0% 100%;
-            }
-
-            75% {
-                background-position: 100% 100%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .card {
-            background-color: rgba(48, 63, 159, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-            margin: 20px auto;
-            width: 80%;
-            height: 600px;
-            padding: 20px;
-            text-align: center;
-            color: #fff;
-            border: 2px solid #2081C3;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .card h1 {
-            font-size: 22px;
-            font-weight: bold;
-            color: #BED8D4;
-            margin-bottom: 15px;
-        }
-
-        #chat-box {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 10px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-            border: 1px solid #2081C3;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .message {
-            max-width: 70%;
-            padding: 10px;
-            border-radius: 15px;
-            word-break: break-word;
-            display: inline-block;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .message-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .message-wrapper.my-message-wrapper {
-            align-items: flex-end;
-        }
-
-        .message-wrapper .sender-name {
-            font-weight: bold;
-            color: rgb(195, 165, 32);
-            font-size: 14px;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: color 0.3s, transform 0.3s;
-            text-align: right;
-        }
-
-        .my-message {
-            align-self: flex-end;
-            background-color: #63D2FF;
-            color: white;
-            border-bottom-right-radius: 0;
-            text-align: right;
-        }
-
-        .other-message {
-            align-self: flex-start;
-            background-color: #BED8D4;
-            color: #333;
-            border-bottom-left-radius: 0;
-        }
-
-        #chat-box {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 10px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-            border: 1px solid #2081C3;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .input-group {
-            display: flex;
-        }
-
-        #message-input {
-            width: calc(100% - 90px);
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            margin-right: 10px;
-        }
-
-        #send-button {
-            padding: 10px 20px;
-            background-color: #63D2FF;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        #send-button:hover {
-            background-color: #2081C3;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-wrap: wrap;
-                height: auto;
-                min-height: 46px;
-            }
-
-            .navbar-toggler {
-                display: block;
-            }
-
-            .navbar-nav {
-                flex-direction: column;
-                width: 100%;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.5s ease;
-            }
-
-            .navbar-nav.show {
-                max-height: 300px;
-            }
-
-            .nav-item {
-                margin: 10px 0;
-                text-align: center;
-            }
-
-            .card {
-
-                transition: margin-top 0.5s ease;
-            }
-
-            body.nav-expanded .card {
-                margin-top: 260px;
-            }
-        }
-    </style>
-
+    <!-- JavaScript -->
     <script>
         function toggleNavbar() {
             var navbarNav = document.getElementById('navbarNav');
@@ -272,8 +88,9 @@ session_start();
         });
     </script>
 
-    <!-- css -->
+    <!-- CSS -->
     <link rel="stylesheet" href="../css/session.css">
+    <link rel="stylesheet" href="../css/chat.css">
 
 </head>
 
@@ -344,6 +161,7 @@ session_start();
         // Variables
         let username = "<?php echo $_SESSION['user_email']; ?>";
         let nameuser = "<?php echo $_SESSION['employee_user'] ?? $_SESSION['boss_user'] ?? 'Usuario'; ?>";
+        let userFactoryId = "<?php echo $user_factory_id; ?>";
         let chatBox = document.getElementById('chat-box');
         let messageInput = document.getElementById('message-input');
         let sendButton = document.getElementById('send-button');
@@ -351,7 +169,7 @@ session_start();
 
         let displayedMessages = {};
 
-        console.log("Chat iniciado para:", nameuser);
+        console.log("Chat iniciado para:", nameuser, "de la fábrica:", userFactoryId);
 
         // Show messages
         function displayMessage(user, text, timestamp, messageId) {
@@ -413,12 +231,13 @@ session_start();
                     user: nameuser,
                     text: messageText,
                     timestamp: timestamp,
-                    email: username
+                    email: username,
+                    factory_id: userFactoryId
                 }).then(() => {
                     messageInput.value = '';
                 }).catch((error) => {
-                    console.error("Error sendiong message:", error);
-                    alert("Error sendiong message. More details in console.");
+                    console.error("Error sending message:", error);
+                    alert("Error sending message. More details in console.");
                 });
             }
         }
@@ -427,8 +246,8 @@ session_start();
         function setupFirebaseListeners() {
             messagesRef.off();
 
-            // Load new messages
-            messagesRef.limitToLast(50).once('value')
+            // Load new messages filtered by factory
+            messagesRef.orderByChild('factory_id').equalTo(userFactoryId).limitToLast(50).once('value')
                 .then((snapshot) => {
                     chatBox.innerHTML = '';
                     displayedMessages = {};
@@ -452,8 +271,8 @@ session_start();
                     console.error("Error loading messages:", error);
                 });
 
-            // Listen new messages
-            messagesRef.limitToLast(100).on('child_added', (snapshot) => {
+            // Listen new messages filtered by factory
+            messagesRef.orderByChild('factory_id').equalTo(userFactoryId).limitToLast(100).on('child_added', (snapshot) => {
                 let messageId = snapshot.key;
                 let messageData = snapshot.val();
 
