@@ -1,54 +1,14 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-# Instalation of required gems:
-# gem install sinatra securerandom rqrcode sqlite3
+# Required gems:
+# gem install sinatra rqrcode
 
 require 'sinatra'
-require 'securerandom'
 require 'rqrcode'
-require 'sqlite3'
 require 'base64'
 
-class URLShortener
-  def initialize
-    @db = SQLite3::Database.new('urls.db')
-    create_table
-  end
-
-  def create_table
-    @db.execute <<-SQL
-      CREATE TABLE IF NOT EXISTS urls (
-        id INTEGER PRIMARY KEY,
-        original_url TEXT NOT NULL,
-        short_code TEXT NOT NULL UNIQUE,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      );
-    SQL
-  end
-
-  def shorten(url)
-    short_code = SecureRandom.alphanumeric(6)
-    
-    while code_exists?(short_code)
-      short_code = SecureRandom.alphanumeric(6)
-    end
-    
-    @db.execute("INSERT INTO urls (original_url, short_code) VALUES (?, ?)", [url, short_code])
-    
-    return short_code
-  end
-
-  def get_original_url(short_code)
-    result = @db.get_first_value("SELECT original_url FROM urls WHERE short_code = ?", short_code)
-    return result
-  end
-
-  def code_exists?(short_code)
-    result = @db.get_first_value("SELECT COUNT(*) FROM urls WHERE short_code = ?", short_code)
-    return result.to_i > 0
-  end
-
+class QRGenerator
   def generate_qr(url)
     qrcode = RQRCode::QRCode.new(url)
     
@@ -69,7 +29,7 @@ end
 set :port, 4567
 set :bind, '0.0.0.0'
 
-shortener = URLShortener.new
+qr_generator = QRGenerator.new
 
 get '/' do
   <<-HTML
@@ -77,7 +37,7 @@ get '/' do
     <html>
     <head>
       <meta charset="UTF-8">
-      <title>URL shortener and QR generator</title>
+      <title>QR generator for URLs</title>
       <style>
         body {
           font-family: Arial, sans-serif;
@@ -112,26 +72,15 @@ get '/' do
         button:hover {
           background-color: #45a049;
         }
-        .result {
-          margin-top: 20px;
-          padding: 15px;
-          background-color: #fff;
-          border-radius: 4px;
-          border: 1px solid #ddd;
-        }
-        .qr-code {
-          text-align: center;
-          margin: 20px 0;
-        }
       </style>
     </head>
     <body>
       <div class="container">
-        <h1>URL shortener and QR generator</h1>
-        <form action="/shorten" method="post">
+        <h1>QR generator for URLs</h1>
+        <form action="/generate-qr" method="post">
           <label for="url">Insert the URL:</label>
-          <input type="url" id="url" name="url" placeholder="https://example.com/longRoute" required>
-          <button type="submit">Short and generate QR</button>
+          <input type="url" id="url" name="url" placeholder="https://example.com" required>
+          <button type="submit">Generate QR</button>
         </form>
       </div>
     </body>
@@ -139,25 +88,21 @@ get '/' do
   HTML
 end
 
-post '/shorten' do
+post '/generate-qr' do
   original_url = params[:url]
   
   unless original_url.start_with?('http://', 'https://')
     original_url = "https://#{original_url}"
   end
   
-  short_code = shortener.shorten(original_url)
-  
-  short_url = "#{request.base_url}/#{short_code}"
-  
-  qr_code_base64 = shortener.generate_qr(short_url)
+  qr_code_base64 = qr_generator.generate_qr(original_url)
   
   <<-HTML
     <!DOCTYPE html>
     <html>
     <head>
       <meta charset="UTF-8">
-      <title>Shortened URL and QR</title>
+      <title>Generated QR code</title>
       <style>
         body {
           font-family: Arial, sans-serif;
@@ -185,10 +130,10 @@ post '/shorten' do
           text-align: center;
           margin: 20px 0;
         }
-        .short-url {
+        .url {
           font-weight: bold;
-          color: #4CAF50;
           word-break: break-all;
+          color: #2196F3;
         }
         .back {
           display: inline-block;
@@ -200,38 +145,23 @@ post '/shorten' do
     </head>
     <body>
       <div class="container">
-        <h1>URL shortened succesfully</h1>
+        <h1>QR code generated succesfully</h1>
         
         <div class="result">
-          <h2>Original URL:</h2>
-          <p>#{original_url}</p>
-          
-          <h2>URL Acortada:</h2>
-          <p class="short-url">#{short_url}</p>
+          <h2>URL:</h2>
+          <p class="url">#{original_url}</p>
         </div>
         
         <div class="qr-code">
-          <h2>Código QR:</h2>
+          <h2>QR Code:</h2>
           <img src="data:image/png;base64,#{qr_code_base64}" alt="QR Code">
         </div>
         
-        <a href="/" class="back">Shorten another URLL</a>
+        <a href="/" class="back">Generate another QR code</a>
       </div>
     </body>
     </html>
   HTML
-end
-
-get '/:short_code' do
-  short_code = params[:short_code]
-  original_url = shortener.get_original_url(short_code)
-  
-  if original_url
-    redirect original_url
-  else
-    status 404
-    "URL not found"
-  end
 end
 
 if __FILE__ == $0
