@@ -46,8 +46,6 @@ session_start();
             font-size: 12px;
         }
 
-
-
         .modal-product-image-container {
             text-align: center;
             margin-bottom: 15px;
@@ -170,7 +168,7 @@ session_start();
     </div>
 
     <!-- Unsaved changes alert -->
-    <div class="unsaved-changes-alert" id="unsavedChangesAlert">
+    <div class="unsaved-changes-alert" id="unsavedChangesAlert" style="display: none;">
         <strong>You have unsaved changes!</strong> Save or cancel your changes before leaving.
     </div>
 
