@@ -707,7 +707,6 @@ $(document).ready(function () {
     return "You have unsaved changes. Are you sure you want to leave?";
   }
 
-  // Add custom style for modal overlay
   $("<style>")
     .prop("type", "text/css")
     .html(
@@ -742,3 +741,130 @@ $(document).ready(function () {
     )
     .appendTo("head");
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("showUnverifiedPanelBtn")
+    .addEventListener("click", function () {
+      document.getElementById("unverifiedProductsPanel").classList.add("open");
+      loadUnverifiedProducts();
+    });
+
+  document.getElementById("closePanel").addEventListener("click", function () {
+    document.getElementById("unverifiedProductsPanel").classList.remove("open");
+  });
+});
+
+function loadUnverifiedProducts() {
+  fetch("getNotVerifiedData.php")
+    .then((response) => response.json())
+    .then((products) => {
+      const productListContainer = document.getElementById(
+        "unverifiedProductsList"
+      );
+      productListContainer.innerHTML = "";
+      products.forEach((product) => {
+        const productItem = document.createElement("div");
+        productItem.classList.add("product-item");
+        productItem.innerHTML = `
+                  <h5>${product.name}</h5>
+                  <img src="../${product.image}"></img>
+                  <p>${product.description}</p>
+                  <button onclick="verifyProduct(${product.id_product})">Verify</button>
+                  <button onclick="deleteProduct(${product.id_product})">Delete</button>
+              `;
+        productListContainer.appendChild(productItem);
+      });
+    })
+    .catch((error) => console.error("Error loading products:", error));
+}
+
+function showConfirmModal({
+  title,
+  message,
+  confirmBtnText = "Confirmar",
+  cancelBtnText = "Cancelar",
+  onConfirm,
+}) {
+  const existingModal = document.getElementById("customConfirmModal");
+  if (existingModal) existingModal.remove();
+
+  const modalHTML = `
+    <div class="modal fade" id="customConfirmModal" tabindex="-1" aria-labelledby="customConfirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="customConfirmModalLabel">${title}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <p>${message}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${cancelBtnText}</button>
+            <button type="button" class="btn btn-danger" id="confirmModalBtn">${confirmBtnText}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+  const modal = new bootstrap.Modal(
+    document.getElementById("customConfirmModal")
+  );
+  modal.show();
+
+  document.getElementById("confirmModalBtn").addEventListener("click", () => {
+    modal.hide();
+    onConfirm();
+  });
+}
+function verifyProduct(productId) {
+  fetch("verify_product.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id_product: productId, verified: true }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.success) {
+        alert("Producto verificado");
+        loadUnverifiedProducts();
+      }
+    })
+    .catch((error) => console.error("Error verifying product:", error));
+}
+
+function deleteProduct(productId) {
+  showConfirmModal({
+    title: "Confirm elimination",
+    message: "Are you sure that you want to delte that rpoduct?",
+    confirmBtnText: "Delete",
+    cancelBtnText: "Cancel",
+    onConfirm: () => {
+      fetch("deleteData.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({ id_product: productId }),
+      })
+        .then((response) => response.text())
+        .then((result) => {
+          if (result.includes("Successfully deleted")) {
+            console.log("Deleted succesfully");
+            loadUnverifiedProducts();
+          } else {
+            console.log(result);
+          }
+        })
+        .catch((error) => {
+          console.error("Error deleting a product:", error);
+        });
+    },
+  });
+}

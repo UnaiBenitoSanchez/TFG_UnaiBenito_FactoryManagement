@@ -63,13 +63,92 @@ session_start();
             padding: 10px;
             border-radius: 5px;
         }
+
+        .unverified-products-panel {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            margin-top: 68px;
+            height: 84%;
+            background-color: rgba(48, 63, 159, 0.9);
+            transition: right 0.3s ease;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .unverified-products-panel.open {
+            right: 0;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            padding-bottom: 15px;
+        }
+
+        .panel-header h4 {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .close-panel {
+            background-color: transparent;
+            border: none;
+            font-size: 20px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .unverified-products-list {
+            margin-top: 20px;
+        }
+
+        .product-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            color: white;
+        }
+
+        .product-item h5 {
+            margin: 0;
+            color: white;
+        }
+
+        .product-item button {
+            margin-top: 10px;
+        }
+
+        .product-item img {
+            max-width: 200px;
+            max-height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
     </style>
+
 
 </head>
 
 <body>
 
     <?php include '../controller/navbar.php'; ?>
+
+    <button id="showUnverifiedPanelBtn" class="btn btn-info">View not verified products</button>
+
+    <div id="unverifiedProductsPanel" class="unverified-products-panel">
+        <div class="panel-header">
+            <h4>Not verified products</h4>
+            <button id="closePanel" class="close-panel">X</button>
+        </div>
+        <div id="unverifiedProductsList" class="unverified-products-list">
+        </div>
+    </div>
 
     <?php
 
@@ -85,7 +164,7 @@ session_start();
             $nameFile = basename($_FILES["product_image"]["name"]);
             $targetDir = "../img/";
             $targetFilePath = $targetDir . $nameFile;
-        
+
             if (move_uploaded_file($_FILES["product_image"]["tmp_name"], $targetFilePath)) {
                 $nameFile1 = $targetFilePath;
             } else {
@@ -93,7 +172,7 @@ session_start();
                 exit();
             }
         }
-        
+
         $nameFile1 = "img/" . $nameFile;
 
         $stmt = $conn->prepare("SELECT COUNT(*) FROM product WHERE name = ?");
@@ -174,11 +253,6 @@ session_start();
         <div class="row" id="products-container">
             <!-- Products will be loaded here dynamically -->
         </div>
-    </div>
-
-    <!-- Unsaved changes alert -->
-    <div class="unsaved-changes-alert" id="unsavedChangesAlert" style="display: none;">
-        <strong>You have unsaved changes!</strong> Save or cancel your changes before leaving.
     </div>
 
     <footer class="text-center text-lg-start fixed-bottom" id="addProductFooter">
