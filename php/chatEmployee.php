@@ -13,7 +13,7 @@ if (isset($_SESSION['employee_user'])) {
     $stmt = $conn->prepare($query);
     $stmt->bindParam(1, $user_email);
     $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC); // Cambio aquí
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($result) {
         $user_factory_id = $result['factory_id_factory'];
     }
@@ -25,7 +25,7 @@ if (isset($_SESSION['employee_user'])) {
     $stmt = $conn->prepare($query);
     $stmt->bindParam(1, $user_email);
     $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC); // Cambio aquí
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($result) {
         $user_factory_id = $result['factory_id_factory'];
     }
