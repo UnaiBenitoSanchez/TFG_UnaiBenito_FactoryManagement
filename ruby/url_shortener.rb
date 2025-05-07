@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-# Instalación de gemas requeridas:
+# Instalation of required gems:
 # gem install sinatra securerandom rqrcode sqlite3
 
 require 'sinatra'
@@ -12,13 +12,11 @@ require 'base64'
 
 class URLShortener
   def initialize
-    # Inicializar la base de datos SQLite
     @db = SQLite3::Database.new('urls.db')
     create_table
   end
 
   def create_table
-    # Crear tabla urls si no existe
     @db.execute <<-SQL
       CREATE TABLE IF NOT EXISTS urls (
         id INTEGER PRIMARY KEY,
@@ -30,37 +28,30 @@ class URLShortener
   end
 
   def shorten(url)
-    # Generar un código corto aleatorio de 6 caracteres
     short_code = SecureRandom.alphanumeric(6)
     
-    # Verificar que el código no exista ya en la base de datos
     while code_exists?(short_code)
       short_code = SecureRandom.alphanumeric(6)
     end
     
-    # Guardar la URL original y su código corto en la base de datos
     @db.execute("INSERT INTO urls (original_url, short_code) VALUES (?, ?)", [url, short_code])
     
     return short_code
   end
 
   def get_original_url(short_code)
-    # Obtener la URL original a partir del código corto
     result = @db.get_first_value("SELECT original_url FROM urls WHERE short_code = ?", short_code)
     return result
   end
 
   def code_exists?(short_code)
-    # Verificar si un código corto ya existe en la base de datos
     result = @db.get_first_value("SELECT COUNT(*) FROM urls WHERE short_code = ?", short_code)
     return result.to_i > 0
   end
 
   def generate_qr(url)
-    # Generar un código QR para la URL
     qrcode = RQRCode::QRCode.new(url)
     
-    # Convertir el código QR a PNG
     png = qrcode.as_png(
       resize_gte_to: false,
       resize_exactly_to: false,
@@ -71,26 +62,22 @@ class URLShortener
       module_px_size: 6
     )
     
-    # Devolver los datos del PNG en formato Base64
     return Base64.strict_encode64(png.to_s)
   end
 end
 
-# Configuración de la aplicación Sinatra
 set :port, 4567
 set :bind, '0.0.0.0'
 
-# Inicializar el acortador de URL
 shortener = URLShortener.new
 
-# Ruta principal - formulario para acortar URLs
 get '/' do
   <<-HTML
     <!DOCTYPE html>
     <html>
     <head>
       <meta charset="UTF-8">
-      <title>Acortador de URLs y Generador QR</title>
+      <title>URL shortener and QR generator</title>
       <style>
         body {
           font-family: Arial, sans-serif;
@@ -140,11 +127,11 @@ get '/' do
     </head>
     <body>
       <div class="container">
-        <h1>Acortador de URLs y Generador QR</h1>
+        <h1>URL shortener and QR generator</h1>
         <form action="/shorten" method="post">
-          <label for="url">Ingresa la URL para acortar:</label>
-          <input type="url" id="url" name="url" placeholder="https://ejemplo.com/ruta/muy/larga" required>
-          <button type="submit">Acortar y Generar QR</button>
+          <label for="url">Insert the URL:</label>
+          <input type="url" id="url" name="url" placeholder="https://example.com/longRoute" required>
+          <button type="submit">Short and generate QR</button>
         </form>
       </div>
     </body>
@@ -152,31 +139,25 @@ get '/' do
   HTML
 end
 
-# Ruta para procesar la URL enviada
 post '/shorten' do
   original_url = params[:url]
   
-  # Validar que la URL sea válida
   unless original_url.start_with?('http://', 'https://')
     original_url = "https://#{original_url}"
   end
   
-  # Acortar la URL
   short_code = shortener.shorten(original_url)
   
-  # Crear la URL corta
   short_url = "#{request.base_url}/#{short_code}"
   
-  # Generar el código QR para la URL corta
   qr_code_base64 = shortener.generate_qr(short_url)
   
-  # Mostrar los resultados
   <<-HTML
     <!DOCTYPE html>
     <html>
     <head>
       <meta charset="UTF-8">
-      <title>URL Acortada y Código QR</title>
+      <title>Shortened URL and QR</title>
       <style>
         body {
           font-family: Arial, sans-serif;
@@ -219,10 +200,10 @@ post '/shorten' do
     </head>
     <body>
       <div class="container">
-        <h1>¡URL Acortada con Éxito!</h1>
+        <h1>URL shortened succesfully</h1>
         
         <div class="result">
-          <h2>URL Original:</h2>
+          <h2>Original URL:</h2>
           <p>#{original_url}</p>
           
           <h2>URL Acortada:</h2>
@@ -232,17 +213,15 @@ post '/shorten' do
         <div class="qr-code">
           <h2>Código QR:</h2>
           <img src="data:image/png;base64,#{qr_code_base64}" alt="QR Code">
-          <p>Escanea este código QR para acceder a la URL acortada.</p>
         </div>
         
-        <a href="/" class="back">Acortar otra URL</a>
+        <a href="/" class="back">Shorten another URLL</a>
       </div>
     </body>
     </html>
   HTML
 end
 
-# Ruta para redirigir a la URL original
 get '/:short_code' do
   short_code = params[:short_code]
   original_url = shortener.get_original_url(short_code)
@@ -251,12 +230,11 @@ get '/:short_code' do
     redirect original_url
   else
     status 404
-    "URL no encontrada"
+    "URL not found"
   end
 end
 
-# Iniciar el servidor si este archivo es ejecutado directamente
 if __FILE__ == $0
-  puts "Servidor iniciado en http://localhost:4567"
+  puts "Server started in http://localhost:4567"
   Sinatra::Application.run!
 end
