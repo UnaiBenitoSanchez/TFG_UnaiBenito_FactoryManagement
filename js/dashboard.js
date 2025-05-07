@@ -821,6 +821,70 @@ function showConfirmModal({
     onConfirm();
   });
 }
+
+$("<style>")
+    .prop("type", "text/css")
+    .html(
+      `
+      #messageModal .modal-dialog {
+        max-width: 400px;
+      }
+      #messageModal .modal-content {
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      }
+      #messageModal .modal-header {
+        border-bottom: 1px solid #dee2e6;
+        background-color:rgb(43, 147, 188);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+        #messageModal .modal-title {
+        color: white;
+      }
+        #messageModal .modal-body {
+        background-color: #63D2FF;
+      }
+      #messageModal .modal-footer {
+        border-top: 1px solid #dee2e6;
+        background-color: #63D2FF;
+      }
+      #messageModal #confirmModalBtn {
+        min-width: 100px;
+      }
+    `
+    )
+    .appendTo("head");
+
+function showMessageModal(message, title = "Información") {
+  const existingModal = document.getElementById("messageModal");
+  if (existingModal) existingModal.remove();
+
+  const modalHTML = `
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="messageModalLabel">${title}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <p>${message}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+  const modal = new bootstrap.Modal(document.getElementById("messageModal"));
+  modal.show();
+}
+
 function verifyProduct(productId) {
   fetch("verify_product.php", {
     method: "POST",
@@ -832,11 +896,14 @@ function verifyProduct(productId) {
     .then((response) => response.json())
     .then((result) => {
       if (result.success) {
-        alert("Producto verificado");
+        showMessageModal("Producto verificado con éxito", "Éxito");
         loadUnverifiedProducts();
       }
     })
-    .catch((error) => console.error("Error verifying product:", error));
+    .catch((error) => {
+      console.error("Error verifying product:", error);
+      showMessageModal("Hubo un error al verificar el producto", "Error");
+    });
 }
 
 function deleteProduct(productId) {

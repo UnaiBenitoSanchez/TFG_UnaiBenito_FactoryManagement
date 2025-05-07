@@ -71,17 +71,11 @@ $sql1 = "SELECT boss_id_boss_factory FROM factory_boss
                                     <p class="card-text">Factory Address: <span id="factoryAddress"><?php echo $factoryAddress; ?></span></p>
                                     <p class="card-text">Number of Employees: <?php echo $row['employee_count']; ?></p>
                                 </div>
-                                <div id="factoryEdit" style="display: none;">
-                                    <label for="editFactoryName">Factory Name:</label>
-                                    <label for="editedEmployeeCount">Number of Employees:</label>
-                                    <input type="text" id="editEmployeeCount" value="<?php echo $row['employee_count']; ?>"><br>
-                                </div>
                                 <div class="map-container">
                                     <div id="map"></div>
                                 </div>
 
                                 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-                                <button class="btn btn-primary" onclick="toggleEdit()">Edit</button>
                                 <button class="btn btn-danger" onclick="saveChanges(<?php echo $row['id_factory']; ?>)" style="display: none;">Save</button>
                                 <script>
                                     let map = L.map('map').setView([0, 0], 2);
@@ -104,25 +98,6 @@ $sql1 = "SELECT boss_id_boss_factory FROM factory_boss
                                         .catch(error => {
                                             console.error('Error retrieving geocoding data:', error);
                                         });
-
-                                    function toggleEdit() {
-                                        let factoryContent = document.getElementById('factoryContent');
-                                        let factoryEdit = document.getElementById('factoryEdit');
-                                        let editButton = document.querySelector('.btn-primary');
-                                        let saveButton = document.querySelector('.btn-danger');
-
-                                        if (factoryContent.style.display === 'none') {
-                                            factoryContent.style.display = 'block';
-                                            factoryEdit.style.display = 'none';
-                                            editButton.style.display = 'block';
-                                            saveButton.style.display = 'none';
-                                        } else {
-                                            factoryContent.style.display = 'none';
-                                            factoryEdit.style.display = 'block';
-                                            editButton.style.display = 'none';
-                                            saveButton.style.display = 'block';
-                                        }
-                                    }
 
                                     function saveChanges(factoryId) {
 
