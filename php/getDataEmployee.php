@@ -22,7 +22,7 @@ try {
     $sql = "SELECT p.id_product, p.name, p.description, p.price, p.image, i.available_quantity
             FROM product p
             INNER JOIN inventory i ON p.id_product = i.product_id_product
-            WHERE i.factory_id_factory = :factory_id";
+            WHERE i.factory_id_factory = :factory_id AND p.verified = TRUE";
 
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':factory_id', $factoryId);

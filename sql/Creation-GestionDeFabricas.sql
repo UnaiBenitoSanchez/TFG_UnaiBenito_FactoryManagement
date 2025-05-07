@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `GestionDeFabricas`.`product` (
   `price` DECIMAL(10,2) NOT NULL,
   `image` VARCHAR(255) NOT NULL,
   `category_id_category` INT NOT NULL,
+  `verified` BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (`id_product`),
   INDEX `fk_product_category_idx` (`category_id_category` ASC) VISIBLE,
   CONSTRAINT `fk_product_category`
@@ -213,72 +214,72 @@ INSERT INTO category VALUES ('1','Entertainment','Made to let children play with
 INSERT INTO boss VALUES ('1','Harold Matson','h4r0ld@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
 INSERT INTO factory VALUES ('1', 'Mattel', '333 Continental Blvd', 'El Segundo', 'California', 'USA');
 INSERT INTO factory_boss VALUES ('1','1');
-INSERT INTO product VALUES('1','Barbie Signature Look Gold Disco - Barbie The Movie','This collectible Barbie® doll sparkles in a sequined disco jumpsuit inspired by her character\'s look in the Barbie™ movie. Her dazzling ensemble is complete with a big disco-inspired mane, metallic jewelry and gold heels.','74.99','img/mattel1.jpg','1');
+INSERT INTO product VALUES('1','Barbie Signature Look Gold Disco - Barbie The Movie','This collectible Barbie® doll sparkles in a sequined disco jumpsuit inspired by her character\'s look in the Barbie™ movie. Her dazzling ensemble is complete with a big disco-inspired mane, metallic jewelry and gold heels.','74.99','img/mattel1.jpg','1', true);
 INSERT INTO inventory VALUES('1','1000','2023-12-22','1','1');
-INSERT INTO product VALUES('2','Barbie The Movie Fashion Pack','This Barbie® collectible clothing set recreates three iconic outfits from the Barbie™ movie. Each set comes with shoes and accessories so fans can dress their dolls just like Barbie, the character in the movie.','74.99','img/mattel2.jpg','1');
+INSERT INTO product VALUES('2','Barbie The Movie Fashion Pack','This Barbie® collectible clothing set recreates three iconic outfits from the Barbie™ movie. Each set comes with shoes and accessories so fans can dress their dolls just like Barbie, the character in the movie.','74.99','img/mattel2.jpg','1', true);
 INSERT INTO inventory VALUES('2','2000','2023-12-22','2','1');
-INSERT INTO product VALUES('3','Barbie Signature Ken Perfect Day - Barbie The Movie','Inspired by Ken\'s character in the Barbie™ movie, this Ken® doll is wearing a matching striped beach outfit. With his surfboard, he\'s having the time of his life in Barbie Land! This Ken® doll is a tribute to the Barbie™ movie, making it the perfect gift for fans and collectors.','49.99','img/mattel3.jpg','1');
+INSERT INTO product VALUES('3','Barbie Signature Ken Perfect Day - Barbie The Movie','Inspired by Ken\'s character in the Barbie™ movie, this Ken® doll is wearing a matching striped beach outfit. With his surfboard, he\'s having the time of his life in Barbie Land! This Ken® doll is a tribute to the Barbie™ movie, making it the perfect gift for fans and collectors.','49.99','img/mattel3.jpg','1', true);
 INSERT INTO inventory VALUES('3','1500','2023-12-22','3','1');
-INSERT INTO product VALUES('4','Barbie Cutie Reveal Serie Phantasy Unicorn','Open the box and you\'ll see inside a soft plush unicorn and four surprise bags. Remove the rainbow unicorn costume and you\'ll find a Barbie doll with long hair and sparkly details. Open the surprise bags and discover sparkly clothes, accessories, a sponge-comb and a mini unicorn.','34.99','img/mattel4.jpg','1');
+INSERT INTO product VALUES('4','Barbie Cutie Reveal Serie Phantasy Unicorn','Open the box and you\'ll see inside a soft plush unicorn and four surprise bags. Remove the rainbow unicorn costume and you\'ll find a Barbie doll with long hair and sparkly details. Open the surprise bags and discover sparkly clothes, accessories, a sponge-comb and a mini unicorn.','34.99','img/mattel4.jpg','1', true);
 INSERT INTO inventory VALUES('4','1000','2023-12-22','4','1');
-INSERT INTO product VALUES('5','Barbie Cutie Reveal Serie Jungle Friends Tiger','Barbie Cutie Reveal Jungle Series dolls offer the cutest unboxing experience with 10 surprises! Discover a charming Elephant, lovable Tiger, bright Toucan or cheeky Monkey, then remove the plush costume to reveal a posable Barbie doll with long, colorful hair. Which doll will you reveal?','32.99','img/mattel5.jpg','1');
+INSERT INTO product VALUES('5','Barbie Cutie Reveal Serie Jungle Friends Tiger','Barbie Cutie Reveal Jungle Series dolls offer the cutest unboxing experience with 10 surprises! Discover a charming Elephant, lovable Tiger, bright Toucan or cheeky Monkey, then remove the plush costume to reveal a posable Barbie doll with long, colorful hair. Which doll will you reveal?','32.99','img/mattel5.jpg','1', true);
 INSERT INTO inventory VALUES('5','2000','2023-12-22','5','1');
-INSERT INTO product VALUES('6','Disney Frozen Queen Anna & Elsa Snow Queen','Set of two classic dolls, Queen Anna and Snow Queen Elsa. Finely detailed features; Elsa snow queen costume includes satin dress with shimmering lavender organza cape and sleeves. Queen Anna costume includes layered green satin dress with glitter, lined cape and tiara. Beautifully styled, rooted hair; molded shoes and boots.','54.46','img/mattel6.jpg','1');
+INSERT INTO product VALUES('6','Disney Frozen Queen Anna & Elsa Snow Queen','Set of two classic dolls, Queen Anna and Snow Queen Elsa. Finely detailed features; Elsa snow queen costume includes satin dress with shimmering lavender organza cape and sleeves. Queen Anna costume includes layered green satin dress with glitter, lined cape and tiara. Beautifully styled, rooted hair; molded shoes and boots.','54.46','img/mattel6.jpg','1', true);
 INSERT INTO inventory VALUES('6','1500','2023-12-22','6','1');
 
 -- Lego
 INSERT INTO boss VALUES ('2','Ole Kirk Christiansen','0l3@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
 INSERT INTO factory VALUES ('2', 'Lego', '2400 Boulevard Nexxus ADN', 'Ciénega de Flores', 'Nuevo León', 'México');
 INSERT INTO factory_boss VALUES ('2','2');
-INSERT INTO product VALUES('7','Millennium Falcon','Packed with authentic details! Highly realistic detailing makes this an impressive display item. Relive the Star Wars™ saga. Includes two crews, so you can recreate both classic and new movies.','849.99','img/lego1.jpg','1');
+INSERT INTO product VALUES('7','Millennium Falcon','Packed with authentic details! Highly realistic detailing makes this an impressive display item. Relive the Star Wars™ saga. Includes two crews, so you can recreate both classic and new movies.','849.99','img/lego1.jpg','1', true);
 INSERT INTO inventory VALUES('7','1200','2024-01-03','7','2');
-INSERT INTO product VALUES('8','Orient Express Train','A paragon of French luxury and an engineering marvel for railroad enthusiasts around the world, the Orient-Express has been stirring imaginations for over 140 years. This new LEGO® Ideas set features interpretations of the train\'s most perfected details along with 8 new character minifigures - it\'s your ticket to endless play and display possibilities!','299.99','img/lego2.jpg','1');
+INSERT INTO product VALUES('8','Orient Express Train','A paragon of French luxury and an engineering marvel for railroad enthusiasts around the world, the Orient-Express has been stirring imaginations for over 140 years. This new LEGO® Ideas set features interpretations of the train\'s most perfected details along with 8 new character minifigures - it\'s your ticket to endless play and display possibilities!','299.99','img/lego2.jpg','1', true);
 INSERT INTO inventory VALUES('8','2300','2024-01-03','8','2');
-INSERT INTO product VALUES('9','Avengers Tower','Recreate the colossal style and grand scale of the Avengers universe\'s most iconic building with the 5201-piece Avengers Tower set. Standing approximately 90 cm tall, this monumental set is more than just a spectacular display piece. It includes a stellar cast of 31 figures that allows you to recreate the battles of the Infinity saga in a multitude of different ways.','499.00','img/lego3.jpg','1');
+INSERT INTO product VALUES('9','Avengers Tower','Recreate the colossal style and grand scale of the Avengers universe\'s most iconic building with the 5201-piece Avengers Tower set. Standing approximately 90 cm tall, this monumental set is more than just a spectacular display piece. It includes a stellar cast of 31 figures that allows you to recreate the battles of the Infinity saga in a multitude of different ways.','499.00','img/lego3.jpg','1', true);
 INSERT INTO inventory VALUES('9','1100','2024-01-03','9','2');
-INSERT INTO product VALUES('10','Cherry Blossoms','As well as being a celebration gift for kids, the brick-built blossoms make a great gift for grown-ups, who will be delighted to receive these unique flowers onValentine’s Day or Mother’s Day. Once complete, the set makes a beautiful piece of floral decor that will add a touch of spring joy to any space. It can also be combined with other LEGO flowers (sold separately) to create a vibrant bouquet.','14.99','img/lego4.jpg','1');
+INSERT INTO product VALUES('10','Cherry Blossoms','As well as being a celebration gift for kids, the brick-built blossoms make a great gift for grown-ups, who will be delighted to receive these unique flowers onValentine’s Day or Mother’s Day. Once complete, the set makes a beautiful piece of floral decor that will add a touch of spring joy to any space. It can also be combined with other LEGO flowers (sold separately) to create a vibrant bouquet.','14.99','img/lego4.jpg','1', true);
 INSERT INTO inventory VALUES('10','1200','2024-01-03','10','2');
-INSERT INTO product VALUES('11','Disney Ariel Mini Castle','Fans of Disney Princess buildable toys and The Little Mermaid movie aged 12 and up will enjoy endless imaginative role play with this mini model of Ariel’s enchanting palace. Mini Disney Ariel’s Castle (40708) is covered in golden details, incorporates various underwater features and includes an Ariel mini-doll figure. This portable buildable playset is part of the Mini Disney range of companion construction toys, sold separately.','39.99','img/lego5.jpg','1');
+INSERT INTO product VALUES('11','Disney Ariel Mini Castle','Fans of Disney Princess buildable toys and The Little Mermaid movie aged 12 and up will enjoy endless imaginative role play with this mini model of Ariel’s enchanting palace. Mini Disney Ariel’s Castle (40708) is covered in golden details, incorporates various underwater features and includes an Ariel mini-doll figure. This portable buildable playset is part of the Mini Disney range of companion construction toys, sold separately.','39.99','img/lego5.jpg','1', true);
 INSERT INTO inventory VALUES('11','2300','2024-01-03','11','2');
-INSERT INTO product VALUES('12','Natural History Museum','Discover the first-ever museum to join the Modular Buildings collection. Home to an array of brick-built exhibits it features dual skylights that allow light to permeate the building’s 2 levels, illuminating the towering brachiosaurus skeleton and collection of treasures within.','299.99','img/lego6.jpg','1');
+INSERT INTO product VALUES('12','Natural History Museum','Discover the first-ever museum to join the Modular Buildings collection. Home to an array of brick-built exhibits it features dual skylights that allow light to permeate the building’s 2 levels, illuminating the towering brachiosaurus skeleton and collection of treasures within.','299.99','img/lego6.jpg','1', true);
 INSERT INTO inventory VALUES('12','1100','2024-01-03','12','2');
 
 -- Nerf
 INSERT INTO boss VALUES ('3','Reyn Guyer','r3yn@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
 INSERT INTO factory VALUES ('3', 'Nerf', 'Cartamundi Shaker Road', 'East Longmeadow', 'MA 01028', 'USA');
 INSERT INTO factory_boss VALUES ('3','3');
-INSERT INTO product VALUES('13','SMG-Zesty de Nerf Fortnite','The Nerf Fortnite SMG-Zesty Launcher SMG-Zesty is inspired by Fortnite\'s Zesty wrapper, which mirrors the look of the popular video game\'s wrapper. The launcher has a removable barrel and a detachable stock so you can customize it in different ways. Attach them, detach them.... It\'s up to you! Remove them when you\'re in close combat for a more compact launcher.','37.99','img/nerf1.jpg','1');
+INSERT INTO product VALUES('13','SMG-Zesty de Nerf Fortnite','The Nerf Fortnite SMG-Zesty Launcher SMG-Zesty is inspired by Fortnite\'s Zesty wrapper, which mirrors the look of the popular video game\'s wrapper. The launcher has a removable barrel and a detachable stock so you can customize it in different ways. Attach them, detach them.... It\'s up to you! Remove them when you\'re in close combat for a more compact launcher.','37.99','img/nerf1.jpg','1', true);
 INSERT INTO inventory VALUES('13','2100','2024-01-03','13','3');
-INSERT INTO product VALUES('14','Nerf Ultra Select','Nerf - Ultra Select, a Nerf Ultra launcher that combines range, speed and precision. It is automatic and has 2 compartments in its integrated clip. It can throw 20 Nerf Ultra and Ultra AccuStrike darts for greater accuracy....','32.99','img/nerf2.jpg','1');
+INSERT INTO product VALUES('14','Nerf Ultra Select','Nerf - Ultra Select, a Nerf Ultra launcher that combines range, speed and precision. It is automatic and has 2 compartments in its integrated clip. It can throw 20 Nerf Ultra and Ultra AccuStrike darts for greater accuracy....','32.99','img/nerf2.jpg','1', true);
 INSERT INTO inventory VALUES('14','1800','2024-01-03','14','3');
-INSERT INTO product VALUES('15','Nerf DinoSquad Stegosmash','Hold your ground as a dart-throwing defender with the Nerf DinoSquad Stego-Smash launcher! It features an incredible dinosaur design that replicates the appearance of a Stegosaurus dinosaur. Throw yourself into "dinotastic" fun with this one dart launcher; load a dart through the front of the barrel, pull the lever back to prime the launcher and pull the trigger to launch the dart at the target.','19.99','img/nerf3.jpg','1');
+INSERT INTO product VALUES('15','Nerf DinoSquad Stegosmash','Hold your ground as a dart-throwing defender with the Nerf DinoSquad Stego-Smash launcher! It features an incredible dinosaur design that replicates the appearance of a Stegosaurus dinosaur. Throw yourself into "dinotastic" fun with this one dart launcher; load a dart through the front of the barrel, pull the lever back to prime the launcher and pull the trigger to launch the dart at the target.','19.99','img/nerf3.jpg','1', true);
 INSERT INTO inventory VALUES('15','2050','2024-01-03','15','3');
-INSERT INTO product VALUES('16','Nerf DinoSquad Rex-Rampage','A motorized launcher that roars like the king of the dinosaurs!!! It has a 10 dart holder in the butt so you have projectiles for easy reloading. Includes 20 Nerf foam darts for quick firing.','20.98','img/nerf4.jpg','1');
+INSERT INTO product VALUES('16','Nerf DinoSquad Rex-Rampage','A motorized launcher that roars like the king of the dinosaurs!!! It has a 10 dart holder in the butt so you have projectiles for easy reloading. Includes 20 Nerf foam darts for quick firing.','20.98','img/nerf4.jpg','1', true);
 INSERT INTO inventory VALUES('16','2100','2024-01-03','16','3');
-INSERT INTO product VALUES('17','Nerf Alpha Strike Slinger SD-1','The Slinger SD-1 Aiming Set includes 1 launcher, 2 target pieces and 4 Nerf Elite darts. The launcher launches 1 dart at a time and is easy to use. Insert 1 dart into the barrel, pull the handle to set it up and pull the trigger to launch 1 dart. Practice your aiming skills with the 2 target pieces that you can put together to form 1 whole target.','7.99','img/nerf5.jpg','1');
+INSERT INTO product VALUES('17','Nerf Alpha Strike Slinger SD-1','The Slinger SD-1 Aiming Set includes 1 launcher, 2 target pieces and 4 Nerf Elite darts. The launcher launches 1 dart at a time and is easy to use. Insert 1 dart into the barrel, pull the handle to set it up and pull the trigger to launch 1 dart. Practice your aiming skills with the 2 target pieces that you can put together to form 1 whole target.','7.99','img/nerf5.jpg','1', true);
 INSERT INTO inventory VALUES('17','1800','2024-01-03','17','3');
-INSERT INTO product VALUES('18','Nerf Alpha Strike - Mission Set','This 31-piece Nerf Alpha Strike Mission Set includes 4 launchers, 25 darts and targets to practice your aim and play Nerf games. Perfect for gifts, parties or play anytime! Includes 2 Stinger SD-1 launchers, 1 Cobra RC-6 launcher, 1 Tiger DB-2 launcher and 2 target pieces that can be snapped together to form 1 whole target.','24.99','img/nerf6.jpg','1');
+INSERT INTO product VALUES('18','Nerf Alpha Strike - Mission Set','This 31-piece Nerf Alpha Strike Mission Set includes 4 launchers, 25 darts and targets to practice your aim and play Nerf games. Perfect for gifts, parties or play anytime! Includes 2 Stinger SD-1 launchers, 1 Cobra RC-6 launcher, 1 Tiger DB-2 launcher and 2 target pieces that can be snapped together to form 1 whole target.','24.99','img/nerf6.jpg','1', true);
 INSERT INTO inventory VALUES('18','2050','2024-01-03','18','3');
 
 -- Playmobil
 INSERT INTO boss VALUES ('4','Hans Beck','h4ns@gmail.com','$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa');
 INSERT INTO factory VALUES ('4', 'Playmobil', 'Brandstätterstraße 2-10', 'Zirndorf', 'Bavaria', 'Germany');
 INSERT INTO factory_boss VALUES ('4','4');
-INSERT INTO product VALUES('19','Playmobil City Life Family','Modern family figure set with accessories for playing everyday life scenes.', '29.99','img/playmobil1.jpg','1');
+INSERT INTO product VALUES('19','Playmobil City Life Family','Modern family figure set with accessories for playing everyday life scenes.', '29.99','img/playmobil1.jpg','1', true);
 INSERT INTO inventory VALUES('19','1500','2024-01-03','19','4');
-INSERT INTO product VALUES('20','Playmobil Pirate Ship','Detailed pirate ship with pirate figures, cannons and treasure for exciting adventures.', '89.99','img/playmobil2.jpg','1');
+INSERT INTO product VALUES('20','Playmobil Pirate Ship','Detailed pirate ship with pirate figures, cannons and treasure for exciting adventures.', '89.99','img/playmobil2.jpg','1', true);
 INSERT INTO inventory VALUES('20','800','2024-01-03','20','4');
-INSERT INTO product VALUES('21','Playmobil Police Car','Police vehicle with lights and sound, includes officer figures for rescue missions.', '34.99','img/playmobil3.jpg','1');
+INSERT INTO product VALUES('21','Playmobil Police Car','Police vehicle with lights and sound, includes officer figures for rescue missions.', '34.99','img/playmobil3.jpg','1', true);
 INSERT INTO inventory VALUES('21','1200','2024-01-03','21','4');
-INSERT INTO product VALUES('22','Playmobil Hospital','Complete hospital with emergency room, medical equipment and doctor/patient figures.', '119.99','img/playmobil4.jpg','1');
+INSERT INTO product VALUES('22','Playmobil Hospital','Complete hospital with emergency room, medical equipment and doctor/patient figures.', '119.99','img/playmobil4.jpg','1', true);
 INSERT INTO inventory VALUES('22','600','2024-01-03','22','4');
-INSERT INTO product VALUES('23','Playmobil Farm with Animals','Traditional farm with animals, tractor and farmer figures for rural play.', '59.99','img/playmobil5.jpg','1');
+INSERT INTO product VALUES('23','Playmobil Farm with Animals','Traditional farm with animals, tractor and farmer figures for rural play.', '59.99','img/playmobil5.jpg','1', true);
 INSERT INTO inventory VALUES('23','900','2024-01-03','23','4');
-INSERT INTO product VALUES('24','Playmobil Medieval Castle','Impressive castle with knights, dragon and accessories for epic battles.', '149.99','img/playmobil6.jpg','1');
+INSERT INTO product VALUES('24','Playmobil Medieval Castle','Impressive castle with knights, dragon and accessories for epic battles.', '149.99','img/playmobil6.jpg','1', true);
 INSERT INTO inventory VALUES('24','500','2024-01-03','24','4');
-INSERT INTO product VALUES('25','Playmobil Passenger Plane','Commercial airplane with passenger and crew figures, perfect for travel play.', '79.99','img/playmobil7.jpg','1');
+INSERT INTO product VALUES('25','Playmobil Passenger Plane','Commercial airplane with passenger and crew figures, perfect for travel play.', '79.99','img/playmobil7.jpg','1', true);
 INSERT INTO inventory VALUES('25','700','2024-01-03','25','4');
-INSERT INTO product VALUES('26','Playmobil Space Station','Space base with astronauts, spacecraft and accessories for space exploration.', '99.99','img/playmobil8.jpg','1');
+INSERT INTO product VALUES('26','Playmobil Space Station','Space base with astronauts, spacecraft and accessories for space exploration.', '99.99','img/playmobil8.jpg','1', true);
 INSERT INTO inventory VALUES('26','650','2024-01-03','26','4');
 
 -- Insert employees for Mattel (Factory 1)

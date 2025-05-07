@@ -249,24 +249,15 @@ if (!isset($_SESSION['user_email'])) {
         $bossEmail = $_SESSION['user_email'];
 
         if (isset($_FILES["product_image"]) && $_FILES["product_image"]["error"] == 0) {
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            $fileType = $_FILES["product_image"]["type"];
-
-            if (!in_array($fileType, $allowedTypes)) {
-                die("Error: Solo se permiten imágenes JPEG, PNG o GIF.");
-            }
-
-            if ($_FILES["product_image"]["size"] > 2000000) {
-                die("Error: La imagen es demasiado grande (máx 2MB).");
-            }
-
-            $nameFile = preg_replace("/[^a-zA-Z0-9\.\-]/", "", basename($_FILES["product_image"]["name"]));
-            $extension = strtolower(pathinfo($nameFile, PATHINFO_EXTENSION));
-            $nameFile = uniqid() . '.' . $extension;
-
-            $targetFile = "../img/" . $nameFile;
-            if (!move_uploaded_file($_FILES["product_image"]["tmp_name"], $targetFile)) {
-                die("Error al subir la imagen.");
+            $nameFile = basename($_FILES["product_image"]["name"]);
+            $targetDir = "../img/";
+            $targetFilePath = $targetDir . $nameFile;
+        
+            if (move_uploaded_file($_FILES["product_image"]["tmp_name"], $targetFilePath)) {
+                $nameFile1 = $targetFilePath;
+            } else {
+                echo "<div class='alert alert-danger text-center'>Error uploading image file.</div>";
+                exit();
             }
         }
 

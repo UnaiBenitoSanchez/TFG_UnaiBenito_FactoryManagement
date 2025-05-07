@@ -83,8 +83,17 @@ session_start();
 
         if (isset($_FILES["product_image"]) && $_FILES["product_image"]["error"] == 0) {
             $nameFile = basename($_FILES["product_image"]["name"]);
+            $targetDir = "../img/";
+            $targetFilePath = $targetDir . $nameFile;
+        
+            if (move_uploaded_file($_FILES["product_image"]["tmp_name"], $targetFilePath)) {
+                $nameFile1 = $targetFilePath;
+            } else {
+                echo "<div class='alert alert-danger text-center'>Error uploading image file.</div>";
+                exit();
+            }
         }
-
+        
         $nameFile1 = "img/" . $nameFile;
 
         $stmt = $conn->prepare("SELECT COUNT(*) FROM product WHERE name = ?");
