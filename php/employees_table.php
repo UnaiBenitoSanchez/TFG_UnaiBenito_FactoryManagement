@@ -186,6 +186,150 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
             font-weight: 500;
             color: #333;
         }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 400px;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #eaeaea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-body {
+            padding: 20px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .modal-footer {
+            padding: 12px 20px;
+            border-top: 1px solid #eaeaea;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .modal-btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .modal-btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        .modal-btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background-color: #45a049;
+        }
+
+        .modal-btn-danger {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .modal-btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+        .modal-success .modal-header {
+            background-color:rgb(104, 175, 76);
+            color: white;
+            border-bottom: none;
+        }
+
+        .modal-success .modal-title {
+            color: white;
+        }
+
+        .modal-success .modal-close {
+            color: white;
+        }
+
+        .modal-error .modal-header {
+            background-color: #f44336;
+            color: white;
+            border-bottom: none;
+        }
+
+        .modal-error .modal-title {
+            color: red;
+        }
+
+        .modal-error .modal-close {
+            color: red;
+        }
+
+        .modal-container .modal-header{
+            background-color: #f44336;
+        }
+
+        .modal-container .modal-header h3{
+            color: white;
+        }
     </style>
 
 </head>
@@ -260,7 +404,6 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <!-- Controles de paginación -->
                 <div class="pagination-controls">
                     <?php if ($page > 1): ?>
                         <a href="?page=<?php echo $page - 1; ?>" class="pagination-arrow">← Previous</a>
@@ -284,6 +427,52 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
         <?php endif; ?>
     </div>
 
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm delete</h3>
+                <button class="modal-close" onclick="hideModal('deleteModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                Are you sure that you want to delete that employee?
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" onclick="hideModal('deleteModal')">Cancel</button>
+                <button class="modal-btn modal-btn-danger" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-container modal-success">
+            <div class="modal-header">
+                <h3 class="modal-title">Updated!</h3>
+                <button class="modal-close" onclick="hideModal('successModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                Employee updated succesfully.
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-primary" onclick="hideModal('successModal')">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="errorModal">
+        <div class="modal-container modal-error">
+            <div class="modal-header">
+                <h3 class="modal-title">Error</h3>
+                <button class="modal-close" onclick="hideModal('errorModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="errorModalBody">
+                Error processing the solicitude.
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-primary" onclick="hideModal('errorModal')">Confirm</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         function enableEdit(button) {
             const row = button.closest('tr');
@@ -294,6 +483,18 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
 
             button.style.display = 'none';
             row.querySelector('.save-btn').style.display = 'inline-block';
+        }
+
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
         }
 
         function saveEdit(button, id) {
@@ -317,18 +518,38 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        alert('Employee updated!');
+                        showModal('successModal');
                         cells.forEach(cell => cell.setAttribute('contenteditable', 'false'));
                         button.style.display = 'none';
                         row.querySelector('.edit-btn').style.display = 'inline-block';
                     } else {
-                        alert('Update failed.');
+                        document.getElementById('errorModalBody').textContent = data.message || 'Error updating employee.';
+                        showModal('errorModal');
                     }
+                })
+                .catch(error => {
+                    document.getElementById('errorModalBody').textContent = 'Connection error.';
+                    showModal('errorModal');
                 });
         }
 
+        let currentEmployeeToDelete = null;
+
         function deleteEmployee(id, button) {
-            if (!confirm('Are you sure you want to delete this employee?')) return;
+            currentEmployeeToDelete = {
+                id,
+                button
+            };
+            showModal('deleteModal');
+        }
+
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            if (!currentEmployeeToDelete) return;
+
+            const {
+                id,
+                button
+            } = currentEmployeeToDelete;
 
             fetch('delete_employee.php', {
                     method: 'POST',
@@ -345,10 +566,27 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
                         const row = button.closest('tr');
                         row.remove();
                     } else {
-                        alert('Delete failed.');
+                        document.getElementById('errorModalBody').textContent = data.message || 'Error deleting the employee';
+                        showModal('errorModal');
                     }
+                })
+                .catch(error => {
+                    document.getElementById('errorModalBody').textContent = 'Connection error.';
+                    showModal('errorModal');
+                })
+                .finally(() => {
+                    hideModal('deleteModal');
+                    currentEmployeeToDelete = null;
                 });
-        }
+        });
+
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideModal(this.id);
+                }
+            });
+        });
     </script>
 
     <script>
@@ -461,7 +699,7 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
                 });
         }
     </script>
-    
+
 </body>
 
 </html>
