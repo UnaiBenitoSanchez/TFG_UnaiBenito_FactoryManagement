@@ -190,27 +190,13 @@ $sql1 = "SELECT boss_id_boss_factory FROM factory_boss
         echo "User not logged in.";
     }
     ?>
+
     <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js'></script>
     <script src='https://cdn.jsdelivr.net/gh/mrdoob/Three.js@r92/examples/js/loaders/GLTFLoader.js'></script>
 
     <?php include '../controller/session.php'; ?>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const sessionPopup = document.querySelector('.session-popup');
-
-            if (sessionPopup) {
-                setTimeout(function() {
-                    sessionPopup.style.transition = 'opacity 0.5s ease-out';
-                    sessionPopup.style.opacity = '0';
-
-                    setTimeout(function() {
-                        sessionPopup.remove();
-                    }, 500);
-                }, 5000);
-            }
-        });
-    </script>
+    <script src="../js/factoryData.js"></script>
 
 </body>
 

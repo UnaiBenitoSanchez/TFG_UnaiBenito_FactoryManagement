@@ -47,46 +47,7 @@ if (isset($_SESSION['employee_user'])) {
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <!-- JavaScript -->
-    <script>
-        function toggleNavbar() {
-            var navbarNav = document.getElementById('navbarNav');
-            navbarNav.classList.toggle('show');
-
-            document.body.classList.toggle('nav-expanded');
-
-            if (document.body.classList.contains('nav-expanded')) {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }
-        }
-
-        $(document).ready(function() {
-            $('#errorModal').hide();
-
-            function openModal() {
-                $('#errorModal').fadeIn();
-            }
-
-            function closeModal() {
-                $('#errorModal').fadeOut();
-            }
-
-            $('a').on('click', function(event) {
-                let link = $(this).attr('href');
-
-                if (link.includes('employee_dashboard.php') || link.includes('../logout.php') || link.includes('chatEmployee.php')) {
-                    return;
-                }
-
-                event.preventDefault();
-                openModal();
-            });
-
-            window.closeModal = closeModal;
-        });
-    </script>
+    <script src="../js/chatConfigs.js"></script>
 
     <!-- CSS -->
     <link rel="stylesheet" href="../css/session.css">
@@ -314,23 +275,6 @@ if (isset($_SESSION['employee_user'])) {
     </script>
 
     <?php include '../controller/session.php'; ?>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const sessionPopup = document.querySelector('.session-popup');
-
-            if (sessionPopup) {
-                setTimeout(function() {
-                    sessionPopup.style.transition = 'opacity 0.5s ease-out';
-                    sessionPopup.style.opacity = '0';
-
-                    setTimeout(function() {
-                        sessionPopup.remove();
-                    }, 500);
-                }, 5000);
-            }
-        });
-    </script>
 
 </body>
 
