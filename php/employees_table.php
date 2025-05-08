@@ -445,7 +445,8 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
 
     <div class="modal-overlay" id="successModal">
         <div class="modal-container modal-success">
-            <div class="modal-header">
+            <div class="modal-header" style="
+            background-color:rgb(104, 175, 76);">
                 <h3 class="modal-title">Updated!</h3>
                 <button class="modal-close" onclick="hideModal('successModal')">&times;</button>
             </div>
