@@ -181,12 +181,11 @@ if (isset($_SESSION['employee_user'])) {
         }
 
         // Send messages
-        function sendMessage() {
+        async function sendMessage() {
             let messageText = messageInput.value.trim();
             if (messageText !== '') {
-                let timestamp = Date.now();
 
-                console.log("Sending message:", messageText);
+                let timestamp = Date.now();
 
                 messagesRef.push({
                     user: nameuser,
@@ -198,10 +197,11 @@ if (isset($_SESSION['employee_user'])) {
                     messageInput.value = '';
                 }).catch((error) => {
                     console.error("Error sending message:", error);
-                    alert("Error sending message. More details in console.");
+                    alert("Error sending message. See console.");
                 });
             }
         }
+
 
         // Configure listeners of Firebase
         function setupFirebaseListeners() {
@@ -272,6 +272,7 @@ if (isset($_SESSION['employee_user'])) {
             messagesRef.off();
             connectedRef.off();
         });
+
     </script>
 
     <?php include '../controller/session.php'; ?>

@@ -2,7 +2,7 @@
 # encoding: UTF-8
 
 # Required gems:
-# gem install sinatra rqrcode
+# gem install sinatra rqrcode rackup puma
 
 require 'sinatra'
 require 'rqrcode'
