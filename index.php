@@ -178,7 +178,7 @@ session_start();
                 <div id="emailError" class="error-message">Please enter a valid email address (example: x@x.xx)</div>
 
                 <input type="password" name="password" id="password" placeholder="Password" required>
-                <div id="passwordError" class="error-message">Password must be at least 8 characters long and contain at least 1 letter, 1 number, and 1 special character</div>
+                <div id="passwordError" class="error-message">Password must be at least 8 characters long and contain at least 1 letter, 1 number, and 1 special character (@,$,!,%,*,#,?,&)</div>
 
                 <label for="role" style="color: white;">Register as:</label>
                 <select name="role" id="role" required>
