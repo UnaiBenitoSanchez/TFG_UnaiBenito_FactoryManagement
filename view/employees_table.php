@@ -505,7 +505,7 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
             const name = cells[0].innerText.trim();
             const email = cells[1].innerText.trim();
 
-            fetch('update_employee.php', {
+            fetch('../model/update_employee.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -552,7 +552,7 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
                 button
             } = currentEmployeeToDelete;
 
-            fetch('delete_employee.php', {
+            fetch('../model/delete_employee.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -592,7 +592,7 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
 
     <script>
         function updateConnectionStatus() {
-            fetch('get_connection_status.php')
+            fetch('../model/get_connection_status.php')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -639,7 +639,7 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
         });
     </script>
 
-    <?php include '../controller/session.php'; ?>
+    <?php include './session.php'; ?>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

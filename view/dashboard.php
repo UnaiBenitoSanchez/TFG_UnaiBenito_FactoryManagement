@@ -137,7 +137,7 @@ session_start();
 
 <body>
 
-    <?php include '../controller/navbar.php'; ?>
+    <?php include './navbar.php'; ?>
 
     <button id="showUnverifiedPanelBtn" class="btn btn-info">View not verified products</button>
 
@@ -302,7 +302,7 @@ session_start();
         });
     </script>
 
-    <?php include '../controller/session.php'; ?>
+    <?php include './session.php'; ?>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

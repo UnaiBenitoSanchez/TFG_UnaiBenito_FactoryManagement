@@ -391,7 +391,7 @@ if (!isset($_SESSION['user_email'])) {
         });
     </script>
 
-    <?php include '../controller/session.php'; ?>
+    <?php include './session.php'; ?>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

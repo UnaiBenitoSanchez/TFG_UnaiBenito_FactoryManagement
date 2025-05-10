@@ -275,7 +275,7 @@ if (isset($_SESSION['employee_user'])) {
 
     </script>
 
-    <?php include '../controller/session.php'; ?>
+    <?php include './session.php'; ?>
 
 </body>
 

@@ -119,7 +119,7 @@ session_start();
 
                                 echo '<script>
                                         setTimeout(function() {
-                                            window.location.href = "./php/landing_page.php";
+                                            window.location.href = "./view/landing_page.php";
                                         }, 3000);
                                     </script>';
                             } else {
@@ -153,7 +153,7 @@ session_start();
 
                                 echo '<script>
                             setTimeout(function() {
-                                window.location.href = "./php/employee_dashboard.php";
+                                window.location.href = "./view/employee_dashboard.php";
                             }, 3000);
                           </script>';
                             }
@@ -265,7 +265,7 @@ session_start();
                             }
 
                             if ($role === 'boss') {
-                                echo '<script>window.location.href = "./php/landing_page.php";</script>';
+                                echo '<script>window.location.href = "./view/landing_page.php";</script>';
                             } else if ($role === 'employee') {
                                 $stmt = $conn->prepare("UPDATE employee SET is_logged_in = TRUE WHERE id_employee = :id");
 
@@ -274,7 +274,7 @@ session_start();
                                 $_SESSION['employee_user'] = $user['name'];
                                 $_SESSION['employee_id'] = $user['id_employee'];
 
-                                echo '<script>window.location.href = "./php/employee_dashboard.php";</script>';
+                                echo '<script>window.location.href = "./view/employee_dashboard.php";</script>';
                                 exit();
                             }
 

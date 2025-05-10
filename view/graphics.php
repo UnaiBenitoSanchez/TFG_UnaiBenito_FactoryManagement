@@ -116,7 +116,7 @@
 </head>
 
 <body>
-    <?php include '../controller/navbar.php'; ?>
+    <?php include './navbar.php'; ?>
 
     <div class="container-fluid mt-4 col-lg-10">
         <div class="row">
@@ -138,7 +138,7 @@
     $conn = null;
     ?>
 
-    <?php include '../controller/session.php'; ?>
+    <?php include './session.php'; ?>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

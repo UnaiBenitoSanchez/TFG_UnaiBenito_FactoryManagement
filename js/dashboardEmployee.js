@@ -64,7 +64,7 @@ $(document).ready(function () {
   // Function to charge data by AJAX
   function loadData() {
     $.ajax({
-      url: "getDataEmployee.php",
+      url: "../model/getDataEmployee.php",
       method: "GET",
       dataType: "json",
       success: function (data) {
@@ -293,7 +293,7 @@ $(document).ready(function () {
         .data("product-data");
 
       $.ajax({
-        url: "updateData.php",
+        url: "../model/updateData.php",
         method: "POST",
         data: {
           id_product: productId,
@@ -560,7 +560,7 @@ $(document).ready(function () {
         .data("product-data");
 
       $.ajax({
-        url: "updateData.php",
+        url: "../model/updateData.php",
         method: "POST",
         data: {
           id_product: productId,
@@ -626,7 +626,7 @@ $(document).ready(function () {
       newPrice !== original.price
     ) {
       $.ajax({
-        url: "updateData.php",
+        url: "../model/updateData.php",
         method: "POST",
         data: {
           id_product: productId,
@@ -667,7 +667,7 @@ $(document).ready(function () {
       function () {
         // If confirmed, proceed with deletion
         $.ajax({
-          url: "deleteData.php",
+          url: "../model/deleteData.php",
           method: "POST",
           data: {
             id_product: productId,

@@ -58,7 +58,7 @@ $factoryName = getFactoryNameByBoss($bossEmail);
 </head>
 
 <body>
-  <?php include '../controller/navbar.php'; ?>
+  <?php include './navbar.php'; ?>
 
   <?php
   // Common function to draw charts
@@ -287,7 +287,7 @@ $factoryName = getFactoryNameByBoss($bossEmail);
     ?>
   </script>
 
-  <?php include '../controller/session.php'; ?>
+  <?php include './session.php'; ?>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
