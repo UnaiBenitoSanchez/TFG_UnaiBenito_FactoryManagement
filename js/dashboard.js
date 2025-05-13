@@ -896,13 +896,13 @@ function verifyProduct(productId) {
     .then((response) => response.json())
     .then((result) => {
       if (result.success) {
-        showMessageModal("Producto verificado con éxito", "Éxito");
+        showMessageModal("Product verified", "Verified");
         loadUnverifiedProducts();
       }
     })
     .catch((error) => {
       console.error("Error verifying product:", error);
-      showMessageModal("Hubo un error al verificar el producto", "Error");
+      showMessageModal("Error verifying product.", "Error");
     });
 }
 

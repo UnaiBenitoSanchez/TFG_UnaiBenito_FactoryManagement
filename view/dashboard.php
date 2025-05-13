@@ -198,42 +198,50 @@ session_start();
                 $stmt = $conn->prepare("INSERT INTO inventory_history (product_id_product, change_quantity, change_type) VALUES (?, ?, 'Add')");
                 $stmt->execute([$productId, $initialQuantity]);
 
+                // Generate a safe event name without special characters
+                $safeProductName = preg_replace('/[^a-zA-Z0-9_]/', '_', $productName);
+                
+                // Fixed subtract event SQL - note the proper event syntax 
                 $subtractEventSQL = "
-                    CREATE EVENT IF NOT EXISTS subtract_quantity_event_$productName
-                    ON SCHEDULE EVERY 1 HOUR
-                    DO
+                    CREATE EVENT subtract_quantity_event_$safeProductName
+                    ON SCHEDULE EVERY 30 MINUTE
+                    DO 
                     BEGIN
-
-                    SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'));
-                    
-                    UPDATE GestionDeFabricas.inventory
-                    SET available_quantity = GREATEST(available_quantity - RAND()*(100-50)+50, 0)
-                    WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName');
-                    
-                    INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-                    VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'),(SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName')), 'Subtract');
-                    END;
-                    ";
+                        SET @current_quantity = (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'));
+                        
+                        UPDATE GestionDeFabricas.inventory
+                        SET available_quantity = GREATEST(available_quantity - RAND()*(100-50)+50, 0)
+                        WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName');
+                        
+                        INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+                        VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'),
+                               (SELECT available_quantity FROM GestionDeFabricas.inventory 
+                                WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName')), 
+                               'Subtract');
+                    END
+                ";
                 $stmt = $conn->prepare($subtractEventSQL);
                 $stmt->execute();
 
+                // Fixed add event SQL - note the proper event syntax
                 $addEventSQL = "
-                    CREATE EVENT IF NOT EXISTS add_quantity_event_$productName
-                    ON SCHEDULE EVERY 1 HOUR
+                    CREATE EVENT add_quantity_event_$safeProductName
+                    ON SCHEDULE EVERY 30 MINUTE
                     DO
                     BEGIN
-            
-                    SET @current_quantity := (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'));
-                    
-                    UPDATE GestionDeFabricas.inventory
-                    SET available_quantity = available_quantity + RAND()*(100-50)+50
-                    WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName');
-                    
-                    INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
-                    VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'), (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName')), 'Add');
-                    
-                    END;
-                    ";
+                        SET @current_quantity = (SELECT available_quantity FROM GestionDeFabricas.inventory WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'));
+                        
+                        UPDATE GestionDeFabricas.inventory
+                        SET available_quantity = available_quantity + RAND()*(100-50)+50
+                        WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName');
+                        
+                        INSERT INTO GestionDeFabricas.inventory_history (product_id_product, change_quantity, change_type)
+                        VALUES ((SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName'), 
+                               (SELECT available_quantity FROM GestionDeFabricas.inventory 
+                                WHERE product_id_product = (SELECT id_product FROM GestionDeFabricas.product WHERE name = '$productName')), 
+                               'Add');
+                    END
+                ";
 
                 $stmt = $conn->prepare($addEventSQL);
                 $stmt->execute();
@@ -241,9 +249,8 @@ session_start();
                 header("Location: " . $_SERVER['PHP_SELF']);
                 exit();
             } catch (PDOException $e) {
-                echo "Error inserting data: " . $e->getMessage();
+                echo "<div class='alert alert-danger text-center'>Error inserting data: " . $e->getMessage() . "</div>";
             }
-            exit();
         }
     }
     $conn = null;
@@ -264,23 +271,23 @@ session_start();
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="product_name" class="form-label">Product Name</label>
-                    <input type="text" class="form-control" id="product_name" name="product_name">
+                    <input type="text" class="form-control" id="product_name" name="product_name" required>
                 </div>
                 <div class="mb-3">
                     <label for="product_description" class="form-label">Product Description</label>
-                    <textarea class="form-control" id="product_description" name="product_description"></textarea>
+                    <textarea class="form-control" id="product_description" name="product_description" required></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="product_price" class="form-label">Product Price</label>
-                    <input type="number" step="0.01" class="form-control" id="product_price" name="product_price">
+                    <input type="number" step="0.01" class="form-control" id="product_price" name="product_price" required>
                 </div>
                 <div class="mb-3">
                     <label for="product_image" class="form-label">Product Image</label>
-                    <input type="file" class="form-control" id="product_image" name="product_image">
+                    <input type="file" class="form-control" id="product_image" name="product_image" required>
                 </div>
                 <div class="mb-3">
                     <label for="product_quantity" class="form-label">Initial Quantity</label>
-                    <input type="number" class="form-control" id="product_quantity" name="product_quantity">
+                    <input type="number" class="form-control" id="product_quantity" name="product_quantity" required>
                 </div>
                 <button type="submit" class="btn btn-primary" name="addProd">Add Product</button>
             </form>

@@ -289,7 +289,7 @@ if (!isset($_SESSION['user_email'])) {
 
                 $subtractEventSQL = "
                 CREATE EVENT IF NOT EXISTS subtract_quantity_event_$productName
-                ON SCHEDULE EVERY 1 HOUR
+                ON SCHEDULE EVERY 30 MINUTE
                 DO
                 BEGIN
 
@@ -308,7 +308,7 @@ if (!isset($_SESSION['user_email'])) {
 
                 $addEventSQL = "
                 CREATE EVENT IF NOT EXISTS add_quantity_event_$productName
-                ON SCHEDULE EVERY 1 HOUR
+                ON SCHEDULE EVERY 30 MINUTE
                 DO
                 BEGIN
            
