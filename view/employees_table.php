@@ -37,33 +37,15 @@ try {
     $stmt->execute();
     $factory = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Pagination configuration
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $perPage = 5;
-    $offset = ($page - 1) * $perPage;
-
-    $stmt = $conn->prepare("
-    SELECT COUNT(*) as total 
-    FROM employee e
-    JOIN factory_employee fe ON e.id_employee = fe.employee_id_employee
-    WHERE fe.factory_id_factory = :factory_id
-");
-    $stmt->bindParam(':factory_id', $factoryId);
-    $stmt->execute();
-    $totalEmployees = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-    $totalPages = ceil($totalEmployees / $perPage);
-
+    // Get all employees without pagination
     $stmt = $conn->prepare("
     SELECT e.id_employee, e.name, e.email, e.role, e.is_logged_in 
     FROM employee e
     JOIN factory_employee fe ON e.id_employee = fe.employee_id_employee
     WHERE fe.factory_id_factory = :factory_id
     ORDER BY e.name
-    LIMIT :limit OFFSET :offset
-");
+    ");
     $stmt->bindParam(':factory_id', $factoryId);
-    $stmt->bindParam(':limit', $perPage, PDO::PARAM_INT);
-    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
     $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -152,39 +134,6 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
         .nav-logout-inline:hover {
             background-color: rgb(255, 90, 90);
             color: #fff;
-        }
-
-        /* Pagination controls */
-        .pagination-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-            gap: 20px;
-        }
-
-        .pagination-arrow {
-            padding: 8px 16px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        .pagination-arrow:hover:not(.disabled) {
-            background-color: #45a049;
-        }
-
-        .pagination-arrow.disabled {
-            background-color: #cccccc;
-            color: #666666;
-            cursor: not-allowed;
-        }
-
-        .page-info {
-            font-weight: 500;
-            color: #333;
         }
 
         .modal-overlay {
@@ -296,7 +245,7 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
         }
 
         .modal-success .modal-header {
-            background-color:rgb(104, 175, 76);
+            background-color: rgb(104, 175, 76);
             color: white;
             border-bottom: none;
         }
@@ -323,15 +272,14 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
             color: red;
         }
 
-        .modal-container .modal-header{
+        .modal-container .modal-header {
             background-color: #f44336;
         }
 
-        .modal-container .modal-header h3{
+        .modal-container .modal-header h3 {
             color: white;
         }
     </style>
-
 </head>
 
 <body>
@@ -404,21 +352,6 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <div class="pagination-controls">
-                    <?php if ($page > 1): ?>
-                        <a href="?page=<?php echo $page - 1; ?>" class="pagination-arrow">← Previous</a>
-                    <?php else: ?>
-                        <span class="pagination-arrow disabled">← Previous</span>
-                    <?php endif; ?>
-
-                    <span class="page-info">Page <?php echo $page; ?> of <?php echo $totalPages; ?></span>
-
-                    <?php if ($page < $totalPages): ?>
-                        <a href="?page=<?php echo $page + 1; ?>" class="pagination-arrow">Next →</a>
-                    <?php else: ?>
-                        <span class="pagination-arrow disabled">Next →</span>
-                    <?php endif; ?>
-                </div>
             </div>
         <?php else: ?>
             <div class="no-employees">
@@ -445,8 +378,7 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
 
     <div class="modal-overlay" id="successModal">
         <div class="modal-container modal-success">
-            <div class="modal-header" style="
-            background-color:rgb(104, 175, 76);">
+            <div class="modal-header" style="background-color:rgb(104, 175, 76);">
                 <h3 class="modal-title">Updated!</h3>
                 <button class="modal-close" onclick="hideModal('successModal')">&times;</button>
             </div>
@@ -657,50 +589,6 @@ $currentEmployeeId = $_SESSION['user_role'] === 'employee' ? $_SESSION['employee
             }
         });
     </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.pagination-arrow:not(.disabled)').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const page = new URL(this.href).searchParams.get('page');
-                    fetchEmployees(page);
-                });
-            });
-        });
-
-        function fetchEmployees(page) {
-            fetch(`employees_table.php?page=${page}`)
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newTable = doc.querySelector('.table-container');
-                    document.querySelector('.table-container').innerHTML = newTable.innerHTML;
-
-                    document.querySelectorAll('.edit-btn').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            enableEdit(this);
-                        });
-                    });
-
-                    document.querySelectorAll('.save-btn').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const id = this.closest('tr').dataset.employeeId;
-                            saveEdit(this, id);
-                        });
-                    });
-
-                    document.querySelectorAll('.delete-btn').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const id = this.closest('tr').dataset.employeeId;
-                            deleteEmployee(id, this);
-                        });
-                    });
-                });
-        }
-    </script>
-
 </body>
 
 </html>
