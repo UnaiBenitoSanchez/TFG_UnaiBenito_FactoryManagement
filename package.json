@@ -19,14 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UnaiBenitoSanchez/gestion_fabricas.git"
+    "url": "git+https://github.com/UnaiBenitoSanchez/TFG_UnaiBenito_FactoryManagement.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/UnaiBenitoSanchez/gestion_fabricas/issues"
+    "url": "https://github.com/UnaiBenitoSanchez/TFG_UnaiBenito_FactoryManagement/issues"
   },
-  "homepage": "https://github.com/UnaiBenitoSanchez/gestion_fabricas#readme"
+  "homepage": "https://github.com/UnaiBenitoSanchez/TFG_UnaiBenito_FactoryManagement#readme"
 }
