@@ -52,7 +52,7 @@
     background-color: #BED8D4; 
 }
 
-@media (max-width: 1920px) {
+@media (max-width: 1420px) {
     .navbar-toggler {
         display: block;
     }
