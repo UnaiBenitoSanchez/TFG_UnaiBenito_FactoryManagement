@@ -202,8 +202,6 @@ session_start();
                 <button type="submit" class="btn" name="signup" style="background-color: white;">Signup</button>
             </form>
 
-
-
         </div>
 
         <!-- Login Section -->

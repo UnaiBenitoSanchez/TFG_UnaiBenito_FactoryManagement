@@ -179,7 +179,7 @@ if (isset($_SESSION['employee_user'])) {
                     text: messageText,
                     timestamp: timestamp,
                     email: username,
-                    factory_id: "<?php echo $user_factory_id; ?>" // Añadir el ID de la fábrica al mensaje
+                    factory_id: "<?php echo $user_factory_id; ?>" 
                 }).then(() => {
                     messageInput.value = '';
                 }).catch((error) => {
@@ -203,7 +203,6 @@ if (isset($_SESSION['employee_user'])) {
                         let messageId = childSnapshot.key;
                         let messageData = childSnapshot.val();
 
-                        // Solo mostrar si el mensaje tiene la misma fábrica que el usuario
                         if (!displayedMessages[messageId] && messageData.factory_id === "<?php echo $user_factory_id; ?>") {
                             displayMessage(
                                 messageData.user,
@@ -219,7 +218,6 @@ if (isset($_SESSION['employee_user'])) {
                     console.error("Error loading messages:", error);
                 });
 
-            // Escuchar nuevos mensajes filtrados por fábrica
             messagesRef.limitToLast(100).on('child_added', (snapshot) => {
                 let messageId = snapshot.key;
                 let messageData = snapshot.val();

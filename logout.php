@@ -1,5 +1,4 @@
 <?php
-// Start or resume the session
 session_start();
 
 if (isset($_SESSION['user_role'])) {

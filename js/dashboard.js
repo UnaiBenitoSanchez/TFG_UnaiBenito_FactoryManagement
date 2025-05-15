@@ -1,13 +1,9 @@
 $(document).ready(function () {
-  // Variable to track unsaved changes
   let hasUnsavedChanges = false;
-  // Original product data for comparison
   let originalProductData = {};
 
-  // Charge data at start
   loadData();
 
-  // Function to create a custom confirmation modal
   function createConfirmModal(
     title,
     message,
@@ -15,10 +11,8 @@ $(document).ready(function () {
     cancelBtnText,
     confirmCallback
   ) {
-    // Remove any existing confirm modal
     $("#customConfirmModal").remove();
 
-    // Create a new modal structure
     const modalHTML = `
       <div class="modal fade" id="customConfirmModal" tabindex="-1" aria-labelledby="customConfirmModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -39,15 +33,12 @@ $(document).ready(function () {
       </div>
     `;
 
-    // Append modal to body
     $("body").append(modalHTML);
 
-    // Initialize the modal
     const confirmModal = new bootstrap.Modal(
       document.getElementById("customConfirmModal")
     );
 
-    // Handle confirm button click
     $("#confirmModalBtn").on("click", function () {
       confirmModal.hide();
       if (typeof confirmCallback === "function") {
@@ -55,13 +46,11 @@ $(document).ready(function () {
       }
     });
 
-    // Show the modal
     confirmModal.show();
 
     return confirmModal;
   }
 
-  // Function to charge data by AJAX
   function loadData() {
     $.ajax({
       url: "../model/getData.php",
@@ -70,7 +59,7 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         renderProducts(data);
-        hasUnsavedChanges = false; // Reset the flag after loading data
+        hasUnsavedChanges = false; 
         updateBeforeUnloadListener();
       },
       error: function (error) {
@@ -79,26 +68,22 @@ $(document).ready(function () {
     });
   }
 
-  // Function to render the products on the container
   function renderProducts(data) {
     let productsContainer = $("#products-container");
     productsContainer.empty();
 
     let totalProducts = 0;
 
-    // Calculate the total of the products
     data.forEach(function (product) {
       totalProducts += parseFloat(product.available_quantity);
     });
 
-    // Render every product
     data.forEach(function (product) {
       console.log("Image:", product.image);
       let productDiv = createProductCard(product, totalProducts);
       productsContainer.append(productDiv);
     });
 
-    // Add modal to body if not exists
     if ($("#productDetailModal").length === 0) {
       $("body").append(`
                   <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
@@ -116,22 +101,18 @@ $(document).ready(function () {
                   </div>
               `);
 
-      // Add event handler for modal close attempt when changes are pending
       $("#productDetailModal").on("hide.bs.modal", function (e) {
         if (hasUnsavedChanges) {
-          e.preventDefault(); // Prevent modal from closing immediately
+          e.preventDefault(); 
 
-          // Show custom confirmation modal
           createConfirmModal(
             "Unsaved Changes",
             "You have unsaved changes. Are you sure you want to close?",
             "Close Anyway",
             "Cancel",
             function () {
-              // If confirmed, reset changes flag and close the modal
               hasUnsavedChanges = false;
               updateBeforeUnloadListener();
-              // Use Bootstrap's API to hide the modal programmatically
               const productModal = bootstrap.Modal.getInstance(
                 document.getElementById("productDetailModal")
               );
@@ -143,7 +124,6 @@ $(document).ready(function () {
     }
   }
 
-  // Function to create the product card
   function createProductCard(product, totalProducts) {
     let availableQuantity = parseFloat(product.available_quantity);
     let price = parseFloat(product.price);
@@ -195,10 +175,8 @@ $(document).ready(function () {
               </div>'
     );
 
-    // Store full product data for modal
     productDiv.data("product-data", product);
 
-    // Store original data for comparison
     originalProductData[product.id_product] = {
       name: product.name,
       description: product.description,
@@ -209,11 +187,9 @@ $(document).ready(function () {
     return productDiv;
   }
 
-  // Enable inline editing on editable fields
   $(document).on("dblclick", ".editable", function (e) {
     e.stopPropagation();
 
-    // Don't do anything if already editing
     if ($(this).find("input").length > 0) return;
 
     const currentValue = $(this).text();
@@ -222,7 +198,6 @@ $(document).ready(function () {
       field === "price" || field === "quantity" ? "number" : "text";
     const step = field === "price" ? "0.01" : "1";
 
-    // Replace content with input
     $(this).html(
       '<input type="' +
         fieldType +
@@ -233,10 +208,8 @@ $(document).ready(function () {
         ">"
     );
 
-    // Focus on the input
     $(this).find("input").focus().select();
 
-    // Show save/cancel buttons
     const productCard = $(this).closest(".card-body");
     productCard.find(".btn-save-changes, .btn-cancel-changes").show();
 
@@ -244,9 +217,7 @@ $(document).ready(function () {
     updateBeforeUnloadListener();
   });
 
-  // Handle input blur event
   $(document).on("blur", ".editable input", function (e) {
-    // Don't handle blur if it's because of clicking save/cancel buttons
     if (
       $(e.relatedTarget).hasClass("btn-save-changes") ||
       $(e.relatedTarget).hasClass("btn-cancel-changes")
@@ -254,19 +225,16 @@ $(document).ready(function () {
       return;
     }
 
-    // We'll just revert to the original text if clicked elsewhere
     const parent = $(this).parent();
     parent.text(parent.data("original"));
   });
 
-  // Handle save changes button
   $(document).on("click", ".btn-save-changes", function () {
     const productId = $(this).data("product-id");
     const productCard = $(this).closest(".card-body");
     const changes = {};
     let hasChanges = false;
 
-    // Collect all edited values
     productCard.find(".editable").each(function () {
       const field = $(this).data("field");
       const input = $(this).find("input");
@@ -280,13 +248,11 @@ $(document).ready(function () {
           hasChanges = true;
         }
 
-        // Update displayed value
         $(this).text(newValue);
         $(this).data("original", newValue);
       }
     });
 
-    // If changes were made, save them
     if (hasChanges) {
       const productData = $(`[data-product-id="${productId}"]`)
         .closest(".col-md-4")
@@ -312,33 +278,27 @@ $(document).ready(function () {
       });
     }
 
-    // Hide buttons
     productCard.find(".btn-save-changes, .btn-cancel-changes").hide();
 
     hasUnsavedChanges = false;
     updateBeforeUnloadListener();
   });
 
-  // Handle cancel changes button
   $(document).on("click", ".btn-cancel-changes", function () {
     const productCard = $(this).closest(".card-body");
 
-    // Revert all editable fields to original values
     productCard.find(".editable").each(function () {
       const originalValue = $(this).data("original");
       $(this).text(originalValue);
     });
 
-    // Hide buttons
     productCard.find(".btn-save-changes, .btn-cancel-changes").hide();
 
     hasUnsavedChanges = false;
     updateBeforeUnloadListener();
   });
 
-  // Handle card click to show modal
   $(document).on("click", ".product-card", function (e) {
-    // Don't open modal if clicking on editable fields, inputs, or buttons
     if (
       $(e.target).hasClass("editable") ||
       $(e.target).closest(".editable").length ||
@@ -352,7 +312,6 @@ $(document).ready(function () {
     const productId = $(this).data("product-id");
     const productData = $(this).closest(".col-md-4").data("product-data");
 
-    // Store original modal data for comparison
     originalProductData[productId] = {
       name: productData.name,
       description: productData.description,
@@ -360,7 +319,6 @@ $(document).ready(function () {
       price: productData.price,
     };
 
-    // Display full product details in modal
     let modalContent = `
   <div class="container-fluid">
       <div class="row">
@@ -413,11 +371,9 @@ $(document).ready(function () {
     productModal.show();
   });
 
-  // Enable inline editing on modal editable fields
   $(document).on("dblclick", ".modal-editable", function (e) {
     e.stopPropagation();
 
-    // Don't do anything if already editing
     if ($(this).find("input, textarea").length > 0) return;
 
     const currentValue = $(this).text();
@@ -442,13 +398,10 @@ $(document).ready(function () {
         ">";
     }
 
-    // Replace content with input
     $(this).html(inputHtml);
 
-    // Focus on the input
     $(this).find("input, textarea").focus().select();
 
-    // Show save/cancel buttons
     $(".btn-modal-edit").hide();
     $(".btn-modal-delete").hide();
     $(".btn-modal-save, .btn-modal-cancel").show();
@@ -457,12 +410,10 @@ $(document).ready(function () {
     updateBeforeUnloadListener();
   });
 
-  // Handle input blur event in modal
   $(document).on(
     "blur",
     ".modal-editable input, .modal-editable textarea",
     function (e) {
-      // Don't handle blur if it's because of clicking save/cancel buttons
       if (
         $(e.relatedTarget).hasClass("btn-modal-save") ||
         $(e.relatedTarget).hasClass("btn-modal-cancel")
@@ -470,13 +421,11 @@ $(document).ready(function () {
         return;
       }
 
-      // We'll just revert to the original text if clicked elsewhere
       const parent = $(this).parent();
       parent.text(parent.data("original"));
     }
   );
 
-  // Handle modal edit button
   $(document).on("click", ".btn-modal-edit", function () {
     const productId = $(this).data("product-id");
     const modalBody = $("#productDetailContent");
@@ -484,7 +433,6 @@ $(document).ready(function () {
       .closest(".col-md-4")
       .data("product-data");
 
-    // Store original data for comparison
     originalProductData[productId] = {
       name: productData.name,
       description: productData.description,
@@ -589,17 +537,14 @@ $(document).ready(function () {
     updateBeforeUnloadListener();
   });
 
-  // Handle modal cancel button for inline edits
   $(document).on("click", ".btn-modal-cancel", function () {
     const modalBody = $("#productDetailContent");
 
-    // Revert all editable fields to original values
     modalBody.find(".modal-editable").each(function () {
       const originalValue = $(this).data("original");
       $(this).text(originalValue);
     });
 
-    // Show edit/delete buttons, hide save/cancel
     $(".btn-modal-edit").show();
     $(".btn-modal-delete").show();
     $(".btn-modal-save, .btn-modal-cancel").hide();
@@ -608,7 +553,6 @@ $(document).ready(function () {
     updateBeforeUnloadListener();
   });
 
-  // Handle save changes from modal form
   $(document).on("click", ".btn-modal-confirm", function () {
     const productId = $(this).data("product-id");
     const newName = $("#modal-product-name").val();
@@ -618,7 +562,6 @@ $(document).ready(function () {
 
     const original = originalProductData[productId];
 
-    // Check if there are actual changes
     if (
       newName !== original.name ||
       newDescription !== original.description ||
@@ -637,7 +580,6 @@ $(document).ready(function () {
         },
         success: function (response) {
           console.log(response);
-          // Close modal and reload data
           $("#productDetailModal").modal("hide");
           loadData();
         },
@@ -646,7 +588,6 @@ $(document).ready(function () {
         },
       });
     } else {
-      // No changes, just close the modal
       $("#productDetailModal").modal("hide");
     }
 
