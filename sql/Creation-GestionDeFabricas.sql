@@ -308,11 +308,11 @@ INSERT INTO factory_employee VALUES
 
 -- Insert employees for Nerf (Factory 3)
 INSERT INTO employee VALUES 
-('21', 'Aaron Phillips', 'aaron.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
-('22', 'Bella Scott', 'bella.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
-('23', 'Carter Adams', 'carter.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
-('24', 'Diana Clark', 'diana.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
-('30', 'Samuel Bennett', 'samuel.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0');
+('11', 'Aaron Phillips', 'aaron.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
+('12', 'Bella Scott', 'bella.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
+('13', 'Carter Adams', 'carter.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
+('14', 'Diana Clark', 'diana.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
+('15', 'Samuel Bennett', 'samuel.nerf@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0');
 
 -- Assign employees to Nerf (Factory 3)
 INSERT INTO factory_employee VALUES 
@@ -320,11 +320,11 @@ INSERT INTO factory_employee VALUES
 
 -- Insert employees for Playmobil (Factory 4)
 INSERT INTO employee VALUES 
-('31', 'Klaus Müller', 'klaus.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
-('32', 'Anna Schmidt', 'anna.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
-('33', 'Thomas Fischer', 'thomas.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
-('34', 'Sabine Weber', 'sabine.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
-('40', 'Stefan Richter', 'stefan.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0');
+('16', 'Klaus Müller', 'klaus.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
+('17', 'Anna Schmidt', 'anna.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
+('18', 'Thomas Fischer', 'thomas.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
+('19', 'Sabine Weber', 'sabine.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0'),
+('20', 'Stefan Richter', 'stefan.playmobil@email.com', '$2y$10$LvUBjigljVKC1YyIwUwa1OI5lhHEnSGgXGc5NdmDRlhCftWHmPgOa', 'worker','0');
 
 -- Assign employees to Playmobil (Factory 4)
 INSERT INTO factory_employee VALUES 
